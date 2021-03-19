@@ -1,4 +1,4 @@
-###
+############### Tasks  ################
 GET http://localhost:3000/api/tasks
 
 ###
@@ -31,3 +31,40 @@ Content-Type: application/json
     "title": "Actualizar un dato"
 }
 
+
+
+############### Users  ################
+
+GET http://localhost:3000/api/users
+
+###
+GET http://localhost:3000/api/users?matricula=16020419
+
+###
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "fullName": "Jesus Aguilera Magaña",
+    "email": "al15020357@itsa.edu.mx",
+    "tokenN": "pushToken[emuladoooo]"
+}
+
+###
+GET http://localhost:3000/api/users/6054f1fb9f7b261784400b51
+
+###
+DELETE http://localhost:3000/api/users/6054f1fb9f7b261784400b51
+
+###
+# GET http://localhost:3000/api/users/done
+
+###
+PUT http://localhost:3000/api/users/6054f65637592d36c0375cb4
+Content-Type: application/json
+
+{
+    "fullName": "Jesus Alejandro",
+    "email": "al15020357@itsa.edu.mx",
+    "tokenN": "pushToken[otrooo]"
+}
