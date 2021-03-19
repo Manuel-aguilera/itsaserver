@@ -1,0 +1,6 @@
+# node
+node_modules
+# Environment variables
+.env
+# production
+dist

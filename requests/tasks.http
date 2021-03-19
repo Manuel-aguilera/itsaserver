@@ -1,0 +1,33 @@
+###
+GET http://localhost:3000/api/tasks
+
+###
+GET http://localhost:3000/api/tasks?page=0&size=3&title=dato
+
+###
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+    "title": "el titulo",
+    "description": "tarea con titulo",
+    "done": true
+}
+
+###
+GET http://localhost:3000/api/tasks/60547e2f32a08b230cc0ce7c
+
+###
+DELETE http://localhost:3000/api/tasks/60547e2f32a08b230cc0ce7c
+
+###
+GET http://localhost:3000/api/tasks/done
+
+###
+PUT http://localhost:3000/api/tasks/60547537a257792cd0086ea4
+Content-Type: application/json
+
+{
+    "title": "Actualizar un dato"
+}
+
