@@ -86,11 +86,11 @@ export const deleteDepositosBancario = async (req, res) => {
 
 export const updateDepositosBancario = async (req, res) => {
     const { id } = req.params;
-    if(!req.body.concepto && !req.body.costo ){
-        return res.status(404).send({
-            message: "DepositosBancario no puede ser vacío en el body"
-        })
-    }
+    // if(!req.body.concepto && !req.body.costo ){
+    //     return res.status(404).send({
+    //         message: "DepositosBancario no puede ser vacío en el body"
+    //     })
+    // }
     try{
         const updatedDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false

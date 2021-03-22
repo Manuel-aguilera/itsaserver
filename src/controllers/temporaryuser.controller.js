@@ -3,7 +3,7 @@ import TemporaryUser from '../models/TemporaryUser';
 
 export const findAllUsers = async (req, res) => {
     try{
-        const data = await User.find();
+        const data = await TemporaryUser.find();
         res.json(data);
     }
     catch(error){
@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
     // }
     try{
         const em = req.body.email;
-        // const dataUser = await User.find({email: em});
+        // const dataUser = await TemporaryUser.find({email: em});
         // console.log('DataUser');
         // console.log(dataUser);
         // if(dataUser.length !== 0){
@@ -45,7 +45,7 @@ export const createUser = async (req, res) => {
                 res.json("Es un correo institucional de un docente ya que ellos no tienen matricula vigente");
         }
         else{  //No es un correo institucional
-            const newUser = new User({
+            const newUser = new TemporaryUser({
                 usuario: req.body.usuario, 
                 nombre: req.body.nombre,
                 apellidoPaterno: req.body.apellidoPaterno,
@@ -66,9 +66,6 @@ export const createUser = async (req, res) => {
                 emailPersonal: req.body.emailPersonal,
                 tokenN: req.body.tokenN,
                 matricula: req.body.matricula,
-                estadoAlumno: req.body.estadoAlumno,
-                tipoAlumno: req.body.tipoAlumno,
-                tipoAlta: req.body.tipoAlta,
                 planEstudios: req.body.planEstudios,
                 fichaAceptada: req.body.fichaAceptada,   
                 pagoInscripcion: req.body.pagoInscripcion,
@@ -88,7 +85,7 @@ export const createUser = async (req, res) => {
 export const findOneUser = async (req, res) => {
     const { id } = req.params;
     try{
-        const user = await User.findById(id);
+        const user = await TemporaryUser.findById(id);
 
         if(!user) return res.status(404).json({
             message: `El usuario con el id: ${id} no existe`
@@ -106,7 +103,7 @@ export const findOneUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     const { id } = req.params;
     try{
-        await User.findByIdAndDelete(id)
+        await TemporaryUser.findByIdAndDelete(id)
         res.json({
             message: 'Tarea ha sido eliminada exitosamente'
         });
@@ -120,7 +117,7 @@ export const deleteUser = async (req, res) => {
 
 // export const findAllDoneUser = async (req, res) => {
 //     try{
-//         const users = await User.find({done: true});
+//         const users = await TemporaryUser.find({done: true});
 //         res.json(users);
 //     }
 //     catch(error){
@@ -132,13 +129,13 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     const { id } = req.params;
-    // if(!req.body.fullName && !req.body.email && !req.body.tokenN){
-    //     return res.status(404).send({
-    //         message: "El title no puede ser vacío en el body"
-    //     })
-    // }
+    if(!req.body.fullName && !req.body.email && !req.body.tokenN){
+        return res.status(404).send({
+            message: "El title no puede ser vacío en el body"
+        })
+    }
     try{
-        const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+        const updatedUser = await TemporaryUser.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });
         res.json({

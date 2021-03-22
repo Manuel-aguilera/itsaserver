@@ -108,6 +108,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    pagoInscripcion: {
+        type: Boolean,
+        default: false,
+    }
 }, {
     versionKey: false,
     timestamps: true,  //para agregar creatAt y updateAt
