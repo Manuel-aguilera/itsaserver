@@ -23,33 +23,44 @@ export const createUser = async (req, res) => {
     //usar express-validator para validar
     if(!req.body.fullName || !req.body.email || !req.body.tokenN){
         return res.status(404).send({
-            message: "El title o description  no puede ser vacío en el body"
+            message: "El fullName, email o tokenN no puede ser vacío en el body"
         })
     }
-    
     try{
-        //vamos a comprobar si ya existía este usuario
         const em = req.body.email;
-        console.log(em);
-        const dataUser = await TemporaryUser.find({email: em});
-        console.log('DataUser');
-        console.log(dataUser);
-        if(dataUser.length !== 0){
-            res.json({message: "El usuario ya existe"});
-        } else {
-            //generamos una matricula en base al correo
-            let matricula = em.slice(2, 10);
-            
-
-            const newUser = new TemporaryUser({
-                fullName: req.body.fullName, 
-                email: req.body.email,
-                tokenN: req.body.tokenN,
-                matricula: matricula,   
-            });
-            const usersave = await newUser.save();
-            res.json(usersave)
+        // const dataUser = await TemporaryUser.find({email: em});
+        // console.log('DataUser');
+        // console.log(dataUser);
+        // if(dataUser.length !== 0){
+        //     res.json({message: "El usuario ya existe"});
+        // }
+        //generamos una matricula en base al correo
+        
+        const isMatriculado = /al/;
+        const isInstitucional = /itsa.edu.mx/;
+        if(isInstitucional.test(em)){  //Es institucional por lo tanto ya está registrado en la tabla de usuarios
+            if(isMatriculado.test(em)){  //Tiene matrícula por lo que concluimos que es un alumno
+                const correo = em.split("@");
+                const dominio = correo[1];
+                const matricula = correo[0].split("al")[1];
+                console.log(dominio)
+                console.log(matricula)
+            }
+            else
+                console.log("Es un correo institucional de un docente ya que ellos no tienen matricula vigente");
         }
+        else{
+            console.log("No es institucional entonces creamos el usuario temporal");
+        }
+
+        const newUser = new TemporaryUser({
+            fullName: req.body.fullName, 
+            email: req.body.email,
+            tokenN: req.body.tokenN,
+            matricula: matricula,   
+        });
+        const usersave = await newUser.save();
+        res.json(usersave)
     }
     catch(error){
         res.status(500).json({
@@ -105,7 +116,7 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     const { id } = req.params;
-    if(!req.body.fullName || !req.body.email || !req.body.tokenN){
+    if(!req.body.fullName && !req.body.email && !req.body.tokenN){
         return res.status(404).send({
             message: "El title no puede ser vacío en el body"
         })
