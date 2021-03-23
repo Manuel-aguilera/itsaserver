@@ -19,12 +19,18 @@ export const findAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try{
+<<<<<<< HEAD
         console.log('Entra body')
         console.log(req.body)
         console.log('Entra body')
         console.log(req.body)
         return;
         console.log('Gurdamos ya')
+=======
+        console.log('Entra')
+        console.log(req.body)
+        return;
+>>>>>>> c8b675d62b9b6ebe8a188292737eba7e0f9108c3
         if(!req.body)
             res.json({
                 data: [],
