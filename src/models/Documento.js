@@ -4,24 +4,35 @@ import {Schema, model} from 'mongoose';
 const documentosSchema = new Schema({
     id_user: {
         type: String,
-        required: true,
         trim: true,
     },
     curpFoto: {
-        type: Binary,
-        required: true,
+        image: {
+            image: {type: String},
+            fileName: {type: String},
+            path: {type: String},
+        } 
     },
     actaFoto: {
-        type: Binary,
-        required: true,
+        image: {
+            image: {type: String},
+            fileName: {type: String},
+            path: {type: String},
+        } 
     },
     certificadoBach: {
-        type: Binary,
-        required: true,
+        image: {
+            image: {type: String},
+            fileName: {type: String},
+            path: {type: String},
+        } 
     },
     constanciaMedica: {
-        type: Binary,
-        required: true,
+        image: {
+            image: {type: String},
+            fileName: {type: String},
+            path: {type: String},
+        } 
     },
 }, {
     versionKey: false,
