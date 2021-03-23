@@ -4,7 +4,11 @@ import TemporaryUser from '../models/TemporaryUser';
 export const findAllUsers = async (req, res) => {
     try{
         const data = await TemporaryUser.find();
-        res.json(data);
+        res.json({
+            data: data,
+            status: "",
+            message: "Usarios de temporaryuser"
+        });
     }
     catch(error){
         res.status(500).json({
@@ -14,22 +18,17 @@ export const findAllUsers = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    //usar express-validator para validar
-    // if(!req.body.fullName || !req.body.email || !req.body.tokenN){
-    //     return res.status(404).send({
-    //         message: "El fullName, email o tokenN no puede ser vacío en el body"
-    //     })
-    // }
     try{
-        const em = req.body.email;
-        // const dataUser = await TemporaryUser.find({email: em});
-        // console.log('DataUser');
-        // console.log(dataUser);
-        // if(dataUser.length !== 0){
-        //     res.json({message: "El usuario ya existe"});
-        // }
-        //generamos una matricula en base al correo
-        
+        console.log('Entra')
+        console.log(req.body)
+        return;
+        if(!req.body)
+            res.json({
+                data: [],
+                status: "",
+                message: "Usarios de temporaryuser"
+            })
+        const em = req.body.email; 
         const isMatriculado = /al/;
         const isInstitucional = /itsa.edu.mx/;
         if(isInstitucional.test(em)){  //Es institucional por lo tanto ya está registrado en la tabla de usuarios
@@ -39,39 +38,33 @@ export const createUser = async (req, res) => {
                 const matricula = correo[0].split("al")[1];
                 console.log(dominio)
                 console.log(matricula)
-                //logueamos al usuario institucional
+                //obtenemos el usuario institucinial y lo devolvemos
+                const dataUser = await TemporaryUser.find({matricula: matricula});
+                res.json({
+                    data: dataUser,
+                    status: "alumno",
+                    message: "Datos del alumno"
+                });                
             }
             else
-                res.json("Es un correo institucional de un docente ya que ellos no tienen matricula vigente");
+                res.json({
+                    data: [],
+                    status: "docente",
+                    message: "Datos del docente"
+                });
         }
         else{  //No es un correo institucional
             const newUser = new TemporaryUser({
                 usuario: req.body.usuario, 
-                nombre: req.body.nombre,
-                apellidoPaterno: req.body.apellidoPaterno,
-                apellidoMaterno: req.body.apellidoMaterno,
-                carrera: req.body.carrera, 
-                fechaNacimiento: req.body.fechaNacimiento,
-                sexo: req.body.sexo,
-                curp: req.body.curp,
-                estado: req.body.estado, 
-                municipio: req.body.municipio,
-                poblacion: req.body.poblacion,
-                colonia: req.body.colonia,
-                direccion: req.body.direccion, 
-                numero: req.body.numero,
-                cp: req.body.cp,
-                telefono1: req.body.telefono1,
-                telefono2: req.body.telefono2,
                 emailPersonal: req.body.emailPersonal,
                 tokenN: req.body.tokenN,
-                matricula: req.body.matricula,
-                planEstudios: req.body.planEstudios,
-                fichaAceptada: req.body.fichaAceptada,   
-                pagoInscripcion: req.body.pagoInscripcion,
             });
             const usersave = await newUser.save();
-            res.json(usersave)
+            res.json({
+                data: usersave,
+                status: "noalumno",
+                message: "noalumno creado correctamente"
+            })
             res.json({message: "No es institucional entonces creamos el usuario temporal"});
         }
     }
