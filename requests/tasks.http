@@ -31,36 +31,58 @@ Content-Type: application/json
     "title": "Actualizar un dato"
 }
 
+############### TemporaryUsers  ################
 
-
-############### Users  ################
-
-GET http://localhost:3000/api/users
+GET http://localhost:3000/api/v1/temporaryusers
 
 ###
-GET http://localhost:3000/api/users?matricula=16020419
+GET http://localhost:3000/api/v1/temporaryusers/6054f1fb9f7b261784400b51
 
 ###
-POST http://localhost:3000/api/users
+POST http://localhost:3000/api/v1/temporaryusers
 Content-Type: application/json
 
 {
-    "fullName": "Jesus Aguilera Magaña",
-    "email": "al15020357@itsa.edu.mx",
-    "tokenN": "pushToken[emuladoooo]"
+    "usuario": "Manuel Aguilera Magaña", 
+    "nombre": "Manuel",
+    "apellidoPaterno": "Aguilera",
+    "apellidoMaterno": "Magaña",
+    "carrera": "Ing. Sistemas Computacionales", 
+    "fechaNacimiento": {new Date("1997", "10", "15")},
+    "sexo": "Hombre",
+    "curp": "AUMM971015HMNGGN06",
+    "estado": "Michoacán", 
+    "municipio": "Apatzingán",
+    "poblacion": "Apatzingán",
+    "colonia": "Chandio",
+    "direccion": "José María Morelos", 
+    "numero": 222,
+    "cp": 60710,
+    "telefono1": 4531194027,
+    "telefono2": 4531698688,
+    "emailPersonal": "manuel.aguilera.magania@gmail.com",
+    "tokenN": "",
+    "matricula": 16020419,
+    "planEstudios": "189480PAN",
+    "fichaAceptada": false,   
+    "pagoInscripcion": false,
 }
 
 ###
-GET http://localhost:3000/api/users/6054f1fb9f7b261784400b51
+POST http://localhost:3000/api/v1/temporaryusers
+Content-Type: application/json
+
+{
+    "usuario": "Manuel Aguilera Magaña", 
+    "emailPersonal": "manuel_aguilerita@hotmail.com",
+    "tokenN": "expoPushToken[1885dfvh9r3hg8xfy3t]"
+}
 
 ###
-DELETE http://localhost:3000/api/users/6054f1fb9f7b261784400b51
+DELETE http://localhost:3000/api/v1/temporaryusers/6054f1fb9f7b261784400b51
 
 ###
-# GET http://localhost:3000/api/users/done
-
-###
-PUT http://localhost:3000/api/users/6054f65637592d36c0375cb4
+PUT http://localhost:3000/api/v1/temporaryusers/6054f65637592d36c0375cb4
 Content-Type: application/json
 
 {
@@ -68,3 +90,7 @@ Content-Type: application/json
     "email": "al15020357@itsa.edu.mx",
     "tokenN": "pushToken[otrooo]"
 }
+
+############### TemporaryUsers  ################
+
+
