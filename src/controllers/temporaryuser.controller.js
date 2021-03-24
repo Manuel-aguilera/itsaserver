@@ -25,7 +25,7 @@ export const createUser = async (req, res) => {
                 status: "",
                 message: "Debes ingresar el nombre, correo y token de temporaryuser"
             })
-        const em = req.body.email; 
+        const em = req.body.emailPersonal; 
         const isMatriculado = /al/;
         const isInstitucional = /itsa.edu.mx/;
         if(isInstitucional.test(em)){  //Es institucional por lo tanto ya está registrado en la tabla de usuarios
@@ -36,7 +36,7 @@ export const createUser = async (req, res) => {
                 console.log(dominio)
                 console.log(matricula)
                 //obtenemos el usuario institucinial y lo devolvemos
-                const dataUser = await TemporaryUser.find({matricula: matricula});
+                const dataUser = await User.find({matricula: matricula});
                 if(dataUser.length > 0)
                     res.json({
                         data: dataUser,
