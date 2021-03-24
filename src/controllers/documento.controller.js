@@ -44,11 +44,7 @@ export const createDocumento = async (req, res) => {
         console.log(req.body.id_user);
         console.log('files');
         console.log(req.files);
-<<<<<<< HEAD
         let newDocumento = [];  
-=======
-        let newDocumento = [];
->>>>>>> c70e51e98b0998feb33f08b78fb3863c6473397f
         req.files.forEach(file => {
             newDocumento.push(new Documento({
                 id_user: req.body.id_user,
