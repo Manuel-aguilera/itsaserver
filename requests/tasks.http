@@ -32,7 +32,9 @@ Content-Type: application/json
 }
 
 ############### TemporaryUsers  ################
-
+###  No olvides que para configurar las rutas de las peticiones debes revisar el puerto
+###  Uso indiscriminadamente el 3000 y 3001 así que cuidado
+###  También la ip que utilizo es localhost o proagrimex.com, ojo ajustalos de acuerdo al contexto
 GET http://localhost:3000/api/v1/temporaryusers
 
 ###
@@ -69,17 +71,17 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/v1/temporaryusers
+POST http://localhost:3001/api/v1/temporaryusers
 Content-Type: application/json
 
 {
-    "usuario": "Manuel Aguilera Magaña", 
+    "usuario": "Jesus Alejandro", 
     "emailPersonal": "manuel_aguilerita@hotmail.com",
-    "tokenN": "expoPushToken[1885dfvh9r3hg8xfy3t]"
+    "tokenN": "expoPushToken[784h9g389ghn98]"
 }
 
 ###
-DELETE http://localhost:3000/api/v1/temporaryusers/6054f1fb9f7b261784400b51
+DELETE https://proagrimex.com/api/v1/temporaryusers/6055187c921e8fbf6f844c80
 
 ###
 PUT http://localhost:3000/api/v1/temporaryusers/6054f65637592d36c0375cb4

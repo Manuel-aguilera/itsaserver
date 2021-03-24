@@ -19,16 +19,11 @@ export const findAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try{
-        console.log('Entra body')
-        console.log(req.body)
-        console.log('Nada')
-        console.log(req.body)
-        return;
         if(!req.body)
             res.json({
                 data: [],
                 status: "",
-                message: "Usarios de temporaryuser"
+                message: "Debes ingresar el nombre, correo y token de temporaryuser"
             })
         const em = req.body.email; 
         const isMatriculado = /al/;
@@ -42,11 +37,18 @@ export const createUser = async (req, res) => {
                 console.log(matricula)
                 //obtenemos el usuario institucinial y lo devolvemos
                 const dataUser = await TemporaryUser.find({matricula: matricula});
-                res.json({
-                    data: dataUser,
-                    status: "alumno",
-                    message: "Datos del alumno"
-                });                
+                if(dataUser.length > 0)
+                    res.json({
+                        data: dataUser,
+                        status: "alumno",
+                        message: "Datos del alumno"
+                    });
+                else  //no existe ese alumno institucional
+                    res.json({
+                        data: [],
+                        status: "noalumno",
+                        message: "No existe el alumno"
+                    });                
             }
             else
                 res.json({
@@ -62,12 +64,13 @@ export const createUser = async (req, res) => {
                 tokenN: req.body.tokenN,
             });
             const usersave = await newUser.save();
+            console.log('usersave');
+            console.log(usersave);
             res.json({
                 data: usersave,
-                status: "noalumno",
-                message: "noalumno creado correctamente"
+                status: "alumnoincripcion",
+                message: "alumnoincripcion creado correctamente"
             })
-            res.json({message: "No es institucional entonces creamos el usuario temporal"});
         }
     }
     catch(error){
