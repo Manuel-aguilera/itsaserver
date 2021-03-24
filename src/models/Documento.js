@@ -8,29 +8,29 @@ const documentosSchema = new Schema({
     },
     curpFoto: {
         image: {
-            image: {type: String},
-            fileName: {type: String},
+            originalname: {type: String},
+            filename: {type: String},
             path: {type: String},
         } 
     },
     actaFoto: {
         image: {
-            image: {type: String},
-            fileName: {type: String},
+            originalname: {type: String},
+            filename: {type: String},
             path: {type: String},
         } 
     },
     certificadoBach: {
         image: {
-            image: {type: String},
-            fileName: {type: String},
+            originalname: {type: String},
+            filename: {type: String},
             path: {type: String},
         } 
     },
     constanciaMedica: {
         image: {
-            image: {type: String},
-            fileName: {type: String},
+            originalname: {type: String},
+            filename: {type: String},
             path: {type: String},
         } 
     },

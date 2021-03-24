@@ -8,6 +8,8 @@ router.post('/', documentoCtrl.createDocumento);
 
 router.get('/', documentoCtrl.findAllDocumento);
 
+router.get('/form', documentoCtrl.homeForm);
+
 router.get('/:id', documentoCtrl.findOneDocumento);
 
 router.delete('/:id', documentoCtrl.deleteDocumento);

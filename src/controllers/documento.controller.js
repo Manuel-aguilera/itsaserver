@@ -1,4 +1,10 @@
 import Documento from '../models/Documento';
+import upload from '../middleware/upload';
+import path from 'path';
+
+export const homeForm = (req, res) => {
+    return res.sendFile(path.join(`${__dirname}/../views/index.html`));
+};
 
 export const findAllDocumento = async (req, res) => {
     try{
@@ -15,22 +21,79 @@ export const findAllDocumento = async (req, res) => {
 
 export const createDocumento = async (req, res) => {
     //usar express-validator para validar
-    if(!req.body.curpFoto || !req.body.actaFoto || !req.body.certificadoBach || !req.body.constanciaMedica ){
-        return res.status(404).send({
-            message: "Curp, acta, certificado y contancia médica no puede ser vacío en el body"
+    try{
+        // if(!req.body.id_user){
+        //     return res.status(404).send({
+        //         data: [],
+        //         status: '',
+        //         message: 'No se conoce el id_user por lo que no podemos guardar las imagenes',
+        //     })
+        // }
+        await upload(req, res);
+        if (req.files.length < 1) {
+            return res.json({
+                data: req.files,
+                status: '',
+                message: 'Deberás envíar las dos imagenes',
+            });
+        }
+
+        //guardamos las ubicaciones de las imagenes en mongodb 
+        console.log('id_user');
+        console.log(req.body.id_user);
+        console.log('files');
+        console.log(req.files);
+        let newDocumento = [];  
+        req.files.forEach(file => {
+            newDocumento.push(new Documento({
+                id_user: req.body.id_user,
+                curpFoto: {
+                    image: {
+                        originalname: file.originalname,
+                        filename: file.filename,
+                        path: file.path,
+                    }
+                },
+                actaFoto: {
+                    image: {
+                        originalname: file.originalname,
+                        filename: file.filename,
+                        path: file.path,
+                    }
+                },
+                certificadoBach: {
+                    image: {
+                        originalname: file.originalname,
+                        filename: file.filename,
+                        path: file.path,
+                    }
+                },
+                constanciaMedica: {
+                    image: {
+                        originalname: file.originalname,
+                        filename: file.filename,
+                        path: file.path,
+                    }
+                }, 
+            }));            
+        });
+        
+        const doc1 = await newDocumento[0].save();
+        const doc2 = await newDocumento[1].save();
+        res.json({
+            data: [doc1, doc2],
+            status: 'success',
+            message: 'Documentos guardados con éxito',
         })
     }
-    try{
-        const newDocumento = new Documento({
-            curpFoto: req.body.curpFoto,
-            actaFoto: req.body.actaFoto,
-            certificadoBach: req.body.certificadoBach,
-            constanciaMedica: req.body.constanciaMedica, 
-        });
-        const documentoSave = await newDocumento.save();
-        res.json(documentoSave)
-    }
     catch(error){
+        if (error.code === "LIMIT_UNEXPECTED_FILE") {
+            return res.status(404).json({
+                data: [],
+                status: 'failed',
+                message: 'Demasiados archivos han sido enviados',
+            });
+        }
         res.status(500).json({
             message: error.message || "Algo ocurrió mal mientras creabamos un Documento",
         });
