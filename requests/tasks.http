@@ -81,7 +81,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/temporaryusers/6055187c921e8fbf6f844c80
+DELETE https://proagrimex.com/api/v1/temporaryusers/605aedc12396130c36fbc43e
 
 ###
 PUT http://localhost:3000/api/v1/temporaryusers/6054f65637592d36c0375cb4
