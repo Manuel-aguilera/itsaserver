@@ -30,6 +30,7 @@ export const createDocumento = async (req, res) => {
         //     })
         // }
         await upload(req, res);
+        //esto
         if (req.files.length < 1) {
             return res.json({
                 data: req.files,
