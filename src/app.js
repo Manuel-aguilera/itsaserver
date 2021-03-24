@@ -2,11 +2,13 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors'; 
 import * as Routes from './routes/index';
+import config from './config';
 
 const app = express();
 
 //Settings
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.PORT);
+console.log(`Server on port: ${config.PORT}`);
 
 //Middlewares
 app.use(cors());
@@ -23,7 +25,7 @@ app.use('/api/v1/users', Routes.userRoutes)
 app.use('/api/v1/temporaryusers', Routes.temporaryUserRoutes)
 app.use('/api/v1/tipopagos', Routes.tipoPagoRoutes)
 app.use('/api/v1/periodos', Routes.periodoRoutes)
-// app.use('/api/v1/documentos', Routes.documentoRoutes)
+app.use('/api/v1/documentos', Routes.documentoRoutes)
 app.use('/api/v1/depositosbancarios', Routes.depositosbancarioRoutes)
 app.use('/api/v1/conveniocies', Routes.convenioCIERoutes)
 app.use('/api/v1/conceptodocumentos', Routes.conceptoDocumentoRoutes)
