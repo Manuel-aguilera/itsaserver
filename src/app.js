@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors'; 
 import * as Routes from './routes/index';
 import config from './config';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -13,8 +14,10 @@ console.log(`Server on port: ${config.PORT}`);
 //Middlewares
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json({limit:'5mb'})); 
+app.use(bodyParser.urlencoded({extended:true, limit:'5mb'}));
+// app.use(express.json());
+// app.use(express.urlencoded({extended: false}));
 
 //Routes
 app.get('/', (req, res) => {
