@@ -58,19 +58,29 @@ export const createUser = async (req, res) => {
                 });
         }
         else{  //No es un correo institucional
-            const newUser = new TemporaryUser({
-                usuario: req.body.usuario, 
-                emailPersonal: req.body.emailPersonal,
-                tokenN: req.body.tokenN,
-            });
-            const usersave = await newUser.save();
-            console.log('usersave');
-            console.log(usersave);
-            res.json({
-                data: usersave,
-                status: "alumnoincripcion",
-                message: "alumnoincripcion creado correctamente"
-            })
+            //Validamos que ya esté registrado si es así devolvemos su sesión
+            const dataUser = await TemporaryUser.find({emailPersonal: req.body.emailPersonal});
+            if(dataUser.length > 0) //ya existe lo devolvemos
+                res.json({
+                    data: dataUser,
+                    status: "alumnoincripcion",
+                    message: "alumnoincripcion creado correctamente"
+                });
+            else{  //no existe ese alumno lo creamos porque cumple con los requisitos
+                const newUser = new TemporaryUser({
+                    usuario: req.body.usuario, 
+                    emailPersonal: req.body.emailPersonal,
+                    tokenN: req.body.tokenN,
+                });
+                const usersave = await newUser.save();
+                console.log('usersave');
+                console.log(usersave);
+                res.json({
+                    data: usersave,
+                    status: "alumnoincripcion",
+                    message: "alumnoincripcion creado correctamente"
+                })
+            }
         }
     }
     catch(error){
