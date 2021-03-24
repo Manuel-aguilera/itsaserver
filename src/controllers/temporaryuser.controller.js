@@ -25,12 +25,12 @@ export const createUser = async (req, res) => {
                 status: "",
                 message: "Debes ingresar el nombre, correo y token de temporaryuser"
             })
-        const em = req.body.emailPersonal; 
+        const email = req.body.emailPersonal; 
         const isMatriculado = /al/;
         const isInstitucional = /itsa.edu.mx/;
-        if(isInstitucional.test(em)){  //Es institucional por lo tanto ya está registrado en la tabla de usuarios
-            if(isMatriculado.test(em)){  //Tiene matrícula por lo que concluimos que es un alumno
-                const correo = em.split("@");
+        if(isInstitucional.test(email)){  //Es institucional por lo tanto ya está registrado en la tabla de usuarios
+            if(isMatriculado.test(email)){  //Tiene matrícula por lo que concluimos que es un alumno
+                const correo = email.split("@");
                 const dominio = correo[1];
                 const matricula = correo[0].split("al")[1];
                 console.log(dominio)
