@@ -4,27 +4,22 @@ import {Schema, model} from 'mongoose';
 const userSchema = new Schema({
     usuario: {
         type: String,
-        required: true,
         trim: true,
     },
     nombre: {
         type: String,
-        required: true,
         trim: true,
     },
     apellidoPaterno: {
         type: String,
-        required: true,
         trim: true,
     },
     apellidoMaterno: {
         type: String,
-        required: true,
         trim: true,
     },
     carrera: {
         type: String,
-        required: true,
         trim: true,
     },
     fechaNacimiento: {
@@ -36,17 +31,14 @@ const userSchema = new Schema({
     },
     curp: {
         type: String,
-        required: true,
         trim: true,
     },
     estado: {
         type: String,
-        required: true,
         trim: true,
     },
     municipio: {
         type: String,
-        required: true,
         trim: true,
     },
     poblacion: {
@@ -69,14 +61,12 @@ const userSchema = new Schema({
     },
     telefono1: {
         type: Number,
-        required: true,
     },
     telefono2: {
         type: Number,
     },
     emailPersonal: {
         type: String,
-        required: true,
         trim: true,
     },
     //campos de registro a la app
@@ -86,7 +76,6 @@ const userSchema = new Schema({
     },
     tokenN: {
         type: String,
-        required: true,
         trim: true,
     },
     matricula: {

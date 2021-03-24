@@ -81,7 +81,18 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/temporaryusers/605aedc12396130c36fbc43e
+POST http://localhost:3001/api/users/nuevo
+Content-Type: application/json
+
+{
+    "usuario": "Manuel Aguilera Magaña",
+    "email": "al16020419@itsa.edu.mx",
+    "emailPersonal": "manueleitor.information@gmail.com",
+    "tokenN": "ExponentPushToken[W13468LyTH5oRczdrMwAKg]"
+}
+
+###
+DELETE https://proagrimex.com/api/v1/temporaryusers/605af4bf6792bd0e12a41b96
 
 ###
 PUT http://localhost:3000/api/v1/temporaryusers/6054f65637592d36c0375cb4

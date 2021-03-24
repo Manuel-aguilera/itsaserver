@@ -6,6 +6,8 @@ const router = Router();
 
 router.post('/', userCtrl.createUser);
 
+router.post('/nuevo', userCtrl.createNewUser);
+
 router.get('/', userCtrl.findAllUsers);
 
 router.get('/:id', userCtrl.findOneUser);
