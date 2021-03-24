@@ -21,6 +21,7 @@ export const createUser = async (req, res) => {
     //     })
     // }
     try{
+
         const em = req.body.email;
         // const dataUser = await User.find({email: em});
         // console.log('DataUser');

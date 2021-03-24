@@ -21,9 +21,6 @@ export const createUser = async (req, res) => {
     try{
         console.log('Entra body')
         console.log(req.body)
-        console.log('Entra body')
-        console.log(req.body)
-        console.log('Gurdamos ya')
         return;
         if(!req.body)
             res.json({
