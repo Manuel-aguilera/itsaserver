@@ -33,8 +33,6 @@ export const createUser = async (req, res) => {
                 const correo = email.split("@");
                 const dominio = correo[1];
                 const matricula = correo[0].split("al")[1];
-                console.log(dominio)
-                console.log(matricula)
                 //obtenemos el usuario institucinial y lo devolvemos
                 const dataUser = await User.find({matricula: matricula});
                 if(dataUser.length > 0)
@@ -73,8 +71,6 @@ export const createUser = async (req, res) => {
                     tokenN: req.body.tokenN,
                 });
                 const usersave = await newUser.save();
-                console.log('usersave');
-                console.log(usersave);
                 res.json({
                     data: usersave,
                     status: "alumnoincripcion",
