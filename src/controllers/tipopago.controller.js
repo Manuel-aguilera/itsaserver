@@ -1,91 +1,136 @@
 import TipoPago from '../models/TipoPago';
 
-export const findAllTipoPago = async (req, res) => {
+export const findAllTipoPagos = async (req, res) => {
     try{
         const data = await TipoPago.find();
         
-        res.json(data);
+        res.json({
+            data: data,
+            status: "success",
+            message: "Datos de las TipoPagos"
+        });
     }
     catch(error){
         res.status(500).json({
-            message: error.message || "Algo ocurrió mal mientras devolviamos los TipoPago",
+            message: error.message || "Algo ocurrió mal mientras devolviamos las TipoPagos",
         });
     }
 }
 
 export const createTipoPago = async (req, res) => {
     //usar express-validator para validar
-    if(!req.body.tipoPago ){
-        return res.status(404).send({
-            message: "tipoPago no puede ser vacío en el body"
-        })
-    }
     try{
+        if(!req.body)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "Debes ingresar los datos del TipoPago"
+        })
         const newTipoPago = new TipoPago({
-            tipoPago: req.body.tipoPago, 
+            fichas: req.body.fichas, 
+            inscripcion: req.body.inscripcion,
+            reinscripcion: req.body.reinscripcion,
+            constanciasKardex: req.body.constanciasKardex, 
+            tramitesEgreso: req.body.tramitesEgreso,
+            titulacion: req.body.titulacion,
+            ingles: req.body.ingles,
         });
-        const tipoPagoSave = await newTipoPago.save();
-        res.json(tipoPagoSave)
+        const TipoPagoSave = await newTipoPago.save();
+        res.json({
+            data: TipoPagoSave,
+            status: "success",
+            message: "TipoPago creada exitosamente"
+        })
     }
     catch(error){
         res.status(500).json({
-            message: error.message || "Algo ocurrió mal mientras creabamos un tipoPago",
+            message: error.message || "Algo ocurrió mal mientras creabamos la TipoPago",
         });
     }
 }
 
 export const findOneTipoPago = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id de la TipoPago"
+        })
     const { id } = req.params;
     try{
-        const tipoPago = await TipoPago.findById(id);
+        const TipoPago = await TipoPago.findById(id);
 
-        if(!tipoPago) return res.status(404).json({
-            message: `El tipoPago con el id: ${id} no existe`
+        if(!TipoPago) return res.status(404).json({
+            data: [],
+            status: "notfound",
+            message: `El TipoPago con el id: ${id} no existe`
         })
 
-        res.json(tipoPago)
+        res.json({
+            data: TipoPago,
+            status: "success",
+            message: `El tipoPago fue encontrada`
+        })
     }
     catch(error){
         res.status(500).json({
-            message: error.message || `Error devolviendo el tipoPago con el id: ${id}`,
+            message: error.message || `Error devolviendo la TipoPago con el id: ${id}`,
         });
     }
 }
 
 export const deleteTipoPago = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el _id del usuario temporaryuser"
+        })
     const { id } = req.params;
     try{
-        await TipoPago.findByIdAndDelete(id)
+        const dataTipoPago = await TipoPago.findByIdAndDelete(id)
         res.json({
-            message: 'El tipoPago ha sido eliminada exitosamente'
-        });
+            data: dataTipoPago,
+            status: 'success',
+            message: 'La TipoPago fue eliminada exitosamente',
+        })
     }
     catch(error){
         res.status(500).json({
-            message: error.message || `Error eliminado el tipoPago con el id: ${id}`,
+            message: error.message || `Error eliminado la TipoPago con el id: ${id}`,
         });
     }
 }
 
 export const updateTipoPago = async (req, res) => {
-    const { id } = req.params;
-    if(!req.body.tipoPago ){
-        return res.status(404).send({
-            message: "El tipoPago no puede ser vacío en el body"
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario temporaryuser"
         })
-    }
+    if(!req.body)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "Debes ingresar datos en el cuerpo temporaryuser"
+        })
+    const { id } = req.params;
     try{
         const updatedTipoPago = await TipoPago.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });
         res.json({
-            message: 'El tipoPago fue actualizado exitosamente',
-            tipoPago: updatedTipoPago
+            data: updatedTipoPago,
+            status: 'success',
+            message: 'La TipoPago fue actualizado exitosamente',
         })
     }
     catch(error){
         res.status(500).json({
-            message: error.message || `Error actualizando el tipoPago con el id: ${id}`,
+            data: [],
+            status: 'internalError',
+            message: `Error actualizando la TipoPago con el id: ${id}`,
         });
     }
 }

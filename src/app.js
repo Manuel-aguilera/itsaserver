@@ -31,7 +31,6 @@ app.use('/api/v1/periodos', Routes.periodoRoutes)
 app.use('/api/v1/documentos', Routes.documentoRoutes)
 app.use('/api/v1/depositosbancarios', Routes.depositosbancarioRoutes)
 app.use('/api/v1/conveniocies', Routes.convenioCIERoutes)
-app.use('/api/v1/conceptodocumentos', Routes.conceptoDocumentoRoutes)
 app.use('/api/v1/carreras', Routes.carreraRoutes)
 
 export default app;

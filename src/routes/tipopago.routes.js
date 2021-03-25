@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', tipopagoCtrl.createTipoPago);
 
-router.get('/', tipopagoCtrl.findAllTipoPago);
+router.get('/', tipopagoCtrl.findAllTipoPagos);
 
 router.get('/:id', tipopagoCtrl.findOneTipoPago);
 

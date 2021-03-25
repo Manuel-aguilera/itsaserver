@@ -178,32 +178,115 @@ Content-Type: application/json
 }
 
 
-############### Carrearas localhost ################
+############### Carreras localhost ################
 
-GET http://localhost:3001/api/v1/carreras
-
-###
-GET http://localhost:3001/api/v1/carreras/6054f1fb9f7b261784400b51
+GET https://proagrimex.com/api/v1/carreras
 
 ###
-POST http://localhost:3001/api/v1/carreras
+GET https://proagrimex.com/api/v1/carreras/605c09a0008d703330f2b608
+
+###
+POST https://proagrimex.com/api/v1/carreras
 Content-Type: application/json
 
 {
-    "carrera": "Contador publico", 
-    "planEstudios": "COPU2010-205", 
-    "codigoCarrera": "COPU",
+    "carrera": "Ingenieria Industrial", 
+    "planEstudios": "IIND2010-227", 
+    "codigoCarrera": "IIND"
 }
 
 ###
-DELETE http://localhost:3001/api/v1/carreras/605bff43d391f41326b3065d
+DELETE https://proagrimex.com/api/v1/carreras/605c0c79ecb400280e10730a
 
 ###
-PUT http://localhost:3001/api/v1/carreras/605aeb952396130c36fbc43c
+PUT https://proagrimex.com/api/v1/carreras/605c09a0008d703330f2b608
 Content-Type: application/json
 
 {
     "carrera": "Contador público", 
     "planEstudios": "COPU2010-205", 
-    "codigoCarrera": "COPU",
+    "codigoCarrera": "COPU"
 }
+
+############### Carreras localhost ################
+
+GET https://proagrimex.com/api/v1/tipopagos
+
+###
+GET https://proagrimex.com/api/v1/tipopagos/605c09a0008d703330f2b608
+
+###
+POST http://localhost:3001/api/v1/tipopagos
+Content-Type: application/json
+
+{
+    "fichas": [
+            "CAMBIO DE FICHA",
+            "FICHA DE ADMISIÓN CONTADOR PUBLICO",
+            "FICHA DE ADMISIÓN INGENIERIA EN GESTION EMPRESARIAL",
+            "FICHA DE ADMISIÓN INGENIERIA BIOQUIMICA",
+            "FICHA DE ADMISIÓN INGENIERIA  CIVIL",
+            "FICHA DE ADMISIÓN INGENIERIA  INFORMATICA",
+            "FICHA DE ADMISIÓN INGENIERIA  INDUSTRIAL",
+            "FICHA DE ADMISION ING. EN INNOVACION AGRICOLA SUSTENTABLE",
+            "FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES"
+    ], 
+    "inscripcion": [
+            "APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO",
+            "EXCEPCIÓN DE INSCRIPCION POR GRATUIDAD"
+    ],
+    "reinscripcion": [
+            "APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL REINGRESO",
+            "EXCEPCIÓN DE REINSCRIPCION POR GRATUIDAD"
+    ],
+    "constanciasKardex": [
+            "CONSTANCIA PARA RESIDENCIAS PROFESIONALES",
+            "CONSTANCIA DE ESTUDIOS CON CALIFICACIONES",
+            "CONSTANCIA DE ESTUDIOS SIN CALIFICACIONES",
+            "KARDEX"
+    ], 
+    "tramitesEgreso": [
+            "TRAMITE DE EGRESOS"
+    ],
+    "titulacion": [
+            "CARTA DE PASANTE PAPEL OFICIAL",
+            "CERTIFICADO OFICIAL (TERMINACIÓN DE ESTUDIOS)",
+            "CERTIFICADO PARCIAL",
+            "CURSO DE TITULACIÓN",
+            "DUPLICADO DE CERTIFICADO",
+            "REPOSICION DE ACTA DE EXÁMEN PROFESIONAL",
+            "TITULO PROFESIONAL",
+            "REPOSICION DE ACTA DE EXÁMEN PROFESIONAL"
+    ],
+    "ingles": [
+            "CURSO DE INGLES INTERNO 13VO NIVEL (90hrs)",
+            "CURSO DE INGLES INTERNO 2 NIVELES (90hrs)",
+            "CURSO DE INGLES INTERNO 3 NIVELES (135hrs)",
+            "CURSO DE INGLES INTERNO 4 NIVELES (180hrs)",
+            "CONSTANCIA DE ESTUDIOS POR NIVEL CON CALIFICACIONES (INGLES INTERNO)",
+            "CONSTANCIA DE LIBERACIÓN CON VALOR CURRICULAR POR REGISTRO DE CLE (INTERNOS)",
+            "CONSTANCIA DE ESTUDIOS POR NIVEL (INGLES INTERNO)",
+            "CUOTA ADICIONAL PÉRDIDA DE MATERIAL BIBLIOGRÁFICO",
+            "CURSO DE ACREDITACIÓN DE INGLES",
+            "CURSO DE INGLES INTERNO 1 NIVEL (45hrs)",
+            "EXAMEN DE ACREDITACIÓN DE INGLES",
+            "EXAMEN DE UBICACIÓN DE INGLES"
+    ]
+}
+
+###
+DELETE https://proagrimex.com/api/v1/tipopagos/605c0c79ecb400280e10730a
+
+###
+PUT https://proagrimex.com/api/v1/tipopagos/605c09a0008d703330f2b608
+Content-Type: application/json
+
+{
+    "carrera": "Contador público", 
+    "planEstudios": "COPU2010-205", 
+    "codigoCarrera": "COPU"
+}
+
+
+
+
