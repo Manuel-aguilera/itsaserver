@@ -33,7 +33,7 @@ export const createDocumento = async (req, res) => {
         if (req.files.length < 1) {
             return res.json({
                 data: [],
-                status: '',
+                status: 'failed',
                 message: 'Deberás envíar las dos imagenes',
             });
         }

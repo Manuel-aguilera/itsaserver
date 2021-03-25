@@ -19,12 +19,14 @@ export const findAllDepositosBancarios = async (req, res) => {
 
 export const createDepositosBancario = async (req, res) => {
     try{
+        
         if(!req.body)
         res.status(404).json({
             data: [],
             status: "failed",
             message: "Debes ingresar los datos del DepositosBancario"
         })
+        
         const newDepositosBancario = new DepositosBancario({
             id_user: req.body.id_user,
             usuario: req.body.usuario,
@@ -41,7 +43,7 @@ export const createDepositosBancario = async (req, res) => {
             fecha: req.body.fecha,
             fechaCaducidad: req.body.fechaCaducidad,
             observaciones: req.body.observaciones, 
-            fotoComprobante: req.body.fotoComprobante,
+            // fotoComprobante: req.files[0], no porque apenas se genera
         });
         const depositosBancarioSave = await newDepositosBancario.save();
         res.json({
@@ -136,21 +138,33 @@ export const deleteDepositosBancario = async (req, res) => {
 }
 
 export const updateDepositosBancario = async (req, res) => {
-    if(!req.params)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el id del DepositosBancario"
-        })
-    if(!req.body)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "Debes ingresar datos en el cuerpo del DepositosBancario"
-        })
-    const { id } = req.params;
     try{
-        const updatedDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, req.body, {
+        await upload(req, res);
+        if(!req.params)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el id del DepositosBancario"
+            })
+        if(!req.body)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "Debes ingresar datos en el cuerpo del DepositosBancario"
+            })
+        if (!req.files) {
+            return res.json({
+                data: [],
+                status: 'failed',
+                message: 'Deberás envíar la foto de comprobante de pago para actualizar',
+            });
+        }
+        const { id } = req.params;
+        
+        const updatedDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+            ...req.body,
+            fotoComprobante: req.files[0]
+        }, {
             useFindAndModify: false
         });
         res.json({

@@ -56,7 +56,7 @@ const depositosBancariosSchema = new Schema({
         type: String,
         trim: true,
     },
-    archivo: {
+    fotoComprobante: {
         originalname: {type: String},
         filename: {type: String},
         path: {type: String},
