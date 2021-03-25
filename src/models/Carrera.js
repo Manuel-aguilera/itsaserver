@@ -7,6 +7,9 @@ const carrerasSchema = new Schema({
     planEstudios: {
         type: String,
     },
+    codigoCarrera: {
+        type: String,
+    }
 }, {
     versionKey: false,
     timestamps: true,  //para agregar creatAt y updateAt

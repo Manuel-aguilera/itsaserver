@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', userCtrl.createUser);
 
-router.post('/nuevo', userCtrl.createNewUser);
+router.post('/nuevo', userCtrl.createNewUser); //para crear un usuario desde la tasks.http
 
 router.get('/', userCtrl.findAllUsers);
 

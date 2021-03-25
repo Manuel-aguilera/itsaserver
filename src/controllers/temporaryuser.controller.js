@@ -6,7 +6,7 @@ export const findAllUsers = async (req, res) => {
         const data = await TemporaryUser.find();
         res.json({
             data: data,
-            status: "",
+            status: "success",
             message: "Usarios de temporaryuser"
         });
     }
@@ -20,9 +20,9 @@ export const findAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
     try{
         if(!req.body)
-            res.json({
+            res.status(404).json({
                 data: [],
-                status: "",
+                status: "failed",
                 message: "Debes ingresar el nombre, correo y token de temporaryuser"
             })
         const email = req.body.emailPersonal; 
@@ -87,15 +87,27 @@ export const createUser = async (req, res) => {
 }
 
 export const findOneUser = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario a buscar en temporaryuser"
+        })
     const { id } = req.params;
     try{
         const user = await TemporaryUser.findById(id);
 
         if(!user) return res.status(404).json({
+            data: [],
+            status: "notfound",
             message: `El usuario con el id: ${id} no existe`
         })
 
-        res.json(user)
+        res.json({
+            data: user,
+            status: "success",
+            message: `El usuario fue encontrado en la tabla temporaryusers`
+        })
     }
     catch(error){
         res.status(500).json({
@@ -105,12 +117,20 @@ export const findOneUser = async (req, res) => {
 }
 
 export const deleteUser = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el _id del usuario temporaryuser"
+        })
     const { id } = req.params;
     try{
-        await TemporaryUser.findByIdAndDelete(id)
+        const userData = await TemporaryUser.findByIdAndDelete(id)
         res.json({
-            message: 'Tarea ha sido eliminada exitosamente'
-        });
+            data: userData,
+            status: 'success',
+            message: 'El usuario fue eliminado exitosamente',
+        })
     }
     catch(error){
         res.status(500).json({
@@ -119,37 +139,36 @@ export const deleteUser = async (req, res) => {
     }
 }
 
-// export const findAllDoneUser = async (req, res) => {
-//     try{
-//         const users = await TemporaryUser.find({done: true});
-//         res.json(users);
-//     }
-//     catch(error){
-//         res.status(500).json({
-//             message: error.message || `Error encontrando los usuarios con done true`,
-//         });
-//     }
-// }
-
 export const updateUser = async (req, res) => {
-    const { id } = req.params;
-    if(!req.body.fullName && !req.body.email && !req.body.tokenN){
-        return res.status(404).send({
-            message: "El title no puede ser vacío en el body"
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario temporaryuser"
         })
-    }
+    if(!req.body)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "Debes ingresar datos en el cuerpo temporaryuser"
+        })
+        
+    const { id } = req.params;
     try{
         const updatedUser = await TemporaryUser.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });
         res.json({
+            data: updatedUser,
+            status: 'success',
             message: 'El usuario fue actualizado exitosamente',
-            user: updatedUser
         })
     }
     catch(error){
         res.status(500).json({
-            message: error.message || `Error actualizando el usuario con el id: ${id}`,
+            data: [],
+            status: 'internalError',
+            message: `Error actualizando el usuario con el id: ${id}`,
         });
     }
 }
