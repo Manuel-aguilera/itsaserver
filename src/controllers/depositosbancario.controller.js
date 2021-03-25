@@ -41,6 +41,7 @@ export const createDepositosBancario = async (req, res) => {
             fecha: req.body.fecha,
             fechaCaducidad: req.body.fechaCaducidad,
             observaciones: req.body.observaciones, 
+            fotoComprobante: req.body.fotoComprobante,
         });
         const depositosBancarioSave = await newDepositosBancario.save();
         res.json({

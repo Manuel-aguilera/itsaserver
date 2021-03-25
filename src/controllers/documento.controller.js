@@ -28,13 +28,6 @@ export const findAllDocumento = async (req, res) => {
 export const createDocumento = async (req, res) => {
     //usar express-validator para validar
     try{
-        // if(!req.body.id_user){
-        //     return res.status(404).send({
-        //         data: [],
-        //         status: '',
-        //         message: 'No se conoce el id_user por lo que no podemos guardar las imagenes',
-        //     })
-        // }
         await upload(req, res);
         //esto
         if (req.files.length < 1) {
@@ -48,47 +41,68 @@ export const createDocumento = async (req, res) => {
         //guardamos las ubicaciones de las imagenes en mongodb 
         console.log('id_user');
         console.log(req.body.id_user);
+        if(!req.body)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario"
+        })
         console.log('files');
         console.log(req.files);
-        let newDocumento = [];  
-        req.files.forEach(file => {
-            newDocumento.push(new Documento({
+
+        let file1 = req.files[0];
+        let file2 = req.files[1];
+        const newDocumento = [];
+        if(isActa(file1) && isCertificado(file2)){
+            console.log('entra a acta y certificado')
+            newDocumento.push(newDocumento.push(new Documento({
                 id_user: req.body.id_user,
-                curpFoto: {
-                    image: {
-                        originalname: file.originalname,
-                        filename: file.filename,
-                        path: file.path,
-                    }
-                },
                 actaFoto: {
                     image: {
-                        originalname: file.originalname,
-                        filename: file.filename,
-                        path: file.path,
+                        originalname: getActa(req.files).originalname,
+                        filename: getActa(req.files).filename,
+                        path: getActa(req.files).path,
                     }
                 },
                 certificadoBach: {
                     image: {
-                        originalname: file.originalname,
-                        filename: file.filename,
-                        path: file.path,
+                        originalname: getCertificado(req.files).originalname,
+                        filename: getCertificado(req.files).filename,
+                        path: getCertificado(req.files).path,
+                    }
+                },     
+            })));
+        }
+        else if(isConstancia(file1) && isCurp(file2)){
+            newDocumento.push(newDocumento.push(new Documento({
+                id_user: req.body.id_user,
+                curpFoto: {
+                    image: {
+                        originalname: getCurp(req.files).originalname,
+                        filename: getCurp(req.files).filename,
+                        path: getCurp(req.files).path,
                     }
                 },
                 constanciaMedica: {
                     image: {
-                        originalname: file.originalname,
-                        filename: file.filename,
-                        path: file.path,
+                        originalname: getConstancia(req.files).originalname,
+                        filename: getConstancia(req.files).filename,
+                        path: getConstancia(req.files).path,
                     }
                 }, 
-            }));            
-        });
+            })));
+        }
+        else {
+            res.json({
+                data: [],
+                status: 'failed',
+                message: 'No enviaste las dos fotos o el nombre es incorrecto',
+            })    
+        }
         
-        const doc1 = await newDocumento[0].save();
-        const doc2 = await newDocumento[1].save();
+        const docs = await newDocumento[0].save();
         res.json({
-            data: [doc1, doc2],
+            data: docs,
             status: 'success',
             message: 'Documentos guardados con éxito',
         })
@@ -107,6 +121,62 @@ export const createDocumento = async (req, res) => {
             message: error.message || "Algo ocurrió mal mientras creabamos un Documento",
         });
     }
+}
+//acta y certificado
+//curp y constancia
+
+const isActa = (file) => {
+    const isActa = /acta/;
+    return (isActa.test(file.originalname)) ? true : false
+}
+
+const isCertificado = (file) => {
+    const isCertificado = /certificado/;
+    return (isCertificado.test(file.originalname)) ? true : false
+}
+
+const isCurp = (file) => {
+    const isCurp = /curp/;
+    return (isCurp.test(file.originalname)) ? true : false
+}
+
+const isConstancia = (file) => {
+    const isConstancia = /constancia/;
+    return (isConstancia.test(file.originalname)) ? true : false
+}
+
+const getActa = (files) => {
+    const isActa = /acta/;
+    if(isActa.test(files[0].originalname))
+        return files[0]
+    else if(isActa.test(files[1].originalname))
+        return files[1];
+    console.log('acta es vacio')
+}
+
+const getCertificado = (files) => {
+    const isCertificado = /certificado/;
+    if(isCertificado.test(files[0].originalname))
+        return files[0];
+    else if(isCertificado.test(files[1].originalname))
+        return files[1];
+    console.log('certificado es vacio')
+}
+
+const getCurp = (files) => {
+    const isCurp = /curp/;
+    if(isCurp.test(files[0].originalname))
+        return files[0];
+    else if(isCurp.test(files[1].originalname))
+        return files[1];
+}
+
+const getConstancia = (files) => {
+    const isConstancia = /constancia/;
+    if(isConstancia.test(files[0].originalname))
+        return files[0];
+    else if(isConstancia.test(files[1].originalname))
+        return files[1];
 }
 
 export const findOneDocumento = async (req, res) => {
@@ -151,15 +221,30 @@ export const deleteDocumento = async (req, res) => {
 }
 
 export const updateDocumento = async (req, res) => {
-    const { id } = req.params;
-    if(!req.body.curpFoto && !req.body.actaFoto && !req.body.certificadoBach && !req.body.constanciaMedica ){
-        return res.status(404).send({
+    await upload(req, res);
+        //esto
+        if (req.files.length < 1) {
+            return res.json({
+                data: [],
+                status: '',
+                message: 'Deberás enviar al menos una imagen',
+            });
+        }
+        if(!req.params)
+        res.status(404).json({
             data: [],
-            status: 'failed',
-            message: "Curp, acta, certificado y contancia médica no puede ser vacío en el body"
+            status: "failed",
+            message: "No has ingresado el id del registro a actualizar"
         })
-    }
+    const { id } = req.params;
     try{
+        await upload(req, res);
+        if(!req.body)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario"
+        })
         const updatedDocumento = await Documento.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });

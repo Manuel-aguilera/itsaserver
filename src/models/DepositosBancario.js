@@ -56,6 +56,11 @@ const depositosBancariosSchema = new Schema({
         type: String,
         trim: true,
     },
+    archivo: {
+        originalname: {type: String},
+        filename: {type: String},
+        path: {type: String},
+    }
 
 }, {
     versionKey: false,
