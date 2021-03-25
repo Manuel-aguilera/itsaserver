@@ -4,8 +4,8 @@ import tipoPagoRoutes from './tipopago.routes';
 import taskRoutes from './tasks.routes';
 import periodoRoutes from './periodo.routes';
 import documentoRoutes from './documento.routes';
+import descargasRoutes from './descargas.routes';
 import depositosbancarioRoutes from './depositosbancario.routes';
-import convenioCIERoutes from './convenioCIE.routes';
 import carreraRoutes from './carrera.routes';
 
-export {userRoutes, temporaryUserRoutes, tipoPagoRoutes, taskRoutes, periodoRoutes, documentoRoutes, depositosbancarioRoutes, convenioCIERoutes, carreraRoutes};
+export {userRoutes, temporaryUserRoutes, tipoPagoRoutes, taskRoutes, periodoRoutes, documentoRoutes, descargasRoutes, depositosbancarioRoutes, carreraRoutes};

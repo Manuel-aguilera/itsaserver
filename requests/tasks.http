@@ -277,14 +277,22 @@ Content-Type: application/json
 GET http://localhost:3001/api/v1/periodos
 
 ###
-GET http://localhost:3001/api/v1/periodos/605c09a0008d703330f2b608
+GET https://proagrimex.com/api/v1/periodos/ultimo
 
 ###
-POST http://localhost:3001/api/v1/periodos
+POST https://proagrimex.com/api/v1/periodos
 Content-Type: application/json
 
 {
-    "periodo": "20163-JULDIC", 
+    "periodo": "20211-ENEJUL"
+}
+
+###
+POST https://proagrimex.com/api/v1/periodos
+Content-Type: application/json
+
+{
+    "periodo": "20203-JULDIC"
 }
 
 ###
@@ -295,9 +303,7 @@ PUT http://localhost:3001/api/v1/periodos/605c09a0008d703330f2b608
 Content-Type: application/json
 
 {
-    "carrera": "Contador público", 
-    "planEstudios": "COPU2010-205", 
-    "codigoCarrera": "COPU"
+    "periodo": "20203-JULDIC"
 }
 
 

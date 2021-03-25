@@ -29,8 +29,8 @@ app.use('/api/v1/temporaryusers', Routes.temporaryUserRoutes)
 app.use('/api/v1/tipopagos', Routes.tipoPagoRoutes)
 app.use('/api/v1/periodos', Routes.periodoRoutes)
 app.use('/api/v1/documentos', Routes.documentoRoutes)
+app.use('/api/v1/descargas', Routes.descargasRoutes)
 app.use('/api/v1/depositosbancarios', Routes.depositosbancarioRoutes)
-app.use('/api/v1/conveniocies', Routes.convenioCIERoutes)
 app.use('/api/v1/carreras', Routes.carreraRoutes)
 
 export default app;

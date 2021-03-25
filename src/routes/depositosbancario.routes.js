@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', depositosBancarioCtrl.createDepositosBancario);
 
-router.get('/', depositosBancarioCtrl.findAllDepositosBancario);
+router.get('/', depositosBancarioCtrl.findAllDepositosBancarios);
 
 router.get('/:id', depositosBancarioCtrl.findOneDepositosBancario);
 

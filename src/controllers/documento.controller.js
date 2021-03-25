@@ -10,10 +10,16 @@ export const findAllDocumento = async (req, res) => {
     try{
         const data = await Documento.find();
         
-        res.json(data);
+        res.json({
+            data: data,
+            status: 'success',
+            message: "Imagenes devueltas",
+        });
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: 'failed',
             message: error.message || "Algo ocurrió mal mientras devolviamos los Documentos",
         });
     }
@@ -33,7 +39,7 @@ export const createDocumento = async (req, res) => {
         //esto
         if (req.files.length < 1) {
             return res.json({
-                data: req.files,
+                data: [],
                 status: '',
                 message: 'Deberás envíar las dos imagenes',
             });
@@ -96,6 +102,8 @@ export const createDocumento = async (req, res) => {
             });
         }
         res.status(500).json({
+            data: [],
+            status: 'failed',
             message: error.message || "Algo ocurrió mal mientras creabamos un Documento",
         });
     }
@@ -107,6 +115,8 @@ export const findOneDocumento = async (req, res) => {
         const documento = await Documento.findById(id);
 
         if(!documento) return res.status(404).json({
+            data: [],
+            status: 'notfound',
             message: `El Documento con el id: ${id} no existe`
         })
 
@@ -114,6 +124,8 @@ export const findOneDocumento = async (req, res) => {
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: 'failed',
             message: error.message || `Error devolviendo el Documento con el id: ${id}`,
         });
     }
@@ -124,11 +136,15 @@ export const deleteDocumento = async (req, res) => {
     try{
         await Documento.findByIdAndDelete(id)
         res.json({
+            data: [],
+            status: 'success',
             message: 'El Documento ha sido eliminada exitosamente'
         });
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: 'failed',
             message: error.message || `Error eliminado el Documento con el id: ${id}`,
         });
     }
@@ -138,6 +154,8 @@ export const updateDocumento = async (req, res) => {
     const { id } = req.params;
     if(!req.body.curpFoto && !req.body.actaFoto && !req.body.certificadoBach && !req.body.constanciaMedica ){
         return res.status(404).send({
+            data: [],
+            status: 'failed',
             message: "Curp, acta, certificado y contancia médica no puede ser vacío en el body"
         })
     }
@@ -146,8 +164,9 @@ export const updateDocumento = async (req, res) => {
             useFindAndModify: false
         });
         res.json({
+            data: updatedDocumento,
+            status: 'success',
             message: 'El Documento fue actualizado exitosamente',
-            documento: updatedDocumento
         })
     }
     catch(error){
