@@ -4,7 +4,6 @@ import {Schema, model} from 'mongoose';
 const periodosSchema = new Schema({
     periodo: {
         type: String,
-        required: true,
         trim: true,
     },
 }, {

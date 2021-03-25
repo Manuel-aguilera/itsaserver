@@ -208,15 +208,12 @@ Content-Type: application/json
     "codigoCarrera": "COPU"
 }
 
-############### Carreras localhost ################
+############### TipoPagos localhost ################
 
 GET https://proagrimex.com/api/v1/tipopagos
 
 ###
-GET https://proagrimex.com/api/v1/tipopagos/605c09a0008d703330f2b608
-
-###
-POST http://localhost:3001/api/v1/tipopagos
+POST https://proagrimex.com/api/v1/tipopagos
 Content-Type: application/json
 
 {
@@ -274,11 +271,27 @@ Content-Type: application/json
     ]
 }
 
-###
-DELETE https://proagrimex.com/api/v1/tipopagos/605c0c79ecb400280e10730a
+
+############### Periodos localhost ################
+
+GET http://localhost:3001/api/v1/periodos
 
 ###
-PUT https://proagrimex.com/api/v1/tipopagos/605c09a0008d703330f2b608
+GET http://localhost:3001/api/v1/periodos/605c09a0008d703330f2b608
+
+###
+POST http://localhost:3001/api/v1/periodos
+Content-Type: application/json
+
+{
+    "periodo": "20163-JULDIC", 
+}
+
+###
+DELETE http://localhost:3001/api/v1/periodos/605c0c79ecb400280e10730a
+
+###
+PUT http://localhost:3001/api/v1/periodos/605c09a0008d703330f2b608
 Content-Type: application/json
 
 {
@@ -286,6 +299,8 @@ Content-Type: application/json
     "planEstudios": "COPU2010-205", 
     "codigoCarrera": "COPU"
 }
+
+
 
 
 

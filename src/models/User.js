@@ -25,6 +25,9 @@ const userSchema = new Schema({
     fechaNacimiento: {
         type: Date,
     },
+    anioIngresoppppp: {
+        type: Date,
+    },
     sexo: {
         type: String,
         trim: true,

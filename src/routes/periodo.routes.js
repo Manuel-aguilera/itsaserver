@@ -6,7 +6,9 @@ const router = Router();
 
 router.post('/', periodoCtrl.createPeriodo);
 
-router.get('/', periodoCtrl.findAllPeriodo);
+router.get('/', periodoCtrl.findAllPeriodos);
+
+router.get('/ultimo', periodoCtrl.findUltimoPeriodo);
 
 router.get('/:id', periodoCtrl.findOnePeriodo);
 
