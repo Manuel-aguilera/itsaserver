@@ -54,16 +54,16 @@ const temporaryUserSchema = new Schema({
         trim: true,
     },
     numero: {
-        type: Number,
+        type: String,
     },
     cp: {
-        type: Number,
+        type: String,
     },
     telefono1: {
-        type: Number,
+        type: String,
     },
     telefono2: {
-        type: Number,
+        type: String,
     },
     emailPersonal: {
         type: String,
@@ -75,7 +75,7 @@ const temporaryUserSchema = new Schema({
         trim: true,
     },
     matricula: {
-        type: Number,
+        type: String,
     },
     planEstudios: {  //
         type: String,

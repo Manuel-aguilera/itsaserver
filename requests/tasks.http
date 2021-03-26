@@ -99,10 +99,14 @@ PUT http://localhost:3001/api/v1/temporaryusers/605adc6cbfb8af34609f348a
 Content-Type: application/json
 
 {
-    "numero": 222,
-    "cp": 60710,
-    "telefono1": 4531194027,
-    "telefono2": 4531698688
+    "nombre": "funcinoa",
+    "apellidoPaterno": "funcinoa",
+    "apellidoMaterno": "funcinoa",
+    "curp": "funcinoa",
+    "telefono1": "funcinoa",
+    "telefono2": "funcinoa",
+    "sexo": "funcinoa",
+    "fechaNacimiento": "2021-03-24T06:30:04.742Z"
 }
 
 ############### TemporaryUsers  proagrimex.com ################
@@ -167,16 +171,19 @@ Content-Type: application/json
 DELETE https://proagrimex.com/api/v1/temporaryusers/605bff43d391f41326b3065d
 
 ###
-PUT https://proagrimex.com/api/v1/temporaryusers/605aeb952396130c36fbc43c
+PUT https://proagrimex.com/api/v1/temporaryusers/605c0efbecb400280e10730e
 Content-Type: application/json
 
 {
-    "numero": 222,
-    "cp": 60710,
-    "telefono1": 4531194027,
-    "telefono2": 4531698688
+    "nombre": "funcinoa",
+    "apellidoPaterno": "funcinoa",
+    "apellidoMaterno": "funcinoa",
+    "curp": "funcinoa",
+    "telefono1": "funcinoa",
+    "telefono2": "funcinoa",
+    "sexo": "funcinoa",
+    "fechaNacimiento": "funcinoa"
 }
-
 
 ############### Carreras localhost ################
 

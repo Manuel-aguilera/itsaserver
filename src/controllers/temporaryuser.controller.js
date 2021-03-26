@@ -140,10 +140,6 @@ export const deleteUser = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-    console.log("body")
-    console.log(req.body)
-    console.log("params")
-    console.log(req.params)
     if(!req.params)
         res.status(404).json({
             data: [],
