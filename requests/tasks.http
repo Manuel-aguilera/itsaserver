@@ -313,6 +313,16 @@ Content-Type: application/json
     "periodo": "20203-JULDIC"
 }
 
+############### Documentos localhost ################
+POST https://proagrimex.com/api/v1/documentos
+Content-Type: application/json
+
+{
+    "id_user": "605aeb952396130c36fbc43c"
+}
+
+###
+DELETE http://localhost:3001/api/v1/documentos/605c55c412cf1c358c592817
 
 
 
