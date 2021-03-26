@@ -87,13 +87,13 @@ export const createUser = async (req, res) => {
 }
 
 export const findOneUser = async (req, res) => {
-    if(!req.params)
+    if(!req.query)
         res.status(404).json({
             data: [],
             status: "failed",
             message: "No has ingresado el id del usuario a buscar en temporaryuser"
         })
-    const { id } = req.params;
+    const { id } = req.query;
     try{
         const user = await TemporaryUser.findById(id);
 
@@ -123,7 +123,7 @@ export const deleteUser = async (req, res) => {
             status: "failed",
             message: "No has ingresado el _id del usuario temporaryuser"
         })
-    const { id } = req.params;
+    const { id } = req.query;
     try{
         const userData = await TemporaryUser.findByIdAndDelete(id)
         res.json({
@@ -140,12 +140,7 @@ export const deleteUser = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-    console.log('req.body');
-    console.log(req.body);
-    console.log('req.params');
-    console.log(req.params);
-    
-    if(!req.params)
+    if(!req.query)
         res.status(404).json({
             data: [],
             status: "failed",
@@ -158,9 +153,7 @@ export const updateUser = async (req, res) => {
             message: "Debes ingresar datos en el cuerpo temporaryuser"
         })
         
-    const { id } = req.params;
-    console.log("id en el server");
-    console.log(req);
+    const { id } = req.query;
     try{
         const updatedUser = await TemporaryUser.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
