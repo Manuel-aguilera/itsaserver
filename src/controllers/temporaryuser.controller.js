@@ -159,6 +159,10 @@ export const updateUser = async (req, res) => {
         })
         
     const { id } = req.params;
+    console.log("id en el server");
+    console.log(id);
+    console.log("req.params en el server");
+    console.log(req.params);
     try{
         const updatedUser = await TemporaryUser.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
