@@ -12,6 +12,10 @@ router.get('/:id', userCtrl.findOneUser);
 
 router.delete('/:id', userCtrl.deleteUser);
 
+router.put('/', userCtrl.updateUser);
+
 router.put('/:id', userCtrl.updateUser);
+
+//No olvidar que /:id  no son los params de las peticiones  
 
 export default router;
