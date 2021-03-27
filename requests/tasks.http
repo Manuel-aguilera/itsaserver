@@ -322,7 +322,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/v1/documentos/605c55c412cf1c358c592817
+DELETE https://proagrimex.com/api/v1/documentos/605ac6ede11d950635ede351
 
 
 
