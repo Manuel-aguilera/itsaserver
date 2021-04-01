@@ -285,6 +285,8 @@ export const updateDocumento = async (req, res) => {
         console.log(req.body);
         console.log('params')
         console.log(req.params);
+        console.log('query')
+        console.log(req.query);
         console.log("Estos son los archivos subidos");
         console.log(req.files);
 
