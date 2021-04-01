@@ -262,7 +262,9 @@ export const deleteDocumento = async (req, res) => {
 
 export const updateDocumento = async (req, res) => {
     try{
+        console.log('atras de upload')
         await upload(req, res);
+        console.log('delante de upload')
         if(req.files.length < 1) {
             return res.json({
                 data: [],
