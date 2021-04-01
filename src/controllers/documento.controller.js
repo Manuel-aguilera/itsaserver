@@ -289,13 +289,13 @@ export const updateDocumento = async (req, res) => {
         console.log(req.files);
 
 
-        let file1 = req.files[0];
-        let file2 = req.files[1];
-        const newDocumento = [];
+        // let file1 = req.files[0];
+        // let file2 = req.files[1];
+        // const newDocumento = [];
 
-        const updatedDocumento = await Documento.find({id_user: id_user});
-        console.log('documento id_user a actualizar');
-        console.log(updateDocumento);
+        // const updatedDocumento = await Documento.find({id_user: id_user});
+        // console.log('documento id_user a actualizar');
+        // console.log(updateDocumento);
         // console.log(updateDocumento.id);
 
         return;
