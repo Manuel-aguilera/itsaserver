@@ -14,6 +14,6 @@ router.get('/:id', documentoCtrl.findOneDocumento);
 
 router.delete('/:id', documentoCtrl.deleteDocumento);
 
-router.put('/:id', documentoCtrl.updateDocumento);
+router.put('/', documentoCtrl.updateDocumento);
 
 export default router;
