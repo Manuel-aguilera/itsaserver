@@ -261,30 +261,99 @@ export const deleteDocumento = async (req, res) => {
 }
 
 export const updateDocumento = async (req, res) => {
-    await upload(req, res);
-        //esto
-        if (req.files.length < 1) {
+    try{
+        await upload(req, res);
+        if(req.files.length < 1) {
             return res.json({
                 data: [],
                 status: '',
                 message: 'Deberás enviar al menos una imagen',
             });
         }
-        if(!req.params)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el id del registro a actualizar"
+        // if(!req.query)
+        // res.status(404).json({
+        //     data: [],
+        //     status: "failed",
+        //     message: "No has ingresado el id del documento a actualizar"
+        // })
+        const { id_user } = req.body;
+        console.log('body')
+        console.log(req.body);
+        console.log('params')
+        console.log(req.params);
+        console.log("Estos son los archivos subidos");
+        console.log(req.files);
+
+
+        let file1 = req.files[0];
+        let file2 = req.files[1];
+        const newDocumento = [];
+
+        const updatedDocumento = await Documento.find({id_user: id_user});
+        console.log('documento id_user a actualizar');
+        console.log(updateDocumento);
+        // console.log(updateDocumento.id);
+
+        return;
+
+        if(isActa(file1) && isCertificado(file2)){
+            console.log(`entra a acta y certificado: actualizamos el documento con id: ${id}`);
+            updatedDocumento = await Documento.findByIdAndUpdate(id, {
+                id_user: req.body.id_user,
+                actaFoto: {
+                    image: {
+                        originalname: getActa(req.files).originalname,
+                        filename: getActa(req.files).filename,
+                        path: getActa(req.files).path,
+                    }
+                },
+                certificadoBach: {
+                    image: {
+                        originalname: getCertificado(req.files).originalname,
+                        filename: getCertificado(req.files).filename,
+                        path: getCertificado(req.files).path,
+                    }
+                },     
+            }, {
+                useFindAndModify: false
+            });
+            newDocumento.push(newDocumento.push(new Documento()));
+        }
+        else if(isConstancia(file1) && isCurp(file2)){
+            newDocumento.push(newDocumento.push(new Documento({
+                id_user: req.body.id_user,
+                curpFoto: {
+                    image: {
+                        originalname: getCurp(req.files).originalname,
+                        filename: getCurp(req.files).filename,
+                        path: getCurp(req.files).path,
+                    }
+                },
+                constanciaMedica: {
+                    image: {
+                        originalname: getConstancia(req.files).originalname,
+                        filename: getConstancia(req.files).filename,
+                        path: getConstancia(req.files).path,
+                    }
+                }, 
+            })));
+        }
+        else {
+            res.json({
+                data: [],
+                status: 'failed',
+                message: 'No enviaste las dos fotos o los nombres son incorrectos',
+            })    
+        }
+        
+        const docs = await newDocumento[0].save();
+        res.json({
+            data: docs,
+            status: 'success',
+            message: 'Documentos guardados con éxito',
         })
-    const { id } = req.params;
-    try{
-        await upload(req, res);
-        if(!req.body)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el id del usuario"
-        })
+
+        return;
         const updatedDocumento = await Documento.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });
@@ -295,7 +364,16 @@ export const updateDocumento = async (req, res) => {
         })
     }
     catch(error){
+        if (error.code === "LIMIT_UNEXPECTED_FILE") {
+            return res.status(404).json({
+                data: [],
+                status: 'failed',
+                message: 'Demasiados archivos han sido enviados',
+            });
+        }
         res.status(500).json({
+            data: [],
+            status: 'failed',
             message: error.message || `Error actualizando el Documento con el id: ${id}`,
         });
     }
