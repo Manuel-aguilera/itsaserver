@@ -267,20 +267,20 @@ export const updateDocumento = async (req, res) => {
         console.log('#######################')
         await upload(req, res);
         console.log('delante de upload')
-        if(req.files.length < 1) {
-            return res.json({
-                data: [],
-                status: '',
-                message: 'Deberás enviar al menos una imagen',
-            });
-        }
+        // if(req.files.length < 1) {
+        //     return res.json({
+        //         data: [],
+        //         status: '',
+        //         message: 'Deberás enviar al menos una imagen',
+        //     });
+        // }
         // if(!req.query)
         // res.status(404).json({
         //     data: [],
         //     status: "failed",
         //     message: "No has ingresado el id del documento a actualizar"
         // })
-        const { id_user } = req.body;
+        // const { id_user } = req.body;
         console.log('body')
         console.log(req.body);
         console.log('params')
