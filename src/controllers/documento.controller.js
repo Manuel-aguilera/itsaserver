@@ -262,43 +262,29 @@ export const deleteDocumento = async (req, res) => {
 
 export const updateDocumento = async (req, res) => {
     try{
-        console.log('#######################')
-        console.log(req);
-        console.log('#######################')
         await upload(req, res);
-        console.log('delante de upload')
-        // if(req.files.length < 1) {
-        //     return res.json({
-        //         data: [],
-        //         status: '',
-        //         message: 'Deberás enviar al menos una imagen',
-        //     });
-        // }
-        // if(!req.query)
-        // res.status(404).json({
-        //     data: [],
-        //     status: "failed",
-        //     message: "No has ingresado el id del documento a actualizar"
-        // })
-        // const { id_user } = req.body;
-        console.log('body')
-        console.log(req.body);
-        console.log('params')
-        console.log(req.params);
-        console.log('query')
-        console.log(req.query);
-        console.log("Estos son los archivos subidos");
-        console.log(req.files);
+        if(req.files.length < 1) {
+            return res.json({
+                data: [],
+                status: 'failed',
+                message: 'Deberás enviar al menos una imagen',
+            });
+        }
+        if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del documento a actualizar"
+        })
+        const { id } = req.query;
 
+        let file1 = req.files[0];
+        let file2 = req.files[1];
+        const newDocumento = [];
 
-        // let file1 = req.files[0];
-        // let file2 = req.files[1];
-        // const newDocumento = [];
-
-        // const updatedDocumento = await Documento.find({id_user: id_user});
-        // console.log('documento id_user a actualizar');
-        // console.log(updateDocumento);
-        // console.log(updateDocumento.id);
+        const updatedDocumento = await Documento.find({id_user: id});
+        console.log('documento id_user a actualizar');
+        console.log(updateDocumento._id);
 
         return;
 
