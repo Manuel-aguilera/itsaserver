@@ -284,7 +284,7 @@ export const updateDocumento = async (req, res) => {
 
         const updatedDocumento = await Documento.find({id_user: id});
         console.log('documento id_user a actualizar');
-        console.log(updateDocumento._id);
+        console.log(updateDocumento);
 
         return;
 
