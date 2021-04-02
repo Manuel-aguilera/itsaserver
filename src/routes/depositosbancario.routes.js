@@ -12,6 +12,6 @@ router.get('/:id', depositosBancarioCtrl.findOneDepositosBancario);
 
 router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
 
-router.put('/:id', depositosBancarioCtrl.updateDepositosBancario);
+router.put('/', depositosBancarioCtrl.updateDepositosBancario);
 
 export default router;

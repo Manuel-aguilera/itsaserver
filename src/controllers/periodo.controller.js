@@ -77,7 +77,7 @@ export const findUltimoPeriodo = async (req, res) => {
     try{
         const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
 
-            if(!periodo) return res.status(404).json({
+        if(!periodo) return res.status(404).json({
             data: [],
             status: "notfound",
             message: `La Periodo con el id: ${id} no existe`

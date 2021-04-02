@@ -12,6 +12,8 @@ export const findAllUsers = async (req, res) => {
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: "failed",
             message: error.message || "Algo ocurrió mal mientras devolviamos los usuarios",
         });
     }

@@ -4,10 +4,16 @@ import TemporaryUser from '../models/TemporaryUser';
 export const findAllUsers = async (req, res) => {
     try{
         const data = await User.find();
-        res.json(data);
+        res.json({
+            data: data,
+            status: "success",
+            message: "lista de users"
+        });
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: "failed",
             message: error.message || "Algo ocurrió mal mientras devolviamos los usuarios",
         });
     }

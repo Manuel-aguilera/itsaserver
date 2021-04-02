@@ -25,6 +25,8 @@ export const findAllDocumento = async (req, res) => {
     }
 }
 
+//no olvides que este lo debemos llamar al momento de entrar al step3 para que exista el registro
+// de documentos para el id_user actual de la app
 export const createDocumento = async (req, res) => {
     //usar express-validator para validar
     try{
@@ -49,13 +51,6 @@ export const createDocumento = async (req, res) => {
         })
     }
     catch(error){
-        if (error.code === "LIMIT_UNEXPECTED_FILE") {
-            return res.status(404).json({
-                data: [],
-                status: 'failed',
-                message: 'Demasiados archivos han sido enviados',
-            });
-        }
         res.status(500).json({
             data: [],
             status: 'failed',

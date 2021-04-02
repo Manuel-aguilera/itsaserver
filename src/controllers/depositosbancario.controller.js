@@ -1,4 +1,9 @@
 import DepositosBancario from '../models/DepositosBancario';
+import TemporaryUser from '../models/TemporaryUser';
+import Documento from '../models/Documento';
+import TipoPago from '../models/TipoPago';
+import User from '../models/User';
+import Periodo from '../models/Periodo';
 
 export const findAllDepositosBancarios = async (req, res) => {
     try{
@@ -23,25 +28,55 @@ export const createDepositosBancario = async (req, res) => {
         if(!req.body)
         res.status(404).json({
             data: [],
-            status: "failed",
+              status: "failed",
             message: "Debes ingresar los datos del DepositosBancario"
         })
+        const { id } = req.body;
+        console.log(id)
+
+        //suponiendo que en el panel del front solicitamos una data compuesta con el usuarytemporary y sus docs
+        //  entonces mediante esta ruta creamos el deposito bancario para que esté disponible en la app móvil del cliente
+        //Haremos la simulacion de la data compuesta para el panel personalizado y llamaremos este metodo para crearlo
+        const temporaryUser = await TemporaryUser.findById(id);
+        const documento = await Documento.findOne({id_user: id})
+        //extraemos el ultimo periodo, ya existe una ruta llamada periodos/ultimo pero aqui ponemos la logica ya que estamos simulando
+        const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
+        const listaPeriodos = Object.entries(periodo);
+        let ultimoPeriodo = listaPeriodos[0][1].periodo;
+
+        //obtenemos el tipo de pago (luego ya que esto se usara en el front)
+        // const tipoPago = await TipoPago.find();
+        // //lo usamos para tipopagos 
+        // const tipoPagos = Object.entries(tipoPago.data[0]);
+        // tipoPagos.map((lista) => {
+        //     console.log(lista[0]) //tipos
+        //     console.log(lista[1]) //conceptos
+        // })
+        // let pago1 = 'fichas';
+        // let concepto1 = 'FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES';
+        // Este para cuando haga el segundo deposito bancario
+        // let pago2 = 'inscripcion';
+        // let concepto2 = 'APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO';
         
+        let folioPago = getFolioPago();
+        let rf = await getReferenciaBancaria(); 
+        let referenciaBancaria = `${rf}${folioPago}`;
+
         const newDepositosBancario = new DepositosBancario({
-            id_user: req.body.id_user,
-            usuario: req.body.usuario,
+            id_user: id,
+            usuario: temporaryUser.usuario,
             tipoPago: req.body.tipoPago,
             concepto: req.body.concepto,
             cantidad: req.body.cantidad,
             costo: req.body.costo,
             importe: req.body.importe,
-            NControlCurp: req.body.NControlCurp,
-            folioInterno: req.body.folioInterno,
+            NControlCurp: temporaryUser.curp,
+            folioInterno: folioPago,
             convenioCIE: req.body.convenioCIE,
-            referenciaBancaria: req.body.referenciaBancaria,
-            DepositosBancario: req.body.DepositosBancario,
-            fecha: req.body.fecha,
-            fechaCaducidad: req.body.fechaCaducidad,
+            referenciaBancaria: referenciaBancaria,
+            periodo: ultimoPeriodo, 
+            fecha: `${new Date(Date.now())}`,
+            fechaCaducidad: `${new Date(Date.now())}`,
             observaciones: req.body.observaciones, 
             // fotoComprobante: req.files[0], no porque apenas se genera
         });
@@ -180,4 +215,33 @@ export const updateDepositosBancario = async (req, res) => {
             message: `Error actualizando la DepositosBancario con el id: ${id}`,
         });
     }
+}
+
+const getFolioPago = () => {
+    return `${Date.now()}`;
+}
+
+const getReferenciaBancaria = async () => {
+    let matricula = await getMatricula();
+    return `A${matricula}F`;
+    // console.log(`A${matricula}F${Date.now()}`);
+}
+
+const getMatricula = async () => {
+    const date = new Date(Date.now());
+    let year = `${date.getFullYear()}`;
+    let anio = year.slice(2,4);
+    const users = await User.find();
+    let numSig = users.length + 1;
+    let matricula = `${anio}02${zeroFill(numSig, 4)}`;
+    return matricula;
+}
+
+const zeroFill = ( number, width ) => { // example zeroFill(324, 4)
+  width -= number.toString().length;
+  if ( width > 0 )
+  {
+    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+  }
+  return number + ""; // siempre devuelve tipo cadena
 }

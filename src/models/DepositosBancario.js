@@ -19,16 +19,16 @@ const depositosBancariosSchema = new Schema({
         trim: true,
     },
     cantidad: {
-        type: Number,
+        type: String,
     },
     costo: {
-        type: Number,
+        type: String,
     },
     importe: {
-        type: Number,
+        type: String,
     },
     NControlCurp: {
-        type: Number,
+        type: String,
     },
     folioInterno: {
         type: String,

@@ -215,9 +215,12 @@ Content-Type: application/json
     "codigoCarrera": "COPU"
 }
 
-############### TipoPagos localhost ################
+############### TipoPagos proagrimex ################
 
 GET https://proagrimex.com/api/v1/tipopagos
+
+###
+DELETE https://proagrimex.com/api/v1/tipopagos/605c2ca8546eb82d9a7a8278
 
 ###
 POST https://proagrimex.com/api/v1/tipopagos
@@ -279,9 +282,9 @@ Content-Type: application/json
 }
 
 
-############### Periodos localhost ################
+############### Periodos proagrimex ################
 
-GET http://localhost:3001/api/v1/periodos
+GET https://proagrimex.com/api/v1/periodos
 
 ###
 GET https://proagrimex.com/api/v1/periodos/ultimo
@@ -313,7 +316,7 @@ Content-Type: application/json
     "periodo": "20203-JULDIC"
 }
 
-############### Documentos localhost ################
+############### Documentos proagrimex ################
 POST https://proagrimex.com/api/v1/documentos
 Content-Type: application/json
 
@@ -324,6 +327,23 @@ Content-Type: application/json
 ###
 DELETE https://proagrimex.com/api/v1/documentos/60653eb48e425509bd62fba2
 
+############### Depositos bancarios proagrimex ################
+POST https://proagrimex.com/api/v1/depositosbancarios
+Content-Type: application/json
+
+{
+    "id": "605adc6cbfb8af34609f348a",
+    "tipoPago": "fichas",
+    "concepto": "FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES",
+    "cantidad": "1",
+    "costo": "1200.00",
+    "importe": "1200.00",
+    "convenioCIE": "001770500", 
+    "observaciones": "No aplica" 
+}
+
+###
+DELETE https://proagrimex.com/api/v1/depositosbancarios/6066cb7c78a77c0d4d2c36f6
 
 
 
