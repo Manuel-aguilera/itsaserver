@@ -277,86 +277,64 @@ export const updateDocumento = async (req, res) => {
             message: "No has ingresado el id del documento a actualizar"
         })
         const { id } = req.query;
-
+        const documentoId = await Documento.findOne({id_user: id});
+        const id_doc = documentoId._id; //es el id del documento a actualizar
         let file1 = req.files[0];
         let file2 = req.files[1];
-        const newDocumento = [];
-        console.log('id')
-        console.log(id)
-        const updatedDocumento = await Documento.findOne({id_user: id});
-        console.log('documento _id a actualizar');
-        console.log(updatedDocumento._id);
-        console.log('documento devuelto');
-        console.log(updatedDocumento);
-
-        return;
-
-        // if(isActa(file1) && isCertificado(file2)){
-        //     console.log(`entra a acta y certificado: actualizamos el documento con id: ${id}`);
-        //     updatedDocumento = await Documento.findByIdAndUpdate(id, {
-        //         id_user: req.body.id_user,
-        //         actaFoto: {
-        //             image: {
-        //                 originalname: getActa(req.files).originalname,
-        //                 filename: getActa(req.files).filename,
-        //                 path: getActa(req.files).path,
-        //             }
-        //         },
-        //         certificadoBach: {
-        //             image: {
-        //                 originalname: getCertificado(req.files).originalname,
-        //                 filename: getCertificado(req.files).filename,
-        //                 path: getCertificado(req.files).path,
-        //             }
-        //         },     
-        //     }, {
-        //         useFindAndModify: false
-        //     });
-        //     newDocumento.push(newDocumento.push(new Documento()));
-        // }
-        // else if(isConstancia(file1) && isCurp(file2)){
-        //     newDocumento.push(newDocumento.push(new Documento({
-        //         id_user: req.body.id_user,
-        //         curpFoto: {
-        //             image: {
-        //                 originalname: getCurp(req.files).originalname,
-        //                 filename: getCurp(req.files).filename,
-        //                 path: getCurp(req.files).path,
-        //             }
-        //         },
-        //         constanciaMedica: {
-        //             image: {
-        //                 originalname: getConstancia(req.files).originalname,
-        //                 filename: getConstancia(req.files).filename,
-        //                 path: getConstancia(req.files).path,
-        //             }
-        //         }, 
-        //     })));
-        // }
-        // else {
-        //     res.json({
-        //         data: [],
-        //         status: 'failed',
-        //         message: 'No enviaste las dos fotos o los nombres son incorrectos',
-        //     })    
-        // }
+        let updatedDocumento = {};
+        if(isActa(file1) && isCertificado(file2)){
+            console.log(`entra a acta y certificado: actualizamos el documento con id: ${id_doc}`);
+            updatedDocumento = await Documento.findByIdAndUpdate(id_doc, {
+                actaFoto: {
+                    image: {
+                        originalname: getActa(req.files).originalname,
+                        filename: getActa(req.files).filename,
+                        path: getActa(req.files).path,
+                    }
+                },
+                certificadoBach: {
+                    image: {
+                        originalname: getCertificado(req.files).originalname,
+                        filename: getCertificado(req.files).filename,
+                        path: getCertificado(req.files).path,
+                    }
+                },     
+            }, {
+                useFindAndModify: false
+            });
+        }
+        else if(isConstancia(file1) && isCurp(file2)){
+            console.log(`entra a curp y constancia: actualizamos el documento con id: ${id_doc}`);
+            updatedDocumento = await Documento.findByIdAndUpdate(id_doc, {
+                curpFoto: {
+                    image: {
+                        originalname: getCurp(req.files).originalname,
+                        filename: getCurp(req.files).filename,
+                        path: getCurp(req.files).path,
+                    }
+                },
+                constanciaMedica: {
+                    image: {
+                        originalname: getConstancia(req.files).originalname,
+                        filename: getConstancia(req.files).filename,
+                        path: getConstancia(req.files).path,
+                    }
+                }, 
+            });
+        }
+        else {
+            res.json({
+                data: [],
+                status: 'failed',
+                message: 'No enviaste las dos fotos o los nombres son incorrectos',
+            })    
+        }
         
-        // const docs = await newDocumento[0].save();
-        // res.json({
-        //     data: docs,
-        //     status: 'success',
-        //     message: 'Documentos guardados con éxito',
-        // })
-
-        // return;
-        // const updatedDocumento = await Documento.findByIdAndUpdate(id, req.body, {
-        //     useFindAndModify: false
-        // });
-        // res.json({
-        //     data: updatedDocumento,
-        //     status: 'success',
-        //     message: 'El Documento fue actualizado exitosamente',
-        // })
+        res.json({
+            data: updatedDocumento,
+            status: 'success',
+            message: 'Documentos guardados con éxito',
+        })
     }
     catch(error){
         if (error.code === "LIMIT_UNEXPECTED_FILE") {
