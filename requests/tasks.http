@@ -332,7 +332,7 @@ POST https://proagrimex.com/api/v1/depositosbancarios
 Content-Type: application/json
 
 {
-    "id": "605adc6cbfb8af34609f348a",
+    "id": "605aeb952396130c36fbc43c",
     "tipoPago": "fichas",
     "concepto": "FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES",
     "cantidad": "1",
@@ -343,7 +343,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/depositosbancarios/6066cb7c78a77c0d4d2c36f6
+DELETE https://proagrimex.com/api/v1/depositosbancarios/6066d7471a0a391105f7c6fd
 
 
 

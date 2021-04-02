@@ -56,6 +56,14 @@ const depositosBancariosSchema = new Schema({
         type: String,
         trim: true,
     },
+    pagado: {
+        type: Boolean,
+        default: false,
+    },
+    procesado: {
+        type: Boolean,
+        default: false,
+    },
     fotoComprobante: {
         originalname: {type: String},
         filename: {type: String},

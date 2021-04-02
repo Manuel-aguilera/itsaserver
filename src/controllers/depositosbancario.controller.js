@@ -24,7 +24,6 @@ export const findAllDepositosBancarios = async (req, res) => {
 
 export const createDepositosBancario = async (req, res) => {
     try{
-        
         if(!req.body)
         res.status(404).json({
             data: [],
@@ -96,7 +95,7 @@ export const createDepositosBancario = async (req, res) => {
     }
 }
 
-export const findOneDepositosBancario = async (req, res) => {
+export const findAvailableDepositosBancario = async (req, res) => {
     if(!req.params)
         res.status(404).json({
             data: [],
@@ -105,7 +104,7 @@ export const findOneDepositosBancario = async (req, res) => {
         })
     const { id } = req.params;
     try{
-        const depositosBancario = await DepositosBancario.findById(id);
+        const depositosBancario = await DepositosBancario.find({id_user: id, procesado: false});
 
         if(!depositosBancario) return res.status(404).json({
             data: [],
