@@ -4,7 +4,7 @@ import Documento from '../models/Documento';
 import TipoPago from '../models/TipoPago';
 import User from '../models/User';
 import Periodo from '../models/Periodo';
-import upload from '../middleware/upload';
+import upload from '../middleware/uploadDepositos';
 
 export const findAllDepositosBancarios = async (req, res) => {
     try{
@@ -192,18 +192,11 @@ export const updateDepositosBancario = async (req, res) => {
         const depositos = await DepositosBancario.find({id_user: id});
         const idsDepositos = Object.entries(depositos).map((doc) => doc[1]._id);
 
-        console.log(id)
-        console.log(procesado)
-        console.log(depositos)
-        console.log(idsDepositos)
-
         let updatedDeposito = [];
         idsDepositos.forEach(async (id, index) => {
-            console.log('entra forEach')
             let file = req.files[index];
             console.log(file)
             if(isFicha(file) || isAportacion(file)){
-                console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id}`);
                 const deposito = await DepositosBancario.findByIdAndUpdate(id, {
                     fotoDeposito: {
                         image: {
