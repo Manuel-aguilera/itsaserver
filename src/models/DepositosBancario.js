@@ -64,16 +64,11 @@ const depositosBancariosSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    fotoFicha: {
+    fotoDeposito: {
         originalname: {type: String},
         filename: {type: String},
         path: {type: String},
     },
-    fotoAportacion: {
-        originalname: {type: String},
-        filename: {type: String},
-        path: {type: String},
-    }
 
 }, {
     versionKey: false,

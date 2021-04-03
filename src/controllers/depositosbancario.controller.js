@@ -188,40 +188,36 @@ export const updateDepositosBancario = async (req, res) => {
         })  
         const { id } = req.query;
         const { procesado } = req.query;
-        const depositoId = await DepositosBancario.findOne({id_user: id});
-        const id_dep = depositoId._id; //es el id del DepositosBancario a actualizar
-        let file1 = req.files[0];
-        let file2 = req.files[1];
-        let updatedDeposito = {};
-        if(isFicha(file1) && isAportacion(file2)){
-            console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id_dep}`);
-            updatedDeposito = await DepositosBancario.findByIdAndUpdate(id_dep, {
-                fotoFicha: {
-                    image: {
-                        originalname: getFicha(req.files).originalname,
-                        filename: getFicha(req.files).filename,
-                        path: getFicha(req.files).path,
-                    }
-                },
-                fotoAportacion: {
-                    image: {
-                        originalname: getAportacion(req.files).originalname,
-                        filename: getAportacion(req.files).filename,
-                        path: getAportacion(req.files).path,
-                    }
-                },     
-                procesado: procesado,
-            }, {
-                useFindAndModify: false
-            });
-        }
-        else {
-            res.json({
-                data: [],
-                status: 'failed',
-                message: 'No enviaste las dos fotos o los nombres son incorrectos',
-            })    
-        }
+        const depositos = await DepositosBancario.find({id_user: id});
+        const idsDepositos = Object.entries(depositos).map((doc) => doc[1]._id);
+
+        let updatedDeposito = [];
+        idsDepositos.forEach(async (id, index) => {
+            let file = req.files[index];
+            if(isFicha(file) || isAportacion(file)){
+                console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id}`);
+                deposito = await DepositosBancario.findByIdAndUpdate(id, {
+                    fotoDeposito: {
+                        image: {
+                            originalname: isFicha(file) ? getFicha(req.files).originalname : getAportacion(req.files).originalname,
+                            filename: isFicha(file) ? getFicha(req.files).filename : getAportacion(req.files).filename,
+                            path: isFicha(file) ? getFicha(req.files).path : getAportacion(req.files).path,
+                        }
+                    },
+                    procesado: procesado,
+                }, {
+                    useFindAndModify: false
+                });
+                updatedDeposito.push(deposito);
+            }
+            else {
+                res.json({
+                    data: [],
+                    status: 'failed',
+                    message: 'No enviaste las dos fotos o los nombres son incorrectos',
+                })    
+            }
+        });
         
         res.json({
             data: updatedDeposito,
