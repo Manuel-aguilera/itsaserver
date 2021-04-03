@@ -174,7 +174,7 @@ export const updateDepositosBancario = async (req, res) => {
     try{
         await upload(req, res);
         if(req.files.length < 1) {
-            return res.json({
+            return res.status(404).json({
                 data: [],
                 status: 'failed',
                 message: 'Deberás enviar al menos una imagen',
@@ -191,9 +191,16 @@ export const updateDepositosBancario = async (req, res) => {
         const depositos = await DepositosBancario.find({id_user: id});
         const idsDepositos = Object.entries(depositos).map((doc) => doc[1]._id);
 
+        console.log(id)
+        console.log(procesado)
+        console.log(depositos)
+        console.log(idsDepositos)
+
         let updatedDeposito = [];
         idsDepositos.forEach(async (id, index) => {
+            console.log('entra forEach')
             let file = req.files[index];
+            console.log(file)
             if(isFicha(file) || isAportacion(file)){
                 console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id}`);
                 deposito = await DepositosBancario.findByIdAndUpdate(id, {
