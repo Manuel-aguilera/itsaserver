@@ -289,7 +289,7 @@ const isAportacion = (file) => {
 }
 
 const getFicha = (files) => {
-    const isFicha = /acta/;
+    const isFicha = /fichaInscripcion/;
     if(isFicha.test(files[0].originalname))
         return files[0]
     else if(isFicha.test(files[1].originalname))
@@ -298,7 +298,7 @@ const getFicha = (files) => {
 }
 
 const getAportacion = (files) => {
-    const isAportacion = /certificado/;
+    const isAportacion = /aportacion/;
     if(isAportacion.test(files[0].originalname))
         return files[0];
     else if(isAportacion.test(files[1].originalname))
