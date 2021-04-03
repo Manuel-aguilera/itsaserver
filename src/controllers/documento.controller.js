@@ -160,60 +160,6 @@ export const createDocumento = async (req, res) => {
 //acta y certificado
 //curp y constancia
 
-const isActa = (file) => {
-    const isActa = /acta/;
-    return (isActa.test(file.originalname)) ? true : false
-}
-
-const isCertificado = (file) => {
-    const isCertificado = /certificado/;
-    return (isCertificado.test(file.originalname)) ? true : false
-}
-
-const isCurp = (file) => {
-    const isCurp = /curp/;
-    return (isCurp.test(file.originalname)) ? true : false
-}
-
-const isConstancia = (file) => {
-    const isConstancia = /constancia/;
-    return (isConstancia.test(file.originalname)) ? true : false
-}
-
-const getActa = (files) => {
-    const isActa = /acta/;
-    if(isActa.test(files[0].originalname))
-        return files[0]
-    else if(isActa.test(files[1].originalname))
-        return files[1];
-    console.log('acta es vacio')
-}
-
-const getCertificado = (files) => {
-    const isCertificado = /certificado/;
-    if(isCertificado.test(files[0].originalname))
-        return files[0];
-    else if(isCertificado.test(files[1].originalname))
-        return files[1];
-    console.log('certificado es vacio')
-}
-
-const getCurp = (files) => {
-    const isCurp = /curp/;
-    if(isCurp.test(files[0].originalname))
-        return files[0];
-    else if(isCurp.test(files[1].originalname))
-        return files[1];
-}
-
-const getConstancia = (files) => {
-    const isConstancia = /constancia/;
-    if(isConstancia.test(files[0].originalname))
-        return files[0];
-    else if(isConstancia.test(files[1].originalname))
-        return files[1];
-}
-
 export const findOneDocumento = async (req, res) => {
     const { id } = req.params;
     try{
@@ -345,5 +291,59 @@ export const updateDocumento = async (req, res) => {
             message: error.message || `Error actualizando el Documento con el id: ${id}`,
         });
     }
+}
+
+const isActa = (file) => {
+    const isActa = /acta/;
+    return (isActa.test(file.originalname)) ? true : false
+}
+
+const isCertificado = (file) => {
+    const isCertificado = /certificado/;
+    return (isCertificado.test(file.originalname)) ? true : false
+}
+
+const isCurp = (file) => {
+    const isCurp = /curp/;
+    return (isCurp.test(file.originalname)) ? true : false
+}
+
+const isConstancia = (file) => {
+    const isConstancia = /constancia/;
+    return (isConstancia.test(file.originalname)) ? true : false
+}
+
+const getActa = (files) => {
+    const isActa = /acta/;
+    if(isActa.test(files[0].originalname))
+        return files[0]
+    else if(isActa.test(files[1].originalname))
+        return files[1];
+    console.log('acta es vacio')
+}
+
+const getCertificado = (files) => {
+    const isCertificado = /certificado/;
+    if(isCertificado.test(files[0].originalname))
+        return files[0];
+    else if(isCertificado.test(files[1].originalname))
+        return files[1];
+    console.log('certificado es vacio')
+}
+
+const getCurp = (files) => {
+    const isCurp = /curp/;
+    if(isCurp.test(files[0].originalname))
+        return files[0];
+    else if(isCurp.test(files[1].originalname))
+        return files[1];
+}
+
+const getConstancia = (files) => {
+    const isConstancia = /constancia/;
+    if(isConstancia.test(files[0].originalname))
+        return files[0];
+    else if(isConstancia.test(files[1].originalname))
+        return files[1];
 }
 
