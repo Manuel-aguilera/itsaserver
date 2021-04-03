@@ -4,6 +4,7 @@ import Documento from '../models/Documento';
 import TipoPago from '../models/TipoPago';
 import User from '../models/User';
 import Periodo from '../models/Periodo';
+import upload from '../middleware/upload';
 
 export const findAllDepositosBancarios = async (req, res) => {
     try{
