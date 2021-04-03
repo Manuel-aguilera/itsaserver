@@ -65,9 +65,11 @@ const depositosBancariosSchema = new Schema({
         default: false,
     },
     fotoDeposito: {
-        originalname: {type: String},
-        filename: {type: String},
-        path: {type: String},
+        image: {
+            originalname: {type: String},
+            filename: {type: String},
+            path: {type: String},
+        }
     },
 
 }, {
