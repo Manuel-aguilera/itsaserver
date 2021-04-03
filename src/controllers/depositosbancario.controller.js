@@ -77,7 +77,6 @@ export const createDepositosBancario = async (req, res) => {
             fecha: `${new Date(Date.now())}`,
             fechaCaducidad: `${new Date(Date.now())}`,
             observaciones: req.body.observaciones, 
-            // fotoComprobante: req.files[0], no porque apenas se genera
         });
         const depositosBancarioSave = await newDepositosBancario.save();
         res.json({
@@ -174,44 +173,72 @@ export const deleteDepositosBancario = async (req, res) => {
 export const updateDepositosBancario = async (req, res) => {
     try{
         await upload(req, res);
-        if(!req.params)
-            res.status(404).json({
-                data: [],
-                status: "failed",
-                message: "No has ingresado el id del DepositosBancario"
-            })
-        if(!req.body)
-            res.status(404).json({
-                data: [],
-                status: "failed",
-                message: "Debes ingresar datos en el cuerpo del DepositosBancario"
-            })
-        if (!req.files) {
+        if(req.files.length < 1) {
             return res.json({
                 data: [],
                 status: 'failed',
-                message: 'Deberás envíar la foto de comprobante de pago para actualizar',
+                message: 'Deberás enviar al menos una imagen',
             });
         }
-        const { id } = req.params;
+        if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del deposito bancario a actualizar"
+        })
+        const { id } = req.query;
+        const depositoId = await DepositosBancario.findOne({id_user: id});
+        const id_dep = depositoId._id; //es el id del DepositosBancario a actualizar
+        let file1 = req.files[0];
+        let file2 = req.files[1];
+        let updatedDeposito = {};
+        if(isFicha(file1) && isAportacion(file2)){
+            console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id_dep}`);
+            updatedDeposito = await DepositosBancario.findByIdAndUpdate(id_dep, {
+                fotoFicha: {
+                    image: {
+                        originalname: getFicha(req.files).originalname,
+                        filename: getFicha(req.files).filename,
+                        path: getFicha(req.files).path,
+                    }
+                },
+                fotoAportacion: {
+                    image: {
+                        originalname: getAportacion(req.files).originalname,
+                        filename: getAportacion(req.files).filename,
+                        path: getAportacion(req.files).path,
+                    }
+                },     
+            }, {
+                useFindAndModify: false
+            });
+        }
+        else {
+            res.json({
+                data: [],
+                status: 'failed',
+                message: 'No enviaste las dos fotos o los nombres son incorrectos',
+            })    
+        }
         
-        const updatedDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
-            ...req.body,
-            fotoComprobante: req.files[0]
-        }, {
-            useFindAndModify: false
-        });
         res.json({
-            data: updatedDepositosBancario,
+            data: updatedDeposito,
             status: 'success',
-            message: 'La DepositosBancario fue actualizado exitosamente',
+            message: 'Deposito Bancario actualizado con éxito',
         })
     }
     catch(error){
+        if (error.code === "LIMIT_UNEXPECTED_FILE") {
+            return res.status(404).json({
+                data: [],
+                status: 'failed',
+                message: 'Demasiados archivos han sido enviados',
+            });
+        }
         res.status(500).json({
             data: [],
-            status: 'internalError',
-            message: `Error actualizando la DepositosBancario con el id: ${id}`,
+            status: 'failed',
+            message: error.message || `Error actualizando el Deposito bancario con el id: ${id}`,
         });
     }
 }
@@ -243,4 +270,32 @@ const zeroFill = ( number, width ) => { // example zeroFill(324, 4)
     return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
   }
   return number + ""; // siempre devuelve tipo cadena
+}
+
+const isFicha = (file) => {
+    const isFicha = /fichaInscripcion/;
+    return (isFicha.test(file.originalname)) ? true : false
+}
+
+const isAportacion = (file) => {
+    const isAportacion = /aportacion/;
+    return (isAportacion.test(file.originalname)) ? true : false
+}
+
+const getFicha = (files) => {
+    const isFicha = /acta/;
+    if(isFicha.test(files[0].originalname))
+        return files[0]
+    else if(isFicha.test(files[1].originalname))
+        return files[1];
+    console.log('ficha es vacio')
+}
+
+const getAportacion = (files) => {
+    const isAportacion = /certificado/;
+    if(isAportacion.test(files[0].originalname))
+        return files[0];
+    else if(isAportacion.test(files[1].originalname))
+        return files[1];
+    console.log('aportacion es vacio')
 }

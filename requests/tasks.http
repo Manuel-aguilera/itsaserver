@@ -333,17 +333,17 @@ Content-Type: application/json
 
 {
     "id": "605aeb952396130c36fbc43c",
-    "tipoPago": "fichas",
-    "concepto": "FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES",
+    "tipoPago": "inscripcion",
+    "concepto": "APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO",
     "cantidad": "1",
-    "costo": "1200.00",
-    "importe": "1200.00",
+    "costo": "800.00",
+    "importe": "800.00",
     "convenioCIE": "001770500", 
     "observaciones": "No aplica" 
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/depositosbancarios/6066d7471a0a391105f7c6fd
+DELETE https://proagrimex.com/api/v1/depositosbancarios/6066dab91a0a391105f7c6fe
 
 
 
