@@ -14,4 +14,6 @@ router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
 
 router.put('/', depositosBancarioCtrl.updateDepositosBancario);
 
+router.put('/:id', depositosBancarioCtrl.updateAvailableDepositosBancario);
+
 export default router;

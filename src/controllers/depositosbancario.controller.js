@@ -204,7 +204,7 @@ export const updateDepositosBancario = async (req, res) => {
             console.log(file)
             if(isFicha(file) || isAportacion(file)){
                 console.log(`entra a ficha y aportacion: actualizamos el deposito bancario con id: ${id}`);
-                deposito = await DepositosBancario.findByIdAndUpdate(id, {
+                const deposito = await DepositosBancario.findByIdAndUpdate(id, {
                     fotoDeposito: {
                         image: {
                             originalname: isFicha(file) ? getFicha(req.files).originalname : getAportacion(req.files).originalname,
@@ -245,6 +245,42 @@ export const updateDepositosBancario = async (req, res) => {
             data: [],
             status: 'failed',
             message: error.message || `Error actualizando el Deposito bancario con el id: ${id}`,
+        });
+    }
+}
+
+export const updateAvailableDepositosBancario = async (req, res) => {
+    try{
+        if(!req.params){
+            res.json({
+                data: [],
+                status: "failed",
+                message: "Necesitas ingresar el id del deposito bancario"
+            });    
+        }
+        if(!req.body){
+            res.json({
+                data: [],
+                status: "failed",
+                message: "Necesitas enviar datos para actualizar el deposito bancario"
+            });    
+        }
+        const { id } = req.params;
+        const data = await DepositosBancario.findByIdAndUpdate(id,{
+            procesado: req.body.procesado,
+        }, {
+            useFindAndModify: false
+        });
+        
+        res.json({
+            data: data,
+            status: "success",
+            message: "DepositosBancarios actualizado exitosamente"
+        });
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || "Algo ocurrió mal mientras devolviamos las DepositosBancarios",
         });
     }
 }
