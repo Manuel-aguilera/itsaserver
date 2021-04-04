@@ -1,7 +1,7 @@
 export const getUpload = async (req, res) => {
     try{
         const { id } = req.params;
-        res.sendFile('/static/' + id);
+        res.sendFile(__dirname+'/static/' + id);
     }
     catch(error){
         res.status(500).json({
