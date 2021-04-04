@@ -106,7 +106,7 @@ export const findAvailableDepositosBancario = async (req, res) => {
     try{
         const depositosBancario = await DepositosBancario.find({id_user: id, procesado: false});
         if(depositosBancario.length < 1) 
-            return res.json({
+            return res.status(404).json({
                 data: [],
                 status: "notfound",
                 message: `La DepositosBancario con el id: ${id} no existe`

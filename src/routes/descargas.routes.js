@@ -8,7 +8,7 @@ router.post('/', descargasBancarioCtrl.createDescarga);
 
 router.get('/', descargasBancarioCtrl.findAllDescarga);
 
-router.get('/:id', descargasBancarioCtrl.findOneDescarga);
+router.get('/', descargasBancarioCtrl.findUserDescargas);
 
 router.delete('/:id', descargasBancarioCtrl.deleteDescarga);
 

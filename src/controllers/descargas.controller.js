@@ -87,18 +87,28 @@ export const createDescarga = async (req, res) => {
     }
 }
 
-export const findOneDescarga = async (req, res) => {
-    const { id } = req.params;
+export const findUserDescargas = async (req, res) => {
     try{
-        const descarga = await Descarga.findById(id);
+        if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id_user para las descargas"
+        })
+        const { id } = req.query;
+        const descarga = await Descarga.find({id_user: id});
 
-        if(!descarga) return res.status(404).json({
+        if(descarga.length < 1) return res.status(404).json({
             data: [],
             status: 'notfound',
-            message: `El Descarga con el id: ${id} no existe`
+            message: `No hay descargas para el usuario con el id: ${id}`
         })
 
-        res.json(descarga)
+        res.json({
+            data: descarga,
+            status: 'success',
+            message: `Archivos devueltos`
+        })
     }
     catch(error){
         res.status(500).json({
