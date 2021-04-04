@@ -1,17 +1,19 @@
 import {Router} from 'express';
 
-import * as descargasBancarioCtrl from '../controllers/descargas.controller';
+import * as descargasCtrl from '../controllers/descargas.controller';
 
 const router = Router();
 
-router.post('/', descargasBancarioCtrl.createDescarga);
+router.post('/', descargasCtrl.createDescarga);
 
-router.get('/', descargasBancarioCtrl.findAllDescarga);
+router.get('/', descargasCtrl.findAllDescarga);
 
-router.get('/', descargasBancarioCtrl.findUserDescargas);
+router.get('/:id', descargasCtrl.findUserDescargas);
 
-router.delete('/:id', descargasBancarioCtrl.deleteDescarga);
+router.get('/form', descargasCtrl.homeForm);
 
-router.put('/:id', descargasBancarioCtrl.updateDescarga);
+router.delete('/:id', descargasCtrl.deleteDescarga);
+
+router.put('/:id', descargasCtrl.updateDescarga);
 
 export default router;

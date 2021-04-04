@@ -3,7 +3,7 @@ import uploadFiles from '../middleware/uploadDescargas';
 import path from 'path';
 
 export const homeForm = (req, res) => {
-    return res.sendFile(path.join(`${__dirname}/../views/index.html`));
+    return res.sendFile(path.join(`${__dirname}/../views/formDes.html`));
 };
 
 export const findAllDescarga = async (req, res) => {
@@ -89,13 +89,13 @@ export const createDescarga = async (req, res) => {
 
 export const findUserDescargas = async (req, res) => {
     try{
-        if(!req.query)
+        if(!req.params)
         res.status(404).json({
             data: [],
             status: "failed",
-            message: "No has ingresado el id_user para las descargas"
+            message: "No has ingresado el id para las descargas"
         })
-        const { id } = req.query;
+        const { id } = req.params;
         const descarga = await Descarga.find({id_user: id});
 
         if(descarga.length < 1) return res.status(404).json({
