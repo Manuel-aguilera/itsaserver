@@ -1,7 +1,13 @@
+import path from 'path';
+
 export const getUpload = async (req, res) => {
     try{
         const { id } = req.params;
-        res.sendFile(__dirname+'/static/' + id);
+        
+        var options = {
+            root: path.resolve('upload'),
+        }
+        res.sendFile(id, options);
     }
     catch(error){
         res.status(500).json({
@@ -10,6 +16,37 @@ export const getUpload = async (req, res) => {
     }
 }
 
+export const getUploadFile = async (req, res) => {
+    try{
+        const { id } = req.params;
+        
+        var options = {
+            root: path.resolve('uploadFile'),
+        }
+        res.sendFile(id, options);
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || "Algo ocurrió mal mientras devolviamos las carreras",
+        });
+    }
+}
+
+export const getUploadDepositos = async (req, res) => {
+    try{
+        const { id } = req.params;
+        
+        var options = {
+            root: path.resolve('uploadDepositos'),
+        }
+        res.sendFile(id, options);
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || "Algo ocurrió mal mientras devolviamos las carreras",
+        });
+    }
+}
 
 // app.get('/user/:uid/photos/:file', function (req, res) {
 //     var uid = req.params.uid

@@ -17,9 +17,9 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit:'5mb'})); 
 app.use(bodyParser.urlencoded({extended:true, limit:'5mb'}));
-app.use('/static', express.static(path.join(__dirname, 'upload')))
-app.use('/static', express.static(path.join(__dirname, 'uploadDepositos')))
-app.use('/static', express.static(path.join(__dirname, 'uploadFile')))
+app.use(express.static('upload'))
+app.use(express.static('uploadDepositos'))
+app.use(express.static('uploadFile'))
 // app.use(express.json());
 // app.use(express.urlencoded({extended: false}));
 
@@ -36,6 +36,6 @@ app.use('/api/v1/documentos', Routes.documentoRoutes)
 app.use('/api/v1/descargas', Routes.descargasRoutes)
 app.use('/api/v1/depositosbancarios', Routes.depositosbancarioRoutes)
 app.use('/api/v1/carreras', Routes.carreraRoutes)
-app.use('/images', Routes.imagesRoutes)
+app.use('/static', Routes.imagesRoutes)
 
 export default app;

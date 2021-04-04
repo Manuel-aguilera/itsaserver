@@ -8,7 +8,11 @@ const router = Router();
 
 // router.get('/ultimo', imagesCtrl.findUltimoPeriodo);
 
-router.get('/:id', imagesCtrl.getUpload);
+router.get('/fotos/:id', imagesCtrl.getUpload);
+
+router.get('/documentos/:id', imagesCtrl.getUploadFile);
+
+router.get('/depositos/:id', imagesCtrl.getUploadDepositos);
 
 export default router;
 
