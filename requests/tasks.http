@@ -346,6 +346,14 @@ Content-Type: application/json
 DELETE https://proagrimex.com/api/v1/depositosbancarios/6066dab91a0a391105f7c6fe
 
 ###
+PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
+Content-Type: application/json
+
+{
+    "procesado": false 
+}
+
+###
 PUT https://proagrimex.com/api/v1/depositosbancarios/6066e9bf30f91111be34b57d
 Content-Type: application/json
 

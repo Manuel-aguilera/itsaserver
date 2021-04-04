@@ -7,5 +7,17 @@ import documentoRoutes from './documento.routes';
 import descargasRoutes from './descargas.routes';
 import depositosbancarioRoutes from './depositosbancario.routes';
 import carreraRoutes from './carrera.routes';
+import imagesRoutes from './images.routes';
 
-export {userRoutes, temporaryUserRoutes, tipoPagoRoutes, taskRoutes, periodoRoutes, documentoRoutes, descargasRoutes, depositosbancarioRoutes, carreraRoutes};
+export {
+    userRoutes, 
+    temporaryUserRoutes, 
+    tipoPagoRoutes, 
+    taskRoutes, 
+    periodoRoutes, 
+    documentoRoutes, 
+    descargasRoutes, 
+    depositosbancarioRoutes, 
+    carreraRoutes,
+    imagesRoutes,
+};
