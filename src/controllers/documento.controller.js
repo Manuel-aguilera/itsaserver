@@ -3,7 +3,7 @@ import upload from '../middleware/upload';
 import path from 'path';
 
 export const homeForm = (req, res) => {
-    return res.sendFile(path.join(`${__dirname}/../views/index.html`));
+    return res.sendFile(path.join(`${__dirname}/../views/formDoc.html`));
 };
 
 export const findAllDocumento = async (req, res) => {
