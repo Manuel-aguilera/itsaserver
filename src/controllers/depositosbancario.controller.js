@@ -18,11 +18,14 @@ export const findAllDepositosBancarios = async (req, res) => {
     }
     catch(error){
         res.status(500).json({
+            data: [],
+            status: "failed",
             message: error.message || "Algo ocurrió mal mientras devolviamos las DepositosBancarios",
         });
     }
 }
 
+//cuando es en la app los datos deben ser seleccionables
 export const createDepositosBancario = async (req, res) => {
     try{
         if(!req.body)
@@ -116,6 +119,36 @@ export const findAvailableDepositosBancario = async (req, res) => {
             data: depositosBancario,
             status: "success",
             message: `Los depositos bancarios fueron encontrados`
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error devolviendo la DepositosBancario con el id: ${id}`,
+        });
+    }
+}
+
+export const findNotPaidDepositosBancario = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id de la DepositosBancario"
+        })
+    const { id } = req.params;
+    try{
+        const depositosBancario = await DepositosBancario.find({id_user: id, pagado: false});
+        if(depositosBancario.length < 1) 
+            return res.status(404).json({
+                data: [],
+                status: "notfound",
+                message: `La DepositosBancario con el id: ${id} no existe`
+            })
+
+        res.json({
+            data: depositosBancario,
+            status: "success",
+            message: `Los depositos bancarios no pagados fueron encontrados`
         })
     }
     catch(error){

@@ -1,7 +1,7 @@
 import {Schema, model} from 'mongoose';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
-const temporaryUserSchema = new Schema({
+const userSchema = new Schema({
     usuario: {
         type: String,
         trim: true,
@@ -58,22 +58,21 @@ const temporaryUserSchema = new Schema({
         trim: true,
     },
     numero: {
-        type: String,
+        type: Number,
     },
     cp: {
-        type: String,
+        type: Number,
     },
     telefono1: {
-        type: String,
+        type: Number,
     },
     telefono2: {
-        type: String,
+        type: Number,
     },
     emailPersonal: {
         type: String,
         trim: true,
     },
-    //campos de registro a la app
     tokenN: {
         type: String,
         trim: true,
@@ -88,11 +87,29 @@ const temporaryUserSchema = new Schema({
     pagoInscripcion: {
         type: Boolean,
         default: false,
-    }
-
+    },
+    anioIngreso: {
+        type: Date,
+    },
+    matricula: {
+        type: Number,
+    },
+    email: {
+        type: String,
+        trim: true,
+    },
+    estadoAlumno: {  //vigente
+        type: String,
+    },
+    tipoAlumno: {  //regular
+        type: String,
+    },
+    tipoAlta: {   //incripcion
+        type: String,
+    },
 }, {
     versionKey: false,
     timestamps: true,  //para agregar creatAt y updateAt
 })
 
-export default model('TemporaryUser', temporaryUserSchema)
+export default model('User', userSchema)

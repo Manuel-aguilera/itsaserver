@@ -8,7 +8,9 @@ router.post('/', depositosBancarioCtrl.createDepositosBancario);
 
 router.get('/', depositosBancarioCtrl.findAllDepositosBancarios);
 
-router.get('/:id', depositosBancarioCtrl.findAvailableDepositosBancario);
+router.get('/noprocesados/:id', depositosBancarioCtrl.findAvailableDepositosBancario);
+
+router.get('/nopagados/:id', depositosBancarioCtrl.findNotPaidDepositosBancario);
 
 router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
 

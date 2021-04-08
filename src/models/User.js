@@ -2,108 +2,288 @@ import {Schema, model} from 'mongoose';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
 const userSchema = new Schema({
-    usuario: {
-        type: String,
-        trim: true,
+    datosAlumno: {
+        usuario: {
+            type: String,
+            trim: true,
+        },
+        matricula: {
+            type: String,
+        },
+        nombre: {
+            type: String,
+            trim: true,
+        },
+        apellidoPaterno: {
+            type: String,
+            trim: true,
+        },
+        apellidoMaterno: {
+            type: String,
+            trim: true,
+        },
+        tipoAlta: {   //incripcion
+            type: String,
+        },
+        estadoAlumno: {  //vigente
+            type: String,
+        },
+        carrera: {
+            type: String,
+            trim: true,
+        },
+        fechaNacimiento: {
+            type: Date,
+        },
+        curp: {
+            type: String,
+            trim: true,
+        },
+        sexo: {
+            type: String,
+            trim: true,
+        },
+        anioIngreso: {
+            type: Date,
+        },
+        tipoAlumno: {  //regular
+            type: String,
+        },
+        planEstudios: {  //
+            type: String,
+        },
+        //campos extra de control  
+        tokenN: {
+            type: String,
+            trim: true,
+        },
+        fichaAceptada: {  
+            type: Boolean,
+            default: false,
+        },
+        pagoInscripcion: {
+            type: Boolean,
+            default: false,
+        },
     },
-    nombre: {
-        type: String,
-        trim: true,
+    datosGenerales: {
+        estado: {
+            type: String,
+        },
+        municipio: {
+            type: String,
+        },
+        poblacion: {
+            type: String,
+        },
+        colonia: {
+            type: String,
+        },
+        direccion: {
+            type: String,
+        },
+        numero: {
+            type: String,
+        },
+        cp: {
+            type: String,
+        },
+        telefono1: {
+            type: String,
+        },
+        telefono2: {
+            type: String,
+        },
+        email: {
+            type: String,
+        },
+        emailPersonal: {
+            type: String,
+        },
+        fechaAlta: {
+            type: Date,
+        },
     },
-    apellidoPaterno: {
-        type: String,
-        trim: true,
+    procedencia: {
+        bachillerato: {  
+            type: String,
+        },
+        especialidad: {  
+            type: String,
+        },
+        anioEgreso: {  
+            type: String,
+        },
+        promedio: {  
+            type: String,
+        },
     },
-    apellidoMaterno: {
-        type: String,
-        trim: true,
+    datosFamiliares: {
+        padres: {
+            padre: {
+                nombre: {
+                    type: String,
+                },
+                vive: {
+                    type: Boolean,
+                },
+                celular: {
+                    type: String,
+                },
+            },
+            madre: {
+                nombre: {
+                    type: String,
+                },
+                vive: {
+                    type: Boolean,
+                },
+                celular: {
+                    type: String,
+                },
+            },
+        }
     },
-    carrera: {
-        type: String,
-        trim: true,
+    situacionActual: {
+        semestre: {  
+            type: String,
+        },
+        grupo: {  
+            type: String,
+        },
+        cargaMaxima: {  
+            type: String,
+        },
+        cargaMinima: {  
+            type: String,
+        },
+        creditosAprobados: {  
+            type: String,
+        },
+        promedioConReprobadas: {  
+            type: String,
+        },
+        promedioSinReprobadas: {  
+            type: String,
+        },
+        motivoBaja: {  
+            type: String,
+        },
+        periodosMaximos: {  
+            type: String,
+        },
+        inscrito: {  
+            type: String,
+        },
+        fechaBajaDefinitiva: {  
+            type: String,
+        },   
+        turno: {  
+            type: String,
+        },   
     },
-    fechaNacimiento: {
-        type: Date,
+    expedientes: {
+        residencias: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        acta: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        certificado: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        curp: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        ingles: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        constanciaNoAdeudo: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        fotografias: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        servicioSocial: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        pagoTitulacion: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        ine: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        vigenciaDerecho: {  
+            expediente: {
+                type: String,
+            },
+            liberado: {
+                type: Boolean,
+                default: false,
+            }
+        },        
+        
     },
-    anioIngresoppppp: {
-        type: Date,
-    },
-    sexo: {
-        type: String,
-        trim: true,
-    },
-    curp: {
-        type: String,
-        trim: true,
-    },
-    estado: {
-        type: String,
-        trim: true,
-    },
-    municipio: {
-        type: String,
-        trim: true,
-    },
-    poblacion: {
-        type: String,
-        trim: true,
-    },
-    colonia: {
-        type: String,
-        trim: true,
-    },
-    direccion: {
-        type: String,
-        trim: true,
-    },
-    numero: {
-        type: Number,
-    },
-    cp: {
-        type: Number,
-    },
-    telefono1: {
-        type: Number,
-    },
-    telefono2: {
-        type: Number,
-    },
-    emailPersonal: {
-        type: String,
-        trim: true,
-    },
-    //campos de registro a la app
-    email: {
-        type: String,
-        trim: true,
-    },
-    tokenN: {
-        type: String,
-        trim: true,
-    },
-    matricula: {
-        type: Number,
-    },
-    estadoAlumno: {  //vigente
-        type: String,
-    },
-    tipoAlumno: {  //regular
-        type: String,
-    },
-    tipoAlta: {   //incripcion
-        type: String,
-    },
-    planEstudios: {  //
-        type: String,
-    },
-    fichaAceptada: {  
-        type: Boolean,
-        default: false,
-    },
-    pagoInscripcion: {
-        type: Boolean,
-        default: false,
-    }
 }, {
     versionKey: false,
     timestamps: true,  //para agregar creatAt y updateAt
