@@ -36,10 +36,11 @@ export const createUser = async (req, res) => {
             matricula = await getMatricula();
         }
         const email = `al${matricula}@itsa.edu.mx`;
-
+        const usuario = `${req.body.datosAlumno.nombre} ${req.body.datosAlumno.apellidoPaterno} ${req.body.datosAlumno.apellidoMaterno}`;
         const newUser = new User({
             datosAlumno: {
                 ...req.body.datosAlumno,
+                usuario: usuario,
                 matricula: matricula,
                 anioIngreso: new Date(Date.now()).getFullYear(),
             },

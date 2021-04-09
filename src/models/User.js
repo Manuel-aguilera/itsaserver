@@ -2,6 +2,9 @@ import {Schema, model} from 'mongoose';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
 const userSchema = new Schema({
+    id_temporaryUser: {
+        type: String,
+    },
     datosAlumno: {
         usuario: {
             type: String,

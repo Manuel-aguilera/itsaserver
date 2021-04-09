@@ -358,7 +358,7 @@ PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
 Content-Type: application/json
 
 {
-    "id_user": "" 
+    "id_user": "605aeb952396130c36fbc43c" 
 }
 
 ###
@@ -366,7 +366,7 @@ PUT https://proagrimex.com/api/v1/depositosbancarios/6066e9bf30f91111be34b57d
 Content-Type: application/json
 
 {
-    "procesado": false 
+    "id_user": "605aeb952396130c36fbc43c"
 }
 
 ############### Users proagrimex ################
@@ -492,4 +492,12 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/users/606fad1ccff9f205dd9d4b7e
+DELETE https://proagrimex.com/api/v1/users/606fb71107305e07352bca3d
+
+###
+PUT https://proagrimex.com/api/v1/users?id=606fb69207305e07352bca3a
+Content-Type: application/json
+
+{
+    "id_temporaryUser": "605aeb952396130c36fbc43c"
+}
