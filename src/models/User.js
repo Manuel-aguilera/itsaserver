@@ -126,6 +126,7 @@ const userSchema = new Schema({
                 },
                 vive: {
                     type: Boolean,
+                    default: true,
                 },
                 celular: {
                     type: String,
@@ -137,6 +138,7 @@ const userSchema = new Schema({
                 },
                 vive: {
                     type: Boolean,
+                    default: true,
                 },
                 celular: {
                     type: String,

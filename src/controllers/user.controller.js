@@ -145,7 +145,6 @@ export const createUser = async (req, res) => {
                     expediente: req.body.expediente,
                     liberado: req.body.liberado,
                 },        
-                
             },
         });
 
@@ -266,6 +265,15 @@ const getMatricula = async () => {
     let numSig = users.length + 1;
     let matricula = `${anio}02${zeroFill(numSig, 4)}`;
     return matricula;
+}
+
+const zeroFill = ( number, width ) => { // example zeroFill(324, 4)
+    width -= number.toString().length;
+    if ( width > 0 )
+    {
+      return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+    }
+    return number + ""; // siempre devuelve tipo cadena
 }
 
 // export const createNewUser = async (req, res) => {

@@ -354,9 +354,141 @@ Content-Type: application/json
 }
 
 ###
+PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
+Content-Type: application/json
+
+{
+    "id_user": "" 
+}
+
+###
 PUT https://proagrimex.com/api/v1/depositosbancarios/6066e9bf30f91111be34b57d
 Content-Type: application/json
 
 {
     "procesado": false 
 }
+
+############### Users proagrimex ################
+
+###
+GET https://proagrimex.com/api/v1/users
+
+###
+POST https://proagrimex.com/api/v1/users
+Content-Type: application/json
+
+{
+    "datosAlumno": {
+        "usuario": "Manuel Aguilera Magaña",
+        "nombre": "Manuel",
+        "apellidoPaterno": "Aguilera",
+        "apellidoMaterno": "Magaña",
+        "tipoAlta": "inscripción",
+        "estadoAlumno": "vigente",
+        "carrera": "Ingenieria en Sistemas Computacionales",
+        "fechaNacimiento": "15 octubre 1997",
+        "curp": "AUMM971015HMNGGN06",
+        "sexo": "HOMBRE",
+        "tipoAlumno": "regular",
+        "planEstudios": "ISIC2010-224",
+        "tokenN": "ExponentPushToken[W13468LyTH5oRczdrMwAKg]",
+        "fichaAceptada": "true",
+        "pagoInscripcion": "true"
+    },
+    "datosGenerales": {
+        "estado": "Michoacán",
+        "municipio": "Apatzingán",
+        "poblacion": "Chandio",
+        "colonia": "Chandio",
+        "direccion": "José María Morelos",
+        "numero": "222",
+        "cp": "60710",
+        "telefono1": "4531194027",
+        "telefono2": "4535389318",
+        "emailPersonal": "manueleitor.information@gmail.com"
+    },
+    "procedencia": {
+        "bachillerato": "COBAEM PLANTEL AGUILILLA",
+        "especialidad": "Fisico-Matemático",
+        "anioEgreso": "2016",
+        "promedio": "100"
+    },
+    "datosFamiliares": {
+        "padres": {
+            "padre": {
+                "nombre": "Jesús Aguilera García",
+                "vive": true,
+                "celular": "4531428237"
+            },
+            "madre": {
+                "nombre": "Gloria Magaña Rodríguez",
+                "vive": true,
+                "celular": "4535389318"
+            }
+        }
+    },
+    "situacionActual": {
+        "semestre": "1",
+        "grupo": "A",
+        "cargaMaxima": "32",
+        "cargaMinima": "24",
+        "creditosAprobados": "250",
+        "promedioConReprobadas": "0.0",
+        "promedioSinReprobadas": "0.0",
+        "motivoBaja": "",
+        "periodosMaximos": "12",
+        "inscrito": "true",
+        "fechaBajaDefinitiva": "",   
+        "turno": "Matutino"   
+    },
+    "expedientes": {
+        "residencias": {  
+            "expediente": "RESIDENCIA LIBERADA",
+            "liberado": false
+        },        
+        "acta": {  
+            "expediente": "ACTA DE NACIMIENTO ORIGINAL",
+            "liberado": false
+        },        
+        "certificado": {  
+            "expediente": "CERTIFICADO DE BACHILLERATO LEGALIZADO",
+            "liberado": false
+        },        
+        "curp": {  
+            "expediente": "COPIA DE LA CURP",
+            "liberado": false
+        },        
+        "ingles": {  
+            "expediente": "ACREDITACIÓN DE INGLES",
+            "liberado": false
+        },        
+        "constanciaNoAdeudo": {  
+            "expediente": "CONSTANCIA DE NO ADEUDO",
+            "liberado": false
+        },        
+        "fotografias": {  
+            "expediente": "FOTOGRAFIAS (2 T/DIPLOMA Y 8 T/CREDENCIAL OVALADA)",
+            "liberado": false
+        },        
+        "servicioSocial": {  
+            "expediente": "SERVICIO SOCIAL",
+            "liberado": false
+        },        
+        "pagoTitulacion": {  
+            "expediente": "RECIBO DE PAGO DE TITULACIÓN",
+            "liberado": false
+        },        
+        "ine": {  
+            "expediente": "COPIA DEL INE",
+            "liberado": false
+        },        
+        "vigenciaDerecho": {  
+            "expediente": "VIGENCIA DE DERECHO",
+            "liberado": false
+        }        
+    }
+}
+
+###
+DELETE https://proagrimex.com/api/v1/users/605bbb55d391f41326b3065c
