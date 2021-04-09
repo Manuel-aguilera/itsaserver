@@ -28,7 +28,7 @@ export const createUser = async (req, res) => {
             })
         }
         
-        const matricula = '';
+        let matricula = '';
         if(req.body.datosAlumno.matricula)
         {
             matricula = req.body.datosAlumno.matricula;
