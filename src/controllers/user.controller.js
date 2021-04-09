@@ -29,9 +29,9 @@ export const createUser = async (req, res) => {
         }
         
         const matricula = '';
-        if(req.body.matricula)
+        if(req.body.datosAlumno.matricula)
         {
-            matricula = req.body.matricula;
+            matricula = req.body.datosAlumno.matricula;
         } else {
             matricula = await getMatricula();
         }
@@ -39,118 +39,26 @@ export const createUser = async (req, res) => {
 
         const newUser = new User({
             datosAlumno: {
-                usuario: req.body.usuario,
+                ...req.body.datosAlumno,
                 matricula: matricula,
-                nombre: req.body.nombre,
-                apellidoPaterno: req.body.apellidoPaterno,
-                apellidoMaterno: req.body.apellidoMaterno,
-                tipoAlta: req.body.tipoAlta,
-                estadoAlumno: req.body.estadoAlumno,
-                carrera: req.body.carrera,
-                fechaNacimiento: req.body.fechaNacimiento,
-                curp: req.body.curp,
-                sexo: req.body.sexo,
                 anioIngreso: new Date(Date.now()).getFullYear(),
-                tipoAlumno: req.body.tipoAlumno,
-                planEstudios: req.body.planEstudios,
-                //campos extra de control  
-                tokenN: req.body.tokenN,
-                fichaAceptada: req.body.fichaAceptada,
-                pagoInscripcion: req.body.pagoInscripcion,
             },
             datosGenerales: {
-                estado: req.body.estado,
-                municipio: req.body.municipio,
-                poblacion: req.body.poblacion,
-                colonia: req.body.colonia,
-                direccion: req.body.direccion,
-                numero: req.body.numero,
-                cp: req.body.cp,
-                telefono1: req.body.telefono1,
-                telefono2: req.body.telefono2,
+                ...req.body.datosGenerales,
                 email: email,
-                emailPersonal: req.body.emailPersonal,
                 fechaAlta: new Date(Date.now()),
             },
             procedencia: {
-                bachillerato: req.body.bachillerato,
-                especialidad: req.body.especialidad,
-                anioEgreso: req.body.anioEgreso,
-                promedio: req.body.promedio,
+                ...req.body.procedencia
             },
             datosFamiliares: {
-                padres: {
-                    padre: {
-                        nombre: req.body.nombre,
-                        vive: req.body.vive,
-                        celular: req.body.celular,
-                    },
-                    madre: {
-                        nombre: req.body.nombre,
-                        vive: req.body.vive,
-                        celular: req.body.celular,
-                    },
-                }
+                ...req.body.datosFamiliares    
             },
             situacionActual: {
-                semestre: req.body.semestre,
-                grupo: req.body.grupo,
-                cargaMaxima: req.body.cargaMaxima,
-                cargaMinima: req.body.cargaMinima,
-                creditosAprobados: req.body.creditosAprobados,
-                promedioConReprobadas: req.body.promedioConReprobadas,
-                promedioSinReprobadas: req.body.promedioSinReprobadas,
-                motivoBaja: req.body.motivoBaja,
-                periodosMaximos: req.body.periodosMaximos,
-                inscrito: req.body.inscrito,
-                fechaBajaDefinitiva: req.body.fechaBajaDefinitiva,   
-                turno: req.body.turno,   
+                ...req.body.situacionActual       
             },
             expedientes: {
-                residencias: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                acta: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                certificado: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                curp: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                ingles: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                constanciaNoAdeudo: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                fotografias: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                servicioSocial: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                pagoTitulacion: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                ine: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
-                vigenciaDerecho: {  
-                    expediente: req.body.expediente,
-                    liberado: req.body.liberado,
-                },        
+                ...req.body.expedientes  
             },
         });
 

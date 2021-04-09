@@ -394,7 +394,8 @@ Content-Type: application/json
         "planEstudios": "ISIC2010-224",
         "tokenN": "ExponentPushToken[W13468LyTH5oRczdrMwAKg]",
         "fichaAceptada": "true",
-        "pagoInscripcion": "true"
+        "pagoInscripcion": "true",
+        "matricula": "16020419"
     },
     "datosGenerales": {
         "estado": "Michoacán",
@@ -491,4 +492,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/users/605bbb55d391f41326b3065c
+DELETE https://proagrimex.com/api/v1/users/606fad1ccff9f205dd9d4b7e
