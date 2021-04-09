@@ -495,7 +495,25 @@ Content-Type: application/json
 DELETE https://proagrimex.com/api/v1/users/606fb71107305e07352bca3d
 
 ###
+DELETE http://localhost:3001/api/v1/users/605b2513018af4305cde48d6
+
+###
 PUT https://proagrimex.com/api/v1/users?id=606fb69207305e07352bca3a
+Content-Type: application/json
+
+{
+    "id_temporaryUser": "605aeb952396130c36fbc43c"
+}
+
+###
+PUT https://proagrimex.com/api/v1/users?id=606fb69207305e07352bca3a
+Content-Type: application/json
+
+{
+    "id_temporaryUser": "605aeb952396130c36fbc43c"
+}
+
+PUT http://localhost:3001/api/v1/users?id=606fc066b31b0539ac030ff3
 Content-Type: application/json
 
 {

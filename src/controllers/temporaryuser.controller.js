@@ -37,9 +37,7 @@ export const createUser = async (req, res) => {
                 const matricula = correo[0].split("al")[1];
                 //obtenemos el usuario institucinial y lo devolvemos
                 const dataUser = await User.find({
-                    datosAlumno: {
-                        matricula: matricula
-                    }
+                    "datosAlumno.matricula": matricula
                 });
                 if(dataUser.length > 0)
                     res.json({
