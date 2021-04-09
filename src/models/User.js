@@ -178,7 +178,8 @@ const userSchema = new Schema({
             type: String,
         },
         inscrito: {  
-            type: String,
+            type: Boolean,
+            default: true,
         },
         fechaBajaDefinitiva: {  
             type: String,
