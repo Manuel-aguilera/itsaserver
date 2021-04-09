@@ -44,7 +44,7 @@ const userSchema = new Schema({
             trim: true,
         },
         anioIngreso: {
-            type: Date,
+            type: String,
         },
         tipoAlumno: {  //regular
             type: String,
@@ -126,6 +126,7 @@ const userSchema = new Schema({
                 },
                 vive: {
                     type: Boolean,
+                    default: true,
                 },
                 celular: {
                     type: String,
@@ -137,6 +138,7 @@ const userSchema = new Schema({
                 },
                 vive: {
                     type: Boolean,
+                    default: true,
                 },
                 celular: {
                     type: String,
