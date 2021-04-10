@@ -2,7 +2,7 @@ import TipoPago from '../models/TipoPago';
 
 export const findAllTipoPagos = async (req, res) => {
     try{
-        const data = await TipoPago.find();
+        const data = await TipoPago.find({}, {_id: 0, createdAt: 0, updatedAt: 0});
         
         res.json({
             data: data,
