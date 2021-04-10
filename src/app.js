@@ -36,6 +36,7 @@ app.use('/api/v1/documentos', Routes.documentoRoutes)
 app.use('/api/v1/descargas', Routes.descargasRoutes)
 app.use('/api/v1/depositosbancarios', Routes.depositosbancarioRoutes)
 app.use('/api/v1/carreras', Routes.carreraRoutes)
+app.use('/api/v1/calificaciones', Routes.calificacionesRoutes)
 app.use('/static', Routes.imagesRoutes)
 
 export default app;

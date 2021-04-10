@@ -380,7 +380,6 @@ Content-Type: application/json
 
 {
     "datosAlumno": {
-        "usuario": "Manuel Aguilera Magaña",
         "nombre": "Manuel",
         "apellidoPaterno": "Aguilera",
         "apellidoMaterno": "Magaña",
@@ -513,9 +512,115 @@ Content-Type: application/json
     "id_temporaryUser": "605aeb952396130c36fbc43c"
 }
 
+###
 PUT http://localhost:3001/api/v1/users?id=606fc066b31b0539ac030ff3
 Content-Type: application/json
 
 {
     "id_temporaryUser": "605aeb952396130c36fbc43c"
 }
+
+###
+POST http://localhost:3001/api/v1/temporaryusers
+Content-Type: application/json
+
+{
+    "emailPersonal": "al16020419@itsa.edu.mx"
+}
+
+############### Calificaciones localhost ################
+
+###
+GET http://localhost:3001/api/v1/calificaciones
+
+###
+POST http://localhost:3001/api/v1/calificaciones
+Content-Type: application/json
+
+{
+    "id_user": "6070c561f6f07a02d02cd23f",
+    "periodo": "20163-JULDIC",
+    "claveMateria": "ACF0901",
+    "materia": "CÁLCULO DIFERENCIAL",
+    "unidades": "5",
+    "estado": "Califs. parciales",
+    "unidad1": "90",
+    "unidad2": "90",
+    "unidad3": "90",
+    "unidad4": "90",
+    "unidad5": "90",
+    "unidad6": "0",
+    "unidad7": "0",
+    "unidad8": "0",
+    "unidad9": "0",
+    "unidad10": "0",
+    "promedio": "90",
+    "opc": "1a",
+    "aprobadas": "AC",
+    "tipoCurso": "NE"
+}
+
+###
+POST http://localhost:3001/api/v1/calificaciones
+Content-Type: application/json
+
+{
+    "id_user": "606fb69207305e07352bca3a",
+    "periodo": "20163-JULDIC",
+    "claveMateria": "ACC0906",
+    "materia": "FUNDAMENTOS DE INVESTIGACIÓN",
+    "unidades": "4",
+    "estado": "Califs. parciales",
+    "unidad1": "100",
+    "unidad2": "100",
+    "unidad3": "100",
+    "unidad4": "100",
+    "unidad5": "0",
+    "unidad6": "0",
+    "unidad7": "0",
+    "unidad8": "0",
+    "unidad9": "0",
+    "unidad10": "0",
+    "promedio": "100",
+    "opc": "1a",
+    "aprobadas": "AC",
+    "tipoCurso": "NE"
+}
+
+###
+POST http://localhost:3001/api/v1/calificaciones
+Content-Type: application/json
+
+{
+    "id_user": "606fb69207305e07352bca3a",
+    "periodo": "20163-JULDIC",
+    "claveMateria": "AED128",
+    "materia": "PROGRAMACIÓN ORIENTADA A OBJETOS",
+    "unidades": "6",
+    "estado": "Califs. parciales",
+    "unidad1": "100",
+    "unidad2": "100",
+    "unidad3": "100",
+    "unidad4": "100",
+    "unidad5": "100",
+    "unidad6": "94",
+    "unidad7": "0",
+    "unidad8": "0",
+    "unidad9": "0",
+    "unidad10": "0",
+    "promedio": "99",
+    "opc": "1a",
+    "aprobadas": "AC",
+    "tipoCurso": "NE"
+}
+
+###
+PUT http://localhost:3001/api/v1/calificaciones/6070c2aae221ca272c0474ba
+Content-Type: application/json
+
+{
+    "id_user": "6070bf64779e7d3c48b09299"
+}
+
+###
+DELETE http://localhost:3001/api/v1/calificaciones/6070bf64779e7d3c48b09299

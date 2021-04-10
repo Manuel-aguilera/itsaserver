@@ -7,6 +7,7 @@ import documentoRoutes from './documento.routes';
 import descargasRoutes from './descargas.routes';
 import depositosbancarioRoutes from './depositosbancario.routes';
 import carreraRoutes from './carrera.routes';
+import calificacionesRoutes from './calificaciones.routes';
 import imagesRoutes from './images.routes';
 
 export {
@@ -19,5 +20,6 @@ export {
     descargasRoutes, 
     depositosbancarioRoutes, 
     carreraRoutes,
+    calificacionesRoutes,
     imagesRoutes,
 };
