@@ -375,6 +375,9 @@ Content-Type: application/json
 GET https://proagrimex.com/api/v1/users
 
 ###
+GET http://localhost:3001/api/v1/users
+
+###
 POST https://proagrimex.com/api/v1/users
 Content-Type: application/json
 
@@ -494,7 +497,7 @@ Content-Type: application/json
 DELETE https://proagrimex.com/api/v1/users/606fb71107305e07352bca3d
 
 ###
-DELETE http://localhost:3001/api/v1/users/605b2513018af4305cde48d6
+DELETE http://localhost:3001/api/v1/users/6071539b641f8b2664982776
 
 ###
 PUT https://proagrimex.com/api/v1/users?id=606fb69207305e07352bca3a
@@ -534,48 +537,21 @@ Content-Type: application/json
 GET http://localhost:3001/api/v1/calificaciones
 
 ###
-POST http://localhost:3001/api/v1/calificaciones
-Content-Type: application/json
-
-{
-    "id_user": "6070c561f6f07a02d02cd23f",
-    "periodo": "20163-JULDIC",
-    "claveMateria": "ACF0901",
-    "materia": "CÁLCULO DIFERENCIAL",
-    "unidades": "5",
-    "estado": "Califs. parciales",
-    "unidad1": "90",
-    "unidad2": "90",
-    "unidad3": "90",
-    "unidad4": "90",
-    "unidad5": "90",
-    "unidad6": "0",
-    "unidad7": "0",
-    "unidad8": "0",
-    "unidad9": "0",
-    "unidad10": "0",
-    "promedio": "90",
-    "opc": "1a",
-    "aprobadas": "AC",
-    "tipoCurso": "NE"
-}
-
-###
-POST http://localhost:3001/api/v1/calificaciones
+POST https://proagrimex.com/api/v1/calificaciones
 Content-Type: application/json
 
 {
     "id_user": "606fb69207305e07352bca3a",
     "periodo": "20163-JULDIC",
-    "claveMateria": "ACC0906",
-    "materia": "FUNDAMENTOS DE INVESTIGACIÓN",
-    "unidades": "4",
+    "claveMateria": "ACF0901",
+    "materia": "CÁLCULO DIFERENCIAL",
+    "unidades": "5",
     "estado": "Califs. parciales",
     "unidad1": "100",
     "unidad2": "100",
     "unidad3": "100",
     "unidad4": "100",
-    "unidad5": "0",
+    "unidad5": "100",
     "unidad6": "0",
     "unidad7": "0",
     "unidad8": "0",
@@ -588,11 +564,38 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3001/api/v1/calificaciones
+POST https://proagrimex.com/api/v1/calificaciones
 Content-Type: application/json
 
 {
-    "id_user": "606fb69207305e07352bca3a",
+    "id_user": "607156dd9a892608924e5e56",
+    "periodo": "20163-JULDIC",
+    "claveMateria": "ACC0906",
+    "materia": "FUNDAMENTOS DE INVESTIGACIÓN",
+    "unidades": "4",
+    "estado": "Califs. parciales",
+    "unidad1": "100",
+    "unidad2": "99",
+    "unidad3": "100",
+    "unidad4": "100",
+    "unidad5": "0",
+    "unidad6": "0",
+    "unidad7": "0",
+    "unidad8": "0",
+    "unidad9": "0",
+    "unidad10": "0",
+    "promedio": "99",
+    "opc": "1a",
+    "aprobadas": "AC",
+    "tipoCurso": "NE"
+}
+
+###
+POST https://proagrimex.com/api/v1/calificaciones
+Content-Type: application/json
+
+{
+    "id_user": "607156dd9a892608924e5e56",
     "periodo": "20163-JULDIC",
     "claveMateria": "AED128",
     "materia": "PROGRAMACIÓN ORIENTADA A OBJETOS",
@@ -602,13 +605,13 @@ Content-Type: application/json
     "unidad2": "100",
     "unidad3": "100",
     "unidad4": "100",
-    "unidad5": "100",
+    "unidad5": "90",
     "unidad6": "94",
     "unidad7": "0",
     "unidad8": "0",
     "unidad9": "0",
     "unidad10": "0",
-    "promedio": "99",
+    "promedio": "98",
     "opc": "1a",
     "aprobadas": "AC",
     "tipoCurso": "NE"
@@ -623,4 +626,8 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/v1/calificaciones/6070bf64779e7d3c48b09299
+DELETE http://localhost:3001/api/v1/calificaciones/6070c2aae221ca272c0474ba
+
+
+//606fb69207305e07352bca3a    Manuel
+//607156dd9a892608924e5e56    Jesus

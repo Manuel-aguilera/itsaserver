@@ -139,15 +139,15 @@ export const deleteDescarga = async (req, res) => {
 }
 
 export const updateDescarga = async (req, res) => {
-    const { id } = req.params;
-    if(!req.body.curpFoto && !req.body.actaFoto && !req.body.certificadoBach && !req.body.constanciaMedica ){
-        return res.status(404).send({
-            data: [],
-            status: 'failed',
-            message: "Curp, acta, certificado y contancia médica no puede ser vacío en el body"
-        })
-    }
     try{
+        if(!req.params){
+            return res.send({
+                data: [],
+                status: 'failed',
+                message: "Nos ingresdo el id para la descarga a actualizar"
+            })
+        }
+        const { id } = req.params;
         const updatedDescarga = await Descarga.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false
         });
