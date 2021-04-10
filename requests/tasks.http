@@ -328,22 +328,23 @@ Content-Type: application/json
 DELETE https://proagrimex.com/api/v1/documentos/60653eb48e425509bd62fba2
 
 ############### Depositos bancarios proagrimex ################
-POST https://proagrimex.com/api/v1/depositosbancarios
+POST http://localhost:3001/api/v1/depositosbancarios/alumno
 Content-Type: application/json
 
 {
-    "id": "605aeb952396130c36fbc43c",
+    "id_user": "606fc066b31b0539ac030ff3",
     "tipoPago": "inscripcion",
-    "concepto": "APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO",
+    "concepto": "EXCEPCIÓN DE INSCRIPCION POR GRATUIDAD",
     "cantidad": "1",
-    "costo": "800.00",
-    "importe": "800.00",
+    "costo": "0.00",
+    "importe": "0.00",
     "convenioCIE": "001770500", 
-    "observaciones": "No aplica" 
+    "observaciones": "No aplica",
+    "estadoPago": "En proceso"
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/depositosbancarios/6066dab91a0a391105f7c6fe
+DELETE http://localhost:3001/api/v1/depositosbancarios/607179dbdf6fd02bac673b3c
 
 ###
 PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
@@ -362,7 +363,7 @@ Content-Type: application/json
 }
 
 ###
-PUT https://proagrimex.com/api/v1/depositosbancarios/6066e9bf30f91111be34b57d
+PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
 Content-Type: application/json
 
 {
@@ -631,3 +632,11 @@ DELETE http://localhost:3001/api/v1/calificaciones/6070c2aae221ca272c0474ba
 
 //606fb69207305e07352bca3a    Manuel
 //607156dd9a892608924e5e56    Jesus
+
+###
+PUT https://proagrimex.com/api/v1/descargas/60697d5ceb6c8c512c7eb9ee
+Content-Type: application/json
+
+{
+    "id_user": "606fb69207305e07352bca3a"
+}

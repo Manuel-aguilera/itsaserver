@@ -71,7 +71,9 @@ const depositosBancariosSchema = new Schema({
             path: {type: String},
         }
     },
-
+    estadoPago: {
+        type: String,
+    },
 }, {
     versionKey: false,
     timestamps: true,  //para agregar creatAt y updateAt

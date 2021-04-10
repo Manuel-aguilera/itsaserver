@@ -25,7 +25,6 @@ export const findAllDepositosBancarios = async (req, res) => {
     }
 }
 
-//cuando es en la app los datos deben ser seleccionables
 export const createDepositosBancario = async (req, res) => {
     try{
         if(!req.body)
@@ -34,39 +33,24 @@ export const createDepositosBancario = async (req, res) => {
               status: "failed",
             message: "Debes ingresar los datos del DepositosBancario"
         })
-        const { id } = req.body;
-        console.log(id)
+        const { id_user } = req.body;
 
         //suponiendo que en el panel del front solicitamos una data compuesta con el usuarytemporary y sus docs
         //  entonces mediante esta ruta creamos el deposito bancario para que esté disponible en la app móvil del cliente
         //Haremos la simulacion de la data compuesta para el panel personalizado y llamaremos este metodo para crearlo
-        const temporaryUser = await TemporaryUser.findById(id);
-        const documento = await Documento.findOne({id_user: id})
+        const temporaryUser = await TemporaryUser.findById(id_user);
+        const documento = await Documento.findOne({id_user: id_user})
         //extraemos el ultimo periodo, ya existe una ruta llamada periodos/ultimo pero aqui ponemos la logica ya que estamos simulando
         const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
         const listaPeriodos = Object.entries(periodo);
         let ultimoPeriodo = listaPeriodos[0][1].periodo;
 
-        //obtenemos el tipo de pago (luego ya que esto se usara en el front)
-        // const tipoPago = await TipoPago.find();
-        // //lo usamos para tipopagos 
-        // const tipoPagos = Object.entries(tipoPago.data[0]);
-        // tipoPagos.map((lista) => {
-        //     console.log(lista[0]) //tipos
-        //     console.log(lista[1]) //conceptos
-        // })
-        // let pago1 = 'fichas';
-        // let concepto1 = 'FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES';
-        // Este para cuando haga el segundo deposito bancario
-        // let pago2 = 'inscripcion';
-        // let concepto2 = 'APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO';
-        
         let folioPago = getFolioPago();
         let rf = await getReferenciaBancaria(); 
         let referenciaBancaria = `${rf}${folioPago}`;
 
         const newDepositosBancario = new DepositosBancario({
-            id_user: id,
+            id_user: id_user,
             usuario: temporaryUser.usuario,
             tipoPago: req.body.tipoPago,
             concepto: req.body.concepto,
@@ -77,9 +61,66 @@ export const createDepositosBancario = async (req, res) => {
             folioInterno: folioPago,
             convenioCIE: req.body.convenioCIE,
             referenciaBancaria: referenciaBancaria,
-            periodo: ultimoPeriodo, 
+            periodo: ultimoPeriodo,
+            estadoPago: req.body.estadoPago,
             fecha: `${new Date(Date.now())}`,
             fechaCaducidad: `${new Date(Date.now())}`,
+            observaciones: req.body.observaciones, 
+        });
+        const depositosBancarioSave = await newDepositosBancario.save();
+        res.json({
+            data: depositosBancarioSave,
+            status: "success",
+            message: "DepositosBancario creada exitosamente"
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            data: [],
+            status: "failed",
+            message: error.message || "Algo ocurrió mal mientras creabamos la DepositosBancario",
+        });
+    }
+}
+
+export const createAlumnoDepositosBancario = async (req, res) => {
+    try{
+        if(!req.body)
+        res.status(404).json({
+            data: [],
+              status: "failed",
+            message: "Debes ingresar los datos del DepositosBancario"
+        })
+        const { id_user } = req.body;
+
+        //suponiendo que en el panel del front solicitamos una data compuesta con el usuarytemporary y sus docs
+        //  entonces mediante esta ruta creamos el deposito bancario para que esté disponible en la app móvil del cliente
+        //Haremos la simulacion de la data compuesta para el panel personalizado y llamaremos este metodo para crearlo
+        const user = await User.findById(id_user);
+        //extraemos el ultimo periodo, ya existe una ruta llamada periodos/ultimo pero aqui ponemos la logica ya que estamos simulando
+        const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
+        const listaPeriodos = Object.entries(periodo);
+        let ultimoPeriodo = listaPeriodos[0][1].periodo;
+
+        let folioPago = getFolioPago();
+        let rf = await getReferenciaBancariaAlumno(user); 
+        let referenciaBancaria = `${rf}${folioPago}`;
+        const newDepositosBancario = new DepositosBancario({
+            id_user: id_user,
+            usuario: user.datosAlumno.usuario,
+            tipoPago: req.body.tipoPago,
+            concepto: req.body.concepto,
+            cantidad: req.body.cantidad,
+            costo: req.body.costo,
+            importe: req.body.importe,
+            NControlCurp: user.datosAlumno.curp,
+            folioInterno: folioPago,
+            convenioCIE: req.body.convenioCIE,
+            referenciaBancaria: referenciaBancaria,
+            periodo: ultimoPeriodo, 
+            estadoPago: req.body.estadoPago,
+            fecha: `${new Date(Date.now())}`,
+            fechaCaducidad: `${new Date(Date.now())}`, //falta indicar la expiracion
             observaciones: req.body.observaciones, 
         });
         const depositosBancarioSave = await newDepositosBancario.save();
@@ -311,17 +352,83 @@ export const updateAvailableDepositosBancario = async (req, res) => {
     }
 }
 
+export const estadoPagoDepositosBancario = async (req, res) => {
+    try{
+        if(!req.params)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el _id del DepositosBancario"
+            })
+        if(!req.body)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el valor para estadoPago"
+            })
+        const { id } = req.params;
+        const dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+            estadoPago: req.body.estadoPago,  
+        }, {
+            useFindAndModify: false
+        });
+        res.json({
+            data: dataDepositosBancario,
+            status: 'success',
+            message: 'La DepositosBancario actualizada exitosamente',
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error actualizada la DepositosBancario con el id: ${id}`,
+        });
+    }
+}
+
+export const pagadoDepositosBancario = async (req, res) => {
+    try{
+        if(!req.params)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el _id del DepositosBancario"
+            })
+        if(!req.body)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el valor para pagado"
+            })
+        const { id } = req.params;
+        const dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+            pagado: req.body.pagado,  
+        }, {
+            useFindAndModify: false
+        });
+        res.json({
+            data: dataDepositosBancario,
+            status: 'success',
+            message: 'La DepositosBancario fue actualizada exitosamente',
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error actualizada la DepositosBancario con el id: ${id}`,
+        });
+    }
+}
+
 const getFolioPago = () => {
     return `${Date.now()}`;
 }
 
 const getReferenciaBancaria = async () => {
-    let matricula = await getMatricula();
-    return `A${matricula}F`;
+    let patron = await getPatron();
+    return `N${patron}F`;
     // console.log(`A${matricula}F${Date.now()}`);
 }
 
-const getMatricula = async () => {
+const getPatron = async () => {
     const date = new Date(Date.now());
     let year = `${date.getFullYear()}`;
     let anio = year.slice(2,4);
@@ -329,6 +436,11 @@ const getMatricula = async () => {
     let numSig = users.length + 1;
     let matricula = `${anio}02${zeroFill(numSig, 4)}`;
     return matricula;
+}
+
+const getReferenciaBancariaAlumno = async (user) => {
+    let matricula = user.datosAlumno.matricula;
+    return `A${matricula}F`;
 }
 
 const zeroFill = ( number, width ) => { // example zeroFill(324, 4)
