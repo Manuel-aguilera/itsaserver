@@ -5,12 +5,17 @@ import * as Routes from './routes/index';
 import config from './config';
 import bodyParser from 'body-parser';
 import path from 'path';
+import { createRoles, createTipoPagos} from './libs/initialSetup';
 
 const app = express();
 
 //Settings
 app.set('port', config.PORT);
 console.log(`Server on port: ${config.PORT}`);
+
+//libs
+createRoles();
+createTipoPagos();
 
 //Middlewares
 app.use(cors());
