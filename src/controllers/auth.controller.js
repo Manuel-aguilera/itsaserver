@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
         const savedUser = await newUserWeb.save();
         
         const token = jwt.sign({id: savedUser._id}, config.SECRET, {
-            expiresIn: 1800 //30 minutos
+            expiresIn: 3600 //1 hora
         })
         
         res.json({
@@ -59,7 +59,7 @@ export const signin = async (req, res) => {
         const userFound = await UserWeb.findOne({email}).populate("roles");
         
         if(!userFound)
-            return res.status(400).json({
+            return res.json({
                 data: [],
                 status: "failed",
                 token: null,
@@ -69,7 +69,7 @@ export const signin = async (req, res) => {
         const matchPassword = await comparePassword(password, userFound.password);
 
         if(!matchPassword)
-            return res.status(401).json({
+            return res.json({
                 data: [],
                 status: "failed",
                 token: null,
@@ -77,7 +77,7 @@ export const signin = async (req, res) => {
             })
 
         const token = jwt.sign({id: userFound._id}, config.SECRET, {
-            expiresIn: 1800
+            expiresIn: 3600
         })
 
         const roles = userFound.roles.map(role => role.name);
