@@ -32,7 +32,11 @@ export const signup = async (req, res) => {
         })
         
         res.json({
-            data: [],
+            data: [{
+                username,
+                email,
+                roles
+            }],
             status: "success",
             token: token,
             message: "Usuario creado correctamente",
@@ -50,7 +54,7 @@ export const signup = async (req, res) => {
 
 export const signin = async (req, res) => {
     try {
-        const { username, email, password, roles } = req.body;
+        const { email, password } = req.body;
 
         const userFound = await UserWeb.findOne({email}).populate("roles");
         
@@ -76,8 +80,14 @@ export const signin = async (req, res) => {
             expiresIn: 1800
         })
 
+        const roles = userFound.roles.map(role => role.name);
+
         res.json({
-            data: [],
+            data: [{
+                username: userFound.username,
+                email: userFound.email,
+                roles
+            }],
             status: "success",
             token: token,
             message: "Usuario devuelto correctamente",
