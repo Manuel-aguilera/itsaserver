@@ -678,7 +678,7 @@ POST http://localhost:3001/api/v1/appweb/users/signin
 Content-Type: application/json
 
 {
-    "username": "Ale Aguilera Magaña",
-    "email": "ale@hotmail.com",
+    "username": "Adi Aguilera Magaña",
+    "email": "adi@hotmail.com",
     "password": "Many1234"
 }
