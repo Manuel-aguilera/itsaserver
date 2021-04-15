@@ -220,7 +220,7 @@ Content-Type: application/json
 GET https://proagrimex.com/api/v1/tipopagos
 
 ###
-DELETE https://proagrimex.com/api/v1/tipopagos/605c2ca8546eb82d9a7a8278
+DELETE https://proagrimex.com/api/v1/tipopagos/605c2bc0546eb82d9a7a8277
 
 ###
 POST https://proagrimex.com/api/v1/tipopagos
@@ -344,7 +344,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/v1/depositosbancarios/607179dbdf6fd02bac673b3c
+DELETE https://proagrimex.com/api/v1/depositosbancarios/60753acf3009695cb01631c5
 
 ###
 PUT https://proagrimex.com/api/v1/depositosbancarios/6066dc0030f91111be34b57c
@@ -639,4 +639,46 @@ Content-Type: application/json
 
 {
     "id_user": "606fb69207305e07352bca3a"
+}
+
+############### Calificaciones localhost ################
+###
+POST http://localhost:3001/api/v1/appweb/users/signup
+Content-Type: application/json
+
+{
+    "username": "Manuel Aguilera Magaña",
+    "email": "manuel_aguilerita@hotmail.com",
+    "password": "Many1234",
+}
+
+###
+POST http://localhost:3001/api/v1/appweb/users/signup
+Content-Type: application/json
+
+{
+    "username": "Adi Aguilera Magaña",
+    "email": "adi@hotmail.com",
+    "password": "Many1234",
+    "roles": ["admin", "moderator"]
+}
+
+###
+POST http://localhost:3001/api/v1/appweb/users/signup
+Content-Type: application/json
+
+{
+    "username": "Ale Aguilera Magaña",
+    "email": "ale@hotmail.com",
+    "password": "Many1234"
+}
+
+###
+POST http://localhost:3001/api/v1/appweb/users/signin
+Content-Type: application/json
+
+{
+    "username": "Ale Aguilera Magaña",
+    "email": "ale@hotmail.com",
+    "password": "Many1234"
 }

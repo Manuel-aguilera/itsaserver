@@ -32,6 +32,7 @@ app.use(express.static('uploadFile'))
 app.get('/', (req, res) => {
     res.json({message: 'API V1 ITSA'})
 })
+app.use('/api/v1/auth', Routes.authRoutes)
 app.use('/api/v1/tasks', Routes.taskRoutes)
 app.use('/api/v1/users', Routes.userRoutes)
 app.use('/api/v1/temporaryusers', Routes.temporaryUserRoutes)

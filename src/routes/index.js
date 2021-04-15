@@ -1,4 +1,5 @@
 import userRoutes from './user.routes';
+import authRoutes from './auth.routes';
 import temporaryUserRoutes from './temporaryuser.routes';
 import tipoPagoRoutes from './tipopago.routes';
 import taskRoutes from './tasks.routes';
@@ -22,4 +23,5 @@ export {
     carreraRoutes,
     calificacionesRoutes,
     imagesRoutes,
+    authRoutes,
 };

@@ -316,7 +316,7 @@ export const updateDepositosBancario = async (req, res) => {
     }
 }
 
-export const updateAvailableDepositosBancario = async (req, res) => {
+export const updateProcesadoDepositosBancario = async (req, res) => {
     try{
         if(!req.params){
             res.json({
