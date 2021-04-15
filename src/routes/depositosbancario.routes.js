@@ -8,7 +8,9 @@ const router = Router();
 
 router.post('/alumno/', depositosBancarioCtrl.createAlumnoDepositosBancario);
 
-router.get('/alumno/noprocesados/:id', depositosBancarioCtrl.findAvailableDepositosBancario);
+router.get('/alumno/:id', depositosBancarioCtrl.findAllDepositosBancarioAlumno);
+
+router.get('/alumno/noprocesados/:id', depositosBancarioCtrl.findNoProcesadoDepositosBancario);
 
 router.get('/alumno/nopagados/:id', depositosBancarioCtrl.findNotPaidDepositosBancario);
 
@@ -22,9 +24,9 @@ router.get('/', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isModerator], dep
 
 router.put('/procesado/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updateProcesadoDepositosBancario);
 
-router.put('/estadopago/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.estadoPagoDepositosBancario);
+router.put('/estadopago/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updateEstadoPagoDepositosBancario);
 
-router.put('/pagado/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.pagadoDepositosBancario);
+router.put('/pagado/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updatePagadoDepositosBancario);
 
 router.delete('/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.deleteDepositosBancario);
 

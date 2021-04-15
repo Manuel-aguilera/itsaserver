@@ -12,8 +12,7 @@ router.post(
     userCtrl.signup);
 
 router.post(
-    '/signin',
-    [verifySignup.checkDuplicateUserAndEamil, verifySignup.checkRolesExisted], 
+    '/signin', 
     userCtrl.signin);
 
 // router.post('/nuevo', userCtrl.createNewUser); //para crear un usuario desde la tasks.http

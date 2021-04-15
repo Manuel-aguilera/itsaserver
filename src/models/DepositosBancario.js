@@ -1,6 +1,8 @@
 import {Schema, model} from 'mongoose';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
+export const ESTADOPAGO = ["revisión", "aceptado", "rechazado", "finalizado", "cancelado"];
+
 const depositosBancariosSchema = new Schema({
     id_user: {
         type: String,
