@@ -7,7 +7,7 @@ export const verifyToken = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"];
         if(!token)
-            return res.status(403).json({
+            return res.json({
                 data: [],
                 status: "failed",
                 message: "El token no ha sido proveido",
@@ -17,7 +17,7 @@ export const verifyToken = async (req, res, next) => {
         req.userId = decoded.id;
         const userWeb = await UserWeb.findById(req.userId, {password: 0});
         if(!userWeb)
-            return res.status(404).json({
+            return res.json({
                 data: [],
                 status: "failed",
                 message: "El usuario no existe",
@@ -25,7 +25,7 @@ export const verifyToken = async (req, res, next) => {
         else 
             next();
     } catch (error) {
-        return res.status(401).json({
+        return res.json({
             data: [],
             status: "failed",
             message: "No tienes autorizacion",
@@ -42,7 +42,7 @@ export const isAdmin = async (req, res, next) => {
             return;
         }
     }
-    return res.status(401).json({
+    return res.json({
         data: [],
         status: "failed",
         message: "No tienes el rol de admin",
@@ -58,7 +58,7 @@ export const isModerator = async (req, res, next) => {
             return;
         }
     }
-    return res.status(401).json({
+    return res.json({
         data: [],
         status: "failed",
         message: "No tienes el rol de moderator",
