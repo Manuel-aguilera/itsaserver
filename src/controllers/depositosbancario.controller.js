@@ -76,7 +76,13 @@ export const createAlumnoDepositosBancario = async (req, res) => {
             referenciaBancaria: referenciaBancaria,
             periodo: ultimoPeriodo, 
             estadoPago: req.body.estadoPago,
-            fotoDeposito: [],
+            fotoDeposito: {
+                image: {
+                    originalname: "null",
+                    filename: "null",
+                    path: "null",
+                },
+            },
             fecha: `${new Date(Date.now())}`,
             fechaCaducidad: `${new Date(Date.now())}`, //falta indicar la expiracion
             observaciones: req.body.observaciones, 
@@ -310,7 +316,13 @@ export const createDepositosBancario = async (req, res) => {
             referenciaBancaria: referenciaBancaria,
             periodo: ultimoPeriodo,
             estadoPago: req.body.estadoPago,
-            fotoDeposito: [],
+            fotoDeposito: {
+                image: {
+                    originalname: "null",
+                    filename: "null",
+                    path: "null",
+                },
+            },
             fecha: `${new Date(Date.now())}`,
             fechaCaducidad: `${new Date(Date.now())}`,
             observaciones: req.body.observaciones, 
