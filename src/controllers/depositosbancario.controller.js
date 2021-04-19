@@ -263,7 +263,7 @@ export const findAllDepositosBancarios = async (req, res) => {
     try{
         const data = await DepositosBancario.find().sort({createdAt: -1});
         
-        res.json({
+        gres.json({
             data: data,
             status: "success",
             message: "Datos de las DepositosBancarios"
@@ -396,6 +396,7 @@ export const updateEstadoPagoDepositosBancario = async (req, res) => {
         const { id } = req.params;
         const dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
             estadoPago: req.body.estadoPago,  
+            observaciones: req.body.observaciones,
         }, {
             useFindAndModify: false
         });
