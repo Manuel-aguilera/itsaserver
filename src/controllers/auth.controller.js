@@ -7,7 +7,7 @@ import config from '../config';
 export const signup = async (req, res) => {
     try{
 
-        const { username, email, password, roles } = req.body;
+        let { username, email, password, roles } = req.body;
 
         let rol = [];
         if(roles){
@@ -16,6 +16,7 @@ export const signup = async (req, res) => {
         } else {
             const foundRoles = await Role.findOne({name: "user"});
             rol = [foundRoles._id];
+            roles = ["user"];
         }
         
         const newUserWeb = new UserWeb({
