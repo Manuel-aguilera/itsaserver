@@ -254,7 +254,7 @@ export const updateDepositosBancario = async (req, res) => {
 
 export const findAllDepositosBancarios = async (req, res) => {
     try{
-        const data = await DepositosBancario.find();
+        const data = await DepositosBancario.find().sort({createdAt: -1});
         
         res.json({
             data: data,
