@@ -263,7 +263,7 @@ export const findAllDepositosBancarios = async (req, res) => {
     try{
         const data = await DepositosBancario.find().sort({createdAt: -1});
         
-        gres.json({
+        res.json({
             data: data,
             status: "success",
             message: "Datos de las DepositosBancarios"
