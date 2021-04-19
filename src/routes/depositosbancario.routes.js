@@ -17,17 +17,18 @@ router.get('/alumno/nopagados/:id', depositosBancarioCtrl.findNotPaidDepositosBa
 router.put('/alumno/', depositosBancarioCtrl.updateDepositosBancario);
 
 //Web
+// quitamos los comprobadores de token y de tipo de sesion porque aún no arreglamos las sesiones
 
-router.post('/', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.createDepositosBancario);
+router.post('/', depositosBancarioCtrl.createDepositosBancario);
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isModerator], depositosBancarioCtrl.findAllDepositosBancarios);
+router.get('/', depositosBancarioCtrl.findAllDepositosBancarios);
 
-router.put('/procesado/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updateProcesadoDepositosBancario);
+router.put('/procesado/:id', depositosBancarioCtrl.updateProcesadoDepositosBancario);
 
-router.put('/estadopago/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updateEstadoPagoDepositosBancario);
+router.put('/estadopago/:id', depositosBancarioCtrl.updateEstadoPagoDepositosBancario);
 
-router.put('/pagado/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.updatePagadoDepositosBancario);
+router.put('/pagado/:id', depositosBancarioCtrl.updatePagadoDepositosBancario);
 
-router.delete('/:id', [authJwt.verifyToken, authJwt.isAdmin], depositosBancarioCtrl.deleteDepositosBancario);
+router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
 
 export default router;
