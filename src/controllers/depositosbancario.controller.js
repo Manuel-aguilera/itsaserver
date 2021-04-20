@@ -50,18 +50,12 @@ export const createAlumnoDepositosBancario = async (req, res) => {
         })
         const { id_user } = req.body;
 
-        //suponiendo que en el panel del front solicitamos una data compuesta con el usuarytemporary y sus docs
-        //  entonces mediante esta ruta creamos el deposito bancario para que esté disponible en la app móvil del cliente
-        //Haremos la simulacion de la data compuesta para el panel personalizado y llamaremos este metodo para crearlo
         const user = await User.findById(id_user);
-        //extraemos el ultimo periodo, ya existe una ruta llamada periodos/ultimo pero aqui ponemos la logica ya que estamos simulando
         const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
         const listaPeriodos = Object.entries(periodo);
         let ultimoPeriodo = listaPeriodos[0][1].periodo;
 
         let folioPago = getFolioPago();
-        let rf = await getReferenciaBancariaAlumno(user); 
-        let referenciaBancaria = `${rf}${folioPago}`;
         const newDepositosBancario = new DepositosBancario({
             id_user: id_user,
             usuario: user.datosAlumno.usuario,
@@ -73,9 +67,11 @@ export const createAlumnoDepositosBancario = async (req, res) => {
             NControlCurp: user.datosAlumno.curp,
             folioInterno: folioPago,
             convenioCIE: req.body.convenioCIE,
-            referenciaBancaria: referenciaBancaria,
+            referenciaBancaria: "Sin aprobar",
             periodo: ultimoPeriodo, 
-            estadoPago: req.body.estadoPago,
+            convenioCIE: "001770500",
+            observaciones: "No aplica",
+            estadoPago: ESTADOPAGO[0], //el 0 es revision
             fotoDeposito: {
                 image: {
                     originalname: "null",
@@ -85,7 +81,6 @@ export const createAlumnoDepositosBancario = async (req, res) => {
             },
             fecha: `${new Date(Date.now())}`,
             fechaCaducidad: `${new Date(Date.now())}`, //falta indicar la expiracion
-            observaciones: req.body.observaciones, 
         });
         const depositosBancarioSave = await newDepositosBancario.save();
         res.json({
@@ -394,12 +389,29 @@ export const updateEstadoPagoDepositosBancario = async (req, res) => {
                 message: "No has ingresado el valor para estadoPago"
             })
         const { id } = req.params;
-        const dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
-            estadoPago: req.body.estadoPago,  
-            observaciones: req.body.observaciones,
-        }, {
-            useFindAndModify: false
-        });
+        let dataDepositosBancario = null;
+        if(ESTADOPAGO[1] === req.body.estadoPago) //"aceptado" debemos crear la referenciaBancaria
+        {
+            let rf = await getReferenciaBancariaAlumno(user); 
+            let deposito = await DepositosBancario.findById(id);
+            let folio = deposito.folioInterno;
+            let referenciaBancaria = `${rf}${folio}`;
+            dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+                estadoPago: req.body.estadoPago,  
+                observaciones: req.body.observaciones,
+                referenciaBancaria: referenciaBancaria, 
+            }, {
+                useFindAndModify: false
+            });
+        } else {
+            dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+                estadoPago: req.body.estadoPago,  
+                observaciones: req.body.observaciones,
+            }, {
+                useFindAndModify: false
+            });
+        }
+
         res.json({
             data: dataDepositosBancario,
             status: 'success',
