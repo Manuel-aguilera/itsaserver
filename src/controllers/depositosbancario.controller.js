@@ -6,7 +6,7 @@ import User from '../models/User';
 import Periodo from '../models/Periodo';
 import upload from '../middleware/uploadDepositos';
 
-// ["revisión", "aceptado", "rechazado", "finalizado", "cancelado"];
+// ["revisión", "aceptado", "foto rechazada", "rechazado", "finalizado", "cancelado"];
 
 //movil
 
