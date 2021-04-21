@@ -98,6 +98,36 @@ export const createAlumnoDepositosBancario = async (req, res) => {
     }
 }
 
+export const cancelarDepositosBancarioAlumno = async (req, res) => {
+    try{
+        if(!req.params)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el _id del DepositosBancario"
+            })
+        const { id } = req.params;
+        let dataDepositosBancario = await DepositosBancario.findByIdAndUpdate(id, {
+            estadoPago: ESTADOPAGO[5],  
+            observaciones: "El deposito bancario fue cancelado por el alumno.",
+        }, {
+            useFindAndModify: false
+        });
+        
+
+        res.json({
+            data: dataDepositosBancario,
+            status: 'success',
+            message: 'El DepositosBancario fue cancelado actualizada exitosamente',
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error cancelando el DepositosBancario con el id: ${id}`,
+        });
+    }
+}
+
 export const findNoProcesadoDepositosBancario = async (req, res) => {
     if(!req.params)
         res.status(404).json({
@@ -181,7 +211,7 @@ export const findUltimoDepositosBancario = async (req, res) => {
     }
 }
 
-export const updateDepositosBancario = async (req, res) => {
+export const updateDepositosBancarioInscripcion = async (req, res) => {
     try{
         await upload(req, res);
         if(req.files.length < 1) {

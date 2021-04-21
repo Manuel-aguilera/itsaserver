@@ -10,11 +10,13 @@ router.post('/alumno/', depositosBancarioCtrl.createAlumnoDepositosBancario);
 
 router.get('/alumno/:id', depositosBancarioCtrl.findAllDepositosBancarioAlumno);
 
+router.delete('/alumno/:id', depositosBancarioCtrl.cancelarDepositosBancarioAlumno);
+
 router.get('/alumno/noprocesados/:id', depositosBancarioCtrl.findNoProcesadoDepositosBancario);
 
 router.get('/alumno/nopagados/:id', depositosBancarioCtrl.findNotPaidDepositosBancario);
 
-router.put('/alumno/', depositosBancarioCtrl.updateDepositosBancario);
+router.put('/alumno/inscripcion', depositosBancarioCtrl.updateDepositosBancarioInscripcion);
 
 //Web
 // quitamos los comprobadores de token y de tipo de sesion porque aún no arreglamos las sesiones
@@ -23,12 +25,13 @@ router.post('/', depositosBancarioCtrl.createDepositosBancario);
 
 router.get('/', depositosBancarioCtrl.findAllDepositosBancarios);
 
+router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
+
 router.put('/procesado/:id', depositosBancarioCtrl.updateProcesadoDepositosBancario);
 
 router.put('/estadopago/:id', depositosBancarioCtrl.updateEstadoPagoDepositosBancario);
 
 router.put('/pagado/:id', depositosBancarioCtrl.updatePagadoDepositosBancario);
 
-router.delete('/:id', depositosBancarioCtrl.deleteDepositosBancario);
 
 export default router;
