@@ -12,6 +12,8 @@ router.get('/alumno/:id', depositosBancarioCtrl.findAllDepositosBancarioAlumno);
 
 router.delete('/alumno/:id', depositosBancarioCtrl.cancelarDepositosBancarioAlumno);
 
+router.put('/alumno', depositosBancarioCtrl.putDepositoBancarioAlumno);
+
 router.get('/alumno/noprocesados/:id', depositosBancarioCtrl.findNoProcesadoDepositosBancario);
 
 router.get('/alumno/nopagados/:id', depositosBancarioCtrl.findNotPaidDepositosBancario);

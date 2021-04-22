@@ -4,7 +4,8 @@ import Documento from '../models/Documento';
 import TipoPago from '../models/TipoPago';
 import User from '../models/User';
 import Periodo from '../models/Periodo';
-import upload from '../middleware/uploadDepositos';
+import uploadDepositosInscripcion from '../middleware/uploadDepositosInscripciones';
+import uploadDepositosAlumno from '../middleware/uploadDepositosAlumno';
 
 // ["revisión", "aceptado", "foto rechazada", "rechazado", "finalizado", "cancelado"];
 
@@ -211,9 +212,62 @@ export const findUltimoDepositosBancario = async (req, res) => {
     }
 }
 
+export const putDepositoBancarioAlumno = async (req, res) => {
+    try{
+        await uploadDepositosAlumno(req, res);
+        if(req.files.length < 1) {
+            return res.status(404).json({
+                data: [],
+                status: 'failed',
+                message: 'Deberás enviar al menos una imagen',
+            });
+        }
+        if(!req.query)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el id del deposito bancario a actualizar"
+            })  
+        const { id } = req.query;
+        let file = req.files[0];  //ya que solo suben una foto para el comprobante de deposito
+        const updatedDeposito = await DepositosBancario.findByIdAndUpdate(id, {
+            fotoDeposito: {
+                image: {
+                    originalname: file.originalname,
+                    filename: file.filename,
+                    path: file.path,
+                }
+            },
+            procesado: true,
+        }, {
+            useFindAndModify: false
+        });
+        
+        res.json({
+            data: updatedDeposito,
+            status: 'success',
+            message: 'Deposito Bancario actualizado con éxito',
+        })
+    }
+    catch(error){
+        if (error.code === "LIMIT_UNEXPECTED_FILE") {
+            return res.status(404).json({
+                data: [],
+                status: 'failed',
+                message: 'Demasiados archivos han sido enviados',
+            });
+        }
+        res.status(500).json({
+            data: [],
+            status: 'failed',
+            message: error.message || `Error actualizando el Deposito bancario con el id: ${id}`,
+        });
+    }
+}
+
 export const updateDepositosBancarioInscripcion = async (req, res) => {
     try{
-        await upload(req, res);
+        await uploadDepositosInscripcion(req, res);
         if(req.files.length < 1) {
             return res.status(404).json({
                 data: [],
