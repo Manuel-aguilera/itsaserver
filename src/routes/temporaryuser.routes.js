@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', userCtrl.createUser);
 
-router.get('/', userCtrl.findAllUsers);
+router.get('/todos/', userCtrl.getAlumnosInscripciones);
 
 router.get('/', userCtrl.findOneUser);
 
