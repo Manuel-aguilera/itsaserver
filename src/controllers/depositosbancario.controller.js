@@ -22,7 +22,7 @@ export const findAllDepositosBancarioAlumno = async (req, res) => {
     try{
         const depositosBancario = await DepositosBancario.find({id_user: id}).sort({createdAt: -1});
         if(depositosBancario.length < 1) 
-            return res.status(404).json({
+            return res.json({
                 data: [],
                 status: "notfound",
                 message: `La DepositosBancario con el id: ${id} no existe`
