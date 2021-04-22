@@ -22,8 +22,8 @@ export const findAllDepositosBancarioAlumno = async (req, res) => {
     try{
         const depositosBancario = await DepositosBancario.find({id_user: id}).sort({createdAt: -1});
         if(depositosBancario.length < 1) 
-            return res.status(404).json({
-                data: [],
+            return res.json({
+                data: null,
                 status: "notfound",
                 message: `La DepositosBancario con el id: ${id} no existe`
             })
@@ -212,7 +212,7 @@ export const findUltimoDepositosBancario = async (req, res) => {
     }
 }
 
-export const putDepositoBancarioAlumno = async (req, res) => {
+export const putDepositoBancarioAlumno = async (req, res) => {  
     try{
         await uploadDepositosAlumno(req, res);
         if(req.files.length < 1) {
