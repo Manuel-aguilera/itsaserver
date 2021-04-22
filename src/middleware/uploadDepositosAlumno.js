@@ -4,7 +4,11 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
+<<<<<<< HEAD
     callback(null, path.join(`${__dirname}/../../uploadDepositos`));
+=======
+    callback(null, path.join(`${__dirname}/../../uploadDepositosAlumno`));
+>>>>>>> 3ed18424fd1904d3d314c515528c549cc703a815
   },
   filename: (req, file, callback) => {
     const match = ["image/png", "image/jpeg", "image/jpg"];
