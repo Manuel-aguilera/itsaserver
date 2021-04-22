@@ -109,6 +109,25 @@ Content-Type: application/json
     "fechaNacimiento": "2021-03-24T06:30:04.742Z"
 }
 
+###
+PUT http://localhost:3001/api/v1/temporaryusers?id=605ae9f8d382772d0022fde3
+Content-Type: application/json
+
+{
+    "documento": "60812f83f7b5842940bad305"
+}
+
+###
+PUT http://localhost:3001/api/v1/temporaryusers?id=605adc6cbfb8af34609f348a
+Content-Type: application/json
+
+{
+    "deposito": [
+        "6081d92b0d4b562520b90d4e",
+        "6081d9c80d4b562520b90d4f"
+    ]
+}
+
 ############### TemporaryUsers  proagrimex.com ################
 
 GET https://proagrimex.com/api/v1/temporaryusers
@@ -317,30 +336,27 @@ Content-Type: application/json
 }
 
 ############### Documentos proagrimex ################
-POST https://proagrimex.com/api/v1/documentos
+POST http://localhost:3001/api/v1/documentos
 Content-Type: application/json
 
 {
-    "id_user": "605aeb952396130c36fbc43c"
+    "id_user": "605ae9f8d382772d0022fde3"
 }
 
 ###
-DELETE https://proagrimex.com/api/v1/documentos/60653eb48e425509bd62fba2
+DELETE http://localhost:3001/api/v1/documentos/60812e6c09d9473a54773917
 
 ############### Depositos bancarios proagrimex ################
-POST http://localhost:3001/api/v1/depositosbancarios/alumno
+POST http://localhost:3001/api/v1/depositosbancarios
 Content-Type: application/json
 
 {
-    "id_user": "606fc066b31b0539ac030ff3",
-    "tipoPago": "inscripcion",
+    "id_user": "605adc6cbfb8af34609f348a",
+    "tipoPago": "ficha",
     "concepto": "EXCEPCIÓN DE INSCRIPCION POR GRATUIDAD",
     "cantidad": "1",
-    "costo": "0.00",
-    "importe": "0.00",
-    "convenioCIE": "001770500", 
-    "observaciones": "No aplica",
-    "estadoPago": "En proceso"
+    "costo": "110.00",
+    "importe": "110.00"
 }
 
 ###

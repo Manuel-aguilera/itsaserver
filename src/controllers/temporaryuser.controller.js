@@ -3,33 +3,7 @@ import TemporaryUser from '../models/TemporaryUser';
 import Documento from '../models/Documento';
 import DepositosBancario from '../models/DepositosBancario';
 
-export const getAlumnosInscripciones = async (req, res) => {
-    try{
-        const users = await TemporaryUser.find();
-        const documentos = await Documento.find();
-        // const listIds = Object.entries(users).map((doc) => doc[1]._id);
-        const alumnos = users.map( async (alumno) => {
-            return {
-                prealumno: alumno,
-                documentos: documentos.find((doc) => (doc.id_user === alumno._id)),
-                depositos: await DepositosBancario.find({id_user: alumno._id}),
-            }
-        });
-        res.json({
-            data: alumnos,
-            status: "success",
-            message: "Usarios sin poblar"
-        });
-    }
-    catch(error){
-        res.status(500).json({
-            data: [],
-            status: "failed",
-            message: error.message || "Algo ocurrió mal mientras devolviamos los usuarios",
-        });
-    }
-}
-
+//movil
 export const createUser = async (req, res) => {
     try{
         if(!req.body)
@@ -88,7 +62,10 @@ export const createUser = async (req, res) => {
                 });
                 const usersave = await newUser.save();
                 const newDocumento = new Documento({id_user: usersave._id});
-                await newDocumento.save();
+                const doc = await newDocumento.save();
+                //en el futuro corregir las referencias para eliminar la variable id_user ya que no es optimo
+                //y usar ref
+                await TemporaryUser.findByIdAndUpdate(usersave._id, {documento: doc._id});
                 res.json({
                     data: usersave,
                     status: "alumnoincripcion",
@@ -100,59 +77,6 @@ export const createUser = async (req, res) => {
     catch(error){
         res.status(500).json({
             message: error.message || "Algo ocurrió mal mientras devolviamos los usuarios",
-        });
-    }
-}
-
-export const findOneUser = async (req, res) => {
-    if(!req.query)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el id del usuario a buscar en temporaryuser"
-        })
-    const { id } = req.query;
-    try{
-        const user = await TemporaryUser.findById(id);
-
-        if(!user) return res.status(404).json({
-            data: [],
-            status: "notfound",
-            message: `El usuario con el id: ${id} no existe`
-        })
-
-        res.json({
-            data: user,
-            status: "success",
-            message: `El usuario fue encontrado en la tabla temporaryusers`
-        })
-    }
-    catch(error){
-        res.status(500).json({
-            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
-        });
-    }
-}
-
-export const deleteUser = async (req, res) => {
-    if(!req.params)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el _id del usuario temporaryuser"
-        })
-    const { id } = req.query;
-    try{
-        const userData = await TemporaryUser.findByIdAndDelete(id)
-        res.json({
-            data: userData,
-            status: 'success',
-            message: 'El usuario fue eliminado exitosamente',
-        })
-    }
-    catch(error){
-        res.status(500).json({
-            message: error.message || `Error eliminado un usuario con el id: ${id}`,
         });
     }
 }
@@ -191,3 +115,81 @@ export const updateUser = async (req, res) => {
     }
 }
 
+//web
+export const getAlumnosInscripciones = async (req, res) => {
+    //para resolver esto debemos usar populate, con eso poblas  los datos sin necesidad de hacer consultas complejas
+    try{
+        const users = await TemporaryUser.find().populate(["documento", "deposito"]);        
+        if(!users) return res.status(404).json({
+            data: [],
+            status: "notfound",
+            message: `No hay usuarios para mostrar calificaciones`
+        })
+        
+        res.json({
+            data: users,
+            status: "success",
+            message: "Usarios sin poblar"
+        });
+    }
+    catch(error){
+        res.status(500).json({
+            data: [],
+            status: "failed",
+            message: error.message || "Algo ocurrió mal mientras devolviamos los usuarios",
+        });
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    if(!req.params)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el _id del usuario temporaryuser"
+        })
+    const { id } = req.query;
+    try{
+        const userData = await TemporaryUser.findByIdAndDelete(id)
+        res.json({
+            data: userData,
+            status: 'success',
+            message: 'El usuario fue eliminado exitosamente',
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error eliminado un usuario con el id: ${id}`,
+        });
+    }
+}
+
+export const findOneUser = async (req, res) => {
+    if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario a buscar en temporaryuser"
+        })
+    const { id } = req.query;
+    try{
+        const user = await TemporaryUser.findById(id);
+
+        if(!user) return res.status(404).json({
+            data: [],
+            status: "notfound",
+            message: `El usuario con el id: ${id} no existe`
+        })
+
+        res.json({
+            data: user,
+            status: "success",
+            message: `El usuario fue encontrado en la tabla temporaryusers`
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
+        });
+    }
+}

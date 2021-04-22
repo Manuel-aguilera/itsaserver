@@ -2,6 +2,16 @@ import {Schema, model} from 'mongoose';
 // import mongoosePaginate from 'mongoose-paginate-v2';
 
 const temporaryUserSchema = new Schema({
+    documento: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'Documento'
+    },
+    deposito: [
+        {
+            ref: "DepositosBancario",
+            type: Schema.Types.ObjectId,
+        }
+    ],
     usuario: {
         type: String,
         trim: true,

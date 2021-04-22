@@ -1,6 +1,5 @@
 import User from '../models/User';
 import Calificacion from '../models/Calificacion';
-import { response } from 'express';
 
 export const createCalificacion = async (req, res) => {
     //usar express-validator para validar

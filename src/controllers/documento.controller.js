@@ -31,8 +31,6 @@ export const createDocumento = async (req, res) => {
     //usar express-validator para validar
     try{
         //guardamos las ubicaciones de las imagenes en mongodb 
-        console.log('id_user');
-        console.log(req.body.id_user);
         if(!req.body)
         res.status(404).json({
             data: [],
@@ -41,6 +39,34 @@ export const createDocumento = async (req, res) => {
         })
         const newDocumento = new Documento({
             id_user: req.body.id_user,     
+            curpFoto: {
+                image: {
+                    originalname: "",
+                    filename: "",
+                    path: "",
+                } 
+            },
+            actaFoto: {
+                image: {
+                    originalname: "",
+                    filename: "",
+                    path: "",
+                } 
+            },
+            certificadoBach: {
+                image: {
+                    originalname: "",
+                    filename: "",
+                    path: "",
+                } 
+            },
+            constanciaMedica: {
+                image: {
+                    originalname: "",
+                    filename: "",
+                    path: "",
+                } 
+            }
         });
         
         const docs = await newDocumento.save();
