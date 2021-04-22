@@ -61,7 +61,37 @@ export const createUser = async (req, res) => {
                     tokenN: req.body.tokenN,
                 });
                 const usersave = await newUser.save();
-                const newDocumento = new Documento({id_user: usersave._id});
+                const newDocumento = new Documento({
+                    id_user: usersave._id,
+                    curpFoto: {
+                        image: {
+                            originalname: "",
+                            filename: "",
+                            path: "",
+                        } 
+                    },
+                    actaFoto: {
+                        image: {
+                            originalname: "",
+                            filename: "",
+                            path: "",
+                        } 
+                    },
+                    certificadoBach: {
+                        image: {
+                            originalname: "",
+                            filename: "",
+                            path: "",
+                        } 
+                    },
+                    constanciaMedica: {
+                        image: {
+                            originalname: "",
+                            filename: "",
+                            path: "",
+                        } 
+                    }
+                });
                 const doc = await newDocumento.save();
                 //en el futuro corregir las referencias para eliminar la variable id_user ya que no es optimo
                 //y usar ref
