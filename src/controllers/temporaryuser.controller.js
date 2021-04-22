@@ -148,7 +148,7 @@ export const deleteUser = async (req, res) => {
             status: "failed",
             message: "No has ingresado el _id del usuario temporaryuser"
         })
-    const { id } = req.query;
+    const { id } = req.params;
     try{
         const userData = await TemporaryUser.findByIdAndDelete(id)
         res.json({
