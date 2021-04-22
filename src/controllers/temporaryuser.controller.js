@@ -1,5 +1,7 @@
 import User from '../models/User';
 import TemporaryUser from '../models/TemporaryUser';
+import Documento from '../models/Documento';
+import DepositosBancario from '../models/DepositosBancario';
 
 export const findAllUsers = async (req, res) => {
     try{
@@ -68,13 +70,18 @@ export const createUser = async (req, res) => {
                     status: "alumnoincripcion",
                     message: "alumnoincripcion creado correctamente"
                 });
-            else{  //no existe ese alumno lo creamos porque cumple con los requisitos
+            else{  //no existe ese alumno lo creamos porque cumple con los requisitos 
+                    //tambien le creamos para que suba los documentos y los depositos bancarios
                 const newUser = new TemporaryUser({
                     usuario: req.body.usuario, 
                     emailPersonal: req.body.emailPersonal,
                     tokenN: req.body.tokenN,
                 });
                 const usersave = await newUser.save();
+                const newDepositosBancario = new DepositosBancario({id_user: usersave._id, usuario: usersave.usuario});
+                await newDepositosBancario.save();
+                const newDocumento = new Documento({id_user: usersave._id});
+                await newDocumento.save();
                 res.json({
                     data: usersave,
                     status: "alumnoincripcion",
