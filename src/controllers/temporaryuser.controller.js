@@ -517,7 +517,12 @@ export const getUserApp = async (req, res) => {
     const { id } = req.query;
     try{
         const user = await User.findOne({id_temporaryUser:id});
-        console.log(user)
+        if(!user) 
+            return res.json({
+                data: user,
+                status: "notfound",
+                message: `El usuario con el id: ${id} no existe`
+            })
         const data = {
             usuario: user.datosGenerales.usuario,
             matricula: user.datosAlumno.matricula,
@@ -526,12 +531,6 @@ export const getUserApp = async (req, res) => {
             carrera: user.datosAlumno.carrera,
             turno: user.situacionActual.turno,
         }
-
-        if(!user) return res.json({
-            data: [],
-            status: "notfound",
-            message: `El usuario con el id: ${id} no existe`
-        })
 
         res.json({
             data: data,
