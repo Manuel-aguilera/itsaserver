@@ -149,7 +149,7 @@ export const updateUser = async (req, res) => {
 export const getAlumnosInscripciones = async (req, res) => {
     //para resolver esto debemos usar populate, con eso poblas  los datos sin necesidad de hacer consultas complejas
     try{
-        const users = await TemporaryUser.find({}, {documento: {_id: 0, id_user: 0, createdAt: 0, updatedAt: 0}}).populate(["documento", "deposito"]);        
+        const users = await TemporaryUser.find().populate(["documento", "deposito"]);        
         if(!users) return res.status(404).json({
             data: [],
             status: "notfound",
