@@ -1,7 +1,21 @@
 import User from '../models/User';
 import TemporaryUser from '../models/TemporaryUser';
 import Documento from '../models/Documento';
+import Periodo from '../models/Periodo';
 import DepositosBancario from '../models/DepositosBancario';
+
+const ESTADOINSC = ["Ficha no aceptada", "Ficha aceptada", "Deposito no aprobado", "Ficha finalizada", "Ficha rechazada"];
+const FICHA = {
+    "Contador publico":"FICHA DE ADMISIÓN CONTADOR PUBLICO",
+    "Ingenieria Civil": "FICHA DE ADMISIÓN INGENIERIA  CIVIL",
+    "ingenieria en Gestión Empresarial": "FICHA DE ADMISIÓN INGENIERIA EN GESTION EMPRESARIAL",
+    "Ingenieria en Innovación Agricola Sustentable":"FICHA DE ADMISION ING. EN INNOVACION AGRICOLA SUSTENTABLE",
+    "Ingenieria en Sistemas Computacionales": "FICHA DE ADMISIÓN ING. EN SISTEMAS COMPUTACIONALES",
+    "Ingenieria Bioquimica": "FICHA DE ADMISIÓN INGENIERIA BIOQUIMICA",
+    "Ingenieria Informatica":"FICHA DE ADMISIÓN INGENIERIA  INFORMATICA",
+    "Ingenieria Industrial":"FICHA DE ADMISIÓN INGENIERIA  INDUSTRIAL",
+}
+const ESTADOPAGO = ["revisión", "aceptado", "foto rechazada", "rechazado", "finalizado", "cancelado"];
 
 //movil
 export const createUser = async (req, res) => {
@@ -223,3 +237,152 @@ export const findOneUser = async (req, res) => {
         });
     }
 }
+
+export const updateEstadoInscripcion = async (req, res) => {
+    try{
+        if(!req.params)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el id del alumno inscripcion"
+            })
+        if(!req.body)
+            res.status(404).json({
+                data: [],
+                status: "failed",
+                message: "No has ingresado el valor para estadoInsc"
+            })
+        const { id } = req.params;
+        let dataTemporaryUser = null;
+        if(ESTADOINSC[1] === req.body.estadoInsc) //"Ficha aceptada" debemos crear los depositos bancarios
+        { 
+            let ficha = FICHA[req.body.carrera];
+            const temporaryUser = await TemporaryUser.findById(id);
+            if(temporaryUser.deposito.length > 0){
+                dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
+                    estadoInsc: req.body.estadoInsc,  
+                }, {
+                    useFindAndModify: false
+                });
+            }else {
+                //extraemos el ultimo periodo, ya existe una ruta llamada periodos/ultimo pero aqui ponemos la logica ya que estamos simulando
+                const periodo = await Periodo.find({},{_id: 0}).sort({"periodo":-1});
+                const listaPeriodos = Object.entries(periodo);
+                let ultimoPeriodo = listaPeriodos[0][1].periodo;
+
+                let folioPago = getFolioPago();
+                let rf = await getReferenciaBancaria(); 
+                let referenciaBancaria = `${rf}${folioPago}`;
+
+                const newDepositoFicha = new DepositosBancario({
+                    id_user: id,
+                    usuario: temporaryUser.usuario,
+                    tipoPago: "fichas",
+                    concepto: ficha,
+                    cantidad: 1,
+                    costo: "1200",
+                    importe: "1200",
+                    NControlCurp: temporaryUser.curp,
+                    folioInterno: folioPago,
+                    referenciaBancaria: referenciaBancaria,
+                    periodo: ultimoPeriodo,
+                    convenioCIE: "001770500",
+                    observaciones: req.body.observaciones,
+                    estadoPago: ESTADOPAGO[0], //el 0 es revision
+                    fotoDeposito: {
+                        image: {
+                            originalname: "null",
+                            filename: "null",
+                            path: "null",
+                        },
+                    },
+                    fecha: `${new Date(Date.now())}`,
+                    fechaCaducidad: `${new Date(Date.now())}`,
+                });
+                const depositosFichaSave = await newDepositoFicha.save();
+                
+                let folioPago2 = getFolioPago();
+                let rf2 = await getReferenciaBancaria(); 
+                let referenciaBancaria2 = `${rf2}${folioPago2}`;
+
+                const newDepositoAportacion = new DepositosBancario({
+                    id_user: id,
+                    usuario: temporaryUser.usuario,
+                    tipoPago: "inscripcion",
+                    concepto: "APORTACIÓN PARA EL FORTALECIMIENTO INSTITUCIONAL NUEVO INGRESO",
+                    cantidad: 1,
+                    costo: "1000",
+                    importe: "1000",
+                    NControlCurp: temporaryUser.curp,
+                    folioInterno: folioPago2,
+                    referenciaBancaria: referenciaBancaria2,
+                    periodo: ultimoPeriodo,
+                    convenioCIE: "001770500",
+                    observaciones: req.body.observaciones,
+                    estadoPago: ESTADOPAGO[0], //el 0 es revision
+                    fotoDeposito: {
+                        image: {
+                            originalname: "null",
+                            filename: "null",
+                            path: "null",
+                        },
+                    },
+                    fecha: `${new Date(Date.now())}`,
+                    fechaCaducidad: `${new Date(Date.now())}`,
+                });
+                const depositoAportacionSave = await newDepositoAportacion.save(); 
+                dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
+                    estadoInsc: req.body.estadoInsc,  
+                    deposito: [depositosFichaSave, depositoAportacionSave]
+                }, {
+                    useFindAndModify: false
+                });
+            }
+        } else {
+            dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
+                estadoInsc: req.body.estadoInsc,  
+            }, {
+                useFindAndModify: false
+            });
+        }
+
+        res.json({
+            data: dataTemporaryUser,
+            status: 'success',
+            message: 'La DepositosBancario creados exitosamente',
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error actualizada la DepositosBancario con el id: ${id}`,
+        });
+    }
+}
+
+const getFolioPago = () => {
+    return `${Date.now()}`;
+}
+
+const getReferenciaBancaria = async () => {
+    let patron = await getPatron();
+    return `N${patron}F`;
+    // console.log(`A${matricula}F${Date.now()}`);
+}
+
+const getPatron = async () => {
+    const date = new Date(Date.now());
+    let year = `${date.getFullYear()}`;
+    let anio = year.slice(2,4);
+    const users = await User.find();
+    let numSig = users.length + 1;
+    let matricula = `${anio}02${zeroFill(numSig, 4)}`;
+    return matricula;
+}
+const zeroFill = ( number, width ) => { // example zeroFill(324, 4)
+    width -= number.toString().length;
+    if ( width > 0 )
+    {
+      return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+    }
+    return number + ""; // siempre devuelve tipo cadena
+  }

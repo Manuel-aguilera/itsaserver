@@ -16,6 +16,7 @@ router.put('/', userCtrl.updateUser);
 
 router.put('/:id', userCtrl.updateUser);
 
+router.put('/estadoinscripcion/:id', userCtrl.updateEstadoInscripcion);
 //No olvidar que /:id  no son los params de las peticiones  
 
 export default router;

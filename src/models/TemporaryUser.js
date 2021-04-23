@@ -98,7 +98,10 @@ const temporaryUserSchema = new Schema({
     pagoInscripcion: {
         type: Boolean,
         default: false,
-    }
+    },
+    estadoInsc: {  //
+        type: String,
+    },
 
 }, {
     versionKey: false,
