@@ -110,12 +110,13 @@ Content-Type: application/json
 }
 
 ###  update temporaryuser
-PUT http://localhost:3001/api/v1/temporaryusers/estadoinscripcion/605ae9f8d382772d0022fde3
+PUT https://proagrimex.com/api/v1/temporaryusers/estadoinscripcion/6081e5de8e89ebbdeb7cde68
 Content-Type: application/json
 
 {
     "estadoInsc": "Ficha aceptada",
-    "carrera": "Ingenieria Civil"
+    "carrera": "ingenieria en Gestión Empresarial",
+    "observaciones": "Alumno en proceso de inscripción"
 }
 
 ###

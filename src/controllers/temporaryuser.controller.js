@@ -2,6 +2,7 @@ import User from '../models/User';
 import TemporaryUser from '../models/TemporaryUser';
 import Documento from '../models/Documento';
 import Periodo from '../models/Periodo';
+import Carrera from '../models/Carrera';
 import DepositosBancario from '../models/DepositosBancario';
 
 const ESTADOINSC = ["Ficha no aceptada", "Ficha aceptada", "Deposito no aprobado", "Ficha finalizada", "Ficha rechazada"];
@@ -77,6 +78,7 @@ export const createUser = async (req, res) => {
                 const usersave = await newUser.save();
                 const newDocumento = new Documento({
                     id_user: usersave._id,
+                    observaciones: "Alumno en proceso de inscripción",
                     curpFoto: {
                         image: {
                             originalname: "",
@@ -349,6 +351,149 @@ export const updateEstadoInscripcion = async (req, res) => {
             });
         }
 
+        if(ESTADOINSC[3] === req.body.estadoInsc){
+            const temporaryUser = await TemporaryUser.findById(id);
+            if(temporaryUser.deposito.length > 0){
+                dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
+                    estadoInsc: req.body.estadoInsc, 
+                    observaciones:  req.body.observaciones,
+                }, {
+                    useFindAndModify: false
+                });
+            }  
+            else {
+                let matricula = await getMatricula();
+                const email = `al${matricula}@itsa.edu.mx`;
+                const usuario = `${req.body.datosAlumno.nombre} ${req.body.datosAlumno.apellidoPaterno} ${req.body.datosAlumno.apellidoMaterno}`;
+                const planEstudios = await Carrera.findOne({carrera: temporaryUser.carrera});
+                const newUser = new User({
+                    id_temporaryUser: id,
+                    datosAlumno: {
+                        fichaAceptada: true,
+                        pagoInscripcion: true,
+                        usuario: usuario,
+                        nombre: temporaryUser.nombre,
+                        apellidoPaterno: temporaryUser.apellidoPaterno,
+                        apellidoMaterno: temporaryUser.apellidoMaterno,
+                        tipoAlta: "inscripción",
+                        estadoAlumno: "vigente",
+                        carrera: temporaryUser.carrera,
+                        fechaNacimiento: (temporaryUser.fechaNacimiento) ? temporaryUser.fechaNacimiento : 'No especificado',
+                        curp: temporaryUser.curp,
+                        sexo: temporaryUser.sexo,
+                        matricula: matricula,
+                        anioIngreso: new Date(Date.now()).getFullYear(),
+                        tipoAlumno: "regular",
+                        sexo: temporaryUser.sexo,
+                        planEstudios: planEstudios.planEstudios,
+                    },
+                    datosGenerales: {
+                        email: email,
+                        fechaAlta: new Date(Date.now()),
+                        estado: temporaryUser.estado,
+                        municipio:temporaryUser.municipio,
+                        poblacion:temporaryUser.poblacion,
+                        colonia:temporaryUser.colonia,
+                        direccion:temporaryUser.direccion,
+                        numero:temporaryUser.numero,
+                        cp:temporaryUser.cp,
+                        telefono1:temporaryUser.telefono1,
+                        telefono2:temporaryUser.telefono2,
+                        emailPersonal:temporaryUser.emailPersonal,
+                    },
+                    procedencia: {
+                        bachillerato: "",
+                        especialidad: "",
+                        anioEgreso: "",
+                        promedio: ""
+                    },
+                    datosFamiliares: {
+                        padres: {
+                            padre: {
+                                nombre: "",
+                                vive: false,
+                                celular: ""
+                            },
+                            madre: {
+                                nombre: "",
+                                vive: false,
+                                celular: ""
+                            }
+                        }  
+                    },
+                    situacionActual: {
+                        semestre: "1",
+                        grupo: "A",
+                        cargaMaxima: "32",
+                        cargaMinima: "24",
+                        creditosAprobados: "250",
+                        promedioConReprobadas: "0.0",
+                        promedioSinReprobadas: "0.0",
+                        motivoBaja: "",
+                        periodosMaximos: "12",
+                        inscrito: "true",
+                        fechaBajaDefinitiva: "",   
+                        turno:temporaryUser.turno,          
+                    },
+                    expedientes: {
+                        "residencias": {  
+                            "expediente": "RESIDENCIA LIBERADA",
+                            "liberado": false
+                        },        
+                        "acta": {  
+                            "expediente": "ACTA DE NACIMIENTO ORIGINAL",
+                            "liberado": false
+                        },        
+                        "certificado": {  
+                            "expediente": "CERTIFICADO DE BACHILLERATO LEGALIZADO",
+                            "liberado": false
+                        },        
+                        "curp": {  
+                            "expediente": "COPIA DE LA CURP",
+                            "liberado": false
+                        },        
+                        "ingles": {  
+                            "expediente": "ACREDITACIÓN DE INGLES",
+                            "liberado": false
+                        },        
+                        "constanciaNoAdeudo": {  
+                            "expediente": "CONSTANCIA DE NO ADEUDO",
+                            "liberado": false
+                        },        
+                        "fotografias": {  
+                            "expediente": "FOTOGRAFIAS (2 T/DIPLOMA Y 8 T/CREDENCIAL OVALADA)",
+                            "liberado": false
+                        },        
+                        "servicioSocial": {  
+                            "expediente": "SERVICIO SOCIAL",
+                            "liberado": false
+                        },        
+                        "pagoTitulacion": {  
+                            "expediente": "RECIBO DE PAGO DE TITULACIÓN",
+                            "liberado": false
+                        },        
+                        "ine": {  
+                            "expediente": "COPIA DEL INE",
+                            "liberado": false
+                        },        
+                        "vigenciaDerecho": {  
+                            "expediente": "VIGENCIA DE DERECHO",
+                            "liberado": false
+                        }      
+                    },
+                });
+
+                const usersave = await newUser.save();
+                dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
+                    estadoInsc: req.body.estadoInsc, 
+                    observaciones:  req.body.observaciones,
+                }, {
+                    useFindAndModify: false
+                });
+            }
+            
+        }
+
         res.json({
             data: dataTemporaryUser,
             status: 'success',
@@ -361,6 +506,45 @@ export const updateEstadoInscripcion = async (req, res) => {
         });
     }
 }
+
+export const getUserApp = async (req, res) => {
+    if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario a buscar en temporaryuser"
+        })
+    const { id } = req.query;
+    try{
+        const user = await User.findOne({id_temporaryUser:id});
+        console.log(user)
+        const data = {
+            usuario: user.datosGenerales.usuario,
+            matricula: user.datosAlumno.matricula,
+            email: user.datosGenerales.email,
+            semestre: user.situacionActual.semestre,
+            carrera: user.datosAlumno.carrera,
+            turno: user.situacionActual.turno,
+        }
+
+        if(!user) return res.json({
+            data: [],
+            status: "notfound",
+            message: `El usuario con el id: ${id} no existe`
+        })
+
+        res.json({
+            data: data,
+            status: "success",
+            message: `El usuario fue encontrado en la tabla temporaryusers`
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
+        });
+    }
+} 
 
 const getFolioPago = () => {
     return `${Date.now()}`;
