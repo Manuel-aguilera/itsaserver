@@ -260,7 +260,8 @@ export const updateEstadoInscripcion = async (req, res) => {
             const temporaryUser = await TemporaryUser.findById(id);
             if(temporaryUser.deposito.length > 0){
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
-                    estadoInsc: req.body.estadoInsc,  
+                    estadoInsc: req.body.estadoInsc, 
+                    observaciones:  req.body.observaciones,
                 }, {
                     useFindAndModify: false
                 });
@@ -333,7 +334,8 @@ export const updateEstadoInscripcion = async (req, res) => {
                 const depositoAportacionSave = await newDepositoAportacion.save(); 
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                     estadoInsc: req.body.estadoInsc,  
-                    deposito: [depositosFichaSave, depositoAportacionSave]
+                    deposito: [depositosFichaSave, depositoAportacionSave],
+                    observaciones:  req.body.observaciones,
                 }, {
                     useFindAndModify: false
                 });
@@ -341,6 +343,7 @@ export const updateEstadoInscripcion = async (req, res) => {
         } else {
             dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                 estadoInsc: req.body.estadoInsc,  
+                observaciones:  req.body.observaciones,
             }, {
                 useFindAndModify: false
             });

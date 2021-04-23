@@ -102,6 +102,9 @@ const temporaryUserSchema = new Schema({
     estadoInsc: {  //
         type: String,
     },
+    observaciones: {  //
+        type: String,
+    },
 
 }, {
     versionKey: false,
