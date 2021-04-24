@@ -283,6 +283,12 @@ export const updateDepositosBancarioInscripcion = async (req, res) => {
         })  
         const { id } = req.query;
         const { procesado } = req.query;
+        await TemporaryUser.findByIdAndUpdate(id, { 
+            estadoInsc:"En revisión",
+        }, {
+            useFindAndModify: false
+        });
+
         const depositos = await DepositosBancario.find({id_user: id});
         const idsDepositos = Object.entries(depositos).map((doc) => doc[1]._id);
 
