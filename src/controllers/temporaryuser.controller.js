@@ -353,7 +353,9 @@ export const updateEstadoInscripcion = async (req, res) => {
 
         if(ESTADOINSC[3] === req.body.estadoInsc){
             const temporaryUser = await TemporaryUser.findById(id);
+            // console.log(temporaryUser)
             if(temporaryUser.deposito.length > 0){
+                console.log("if")
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                     estadoInsc: req.body.estadoInsc, 
                     observaciones:  req.body.observaciones,
@@ -362,6 +364,7 @@ export const updateEstadoInscripcion = async (req, res) => {
                 });
             }  
             else {
+                console.log("else")
                 let matricula = await getMatricula();
                 const email = `al${matricula}@itsa.edu.mx`;
                 const usuario = `${req.body.datosAlumno.nombre} ${req.body.datosAlumno.apellidoPaterno} ${req.body.datosAlumno.apellidoMaterno}`;
@@ -436,49 +439,49 @@ export const updateEstadoInscripcion = async (req, res) => {
                         turno:temporaryUser.turno,          
                     },
                     expedientes: {
-                        "residencias": {  
-                            "expediente": "RESIDENCIA LIBERADA",
-                            "liberado": false
+                        residencias: {  
+                            expediente: "RESIDENCIA LIBERADA",
+                            liberado: false
                         },        
-                        "acta": {  
-                            "expediente": "ACTA DE NACIMIENTO ORIGINAL",
-                            "liberado": false
+                        acta: {  
+                            expediente: "ACTA DE NACIMIENTO ORIGINAL",
+                            liberado: false
                         },        
-                        "certificado": {  
-                            "expediente": "CERTIFICADO DE BACHILLERATO LEGALIZADO",
-                            "liberado": false
+                        certificado: {  
+                            expediente: "CERTIFICADO DE BACHILLERATO LEGALIZADO",
+                            liberado: false
                         },        
-                        "curp": {  
-                            "expediente": "COPIA DE LA CURP",
-                            "liberado": false
+                        curp: {  
+                            expediente: "COPIA DE LA CURP",
+                            liberado: false
                         },        
-                        "ingles": {  
-                            "expediente": "ACREDITACIÓN DE INGLES",
-                            "liberado": false
+                        ingles: {  
+                            expediente: "ACREDITACIÓN DE INGLES",
+                            liberado: false
                         },        
-                        "constanciaNoAdeudo": {  
-                            "expediente": "CONSTANCIA DE NO ADEUDO",
-                            "liberado": false
+                        constanciaNoAdeudo: {  
+                            expediente: "CONSTANCIA DE NO ADEUDO",
+                            liberado: false
                         },        
-                        "fotografias": {  
-                            "expediente": "FOTOGRAFIAS (2 T/DIPLOMA Y 8 T/CREDENCIAL OVALADA)",
-                            "liberado": false
+                        fotografias: {  
+                            expediente: "FOTOGRAFIAS (2 T/DIPLOMA Y 8 T/CREDENCIAL OVALADA)",
+                            liberado: false
                         },        
-                        "servicioSocial": {  
-                            "expediente": "SERVICIO SOCIAL",
-                            "liberado": false
+                        servicioSocial: {  
+                            expediente: "SERVICIO SOCIAL",
+                            liberado: false
                         },        
-                        "pagoTitulacion": {  
-                            "expediente": "RECIBO DE PAGO DE TITULACIÓN",
-                            "liberado": false
+                        pagoTitulacion: {  
+                            expediente: "RECIBO DE PAGO DE TITULACIÓN",
+                            liberado: false
                         },        
-                        "ine": {  
-                            "expediente": "COPIA DEL INE",
-                            "liberado": false
+                        ine: {  
+                            expediente: "COPIA DEL INE",
+                            liberado: false
                         },        
-                        "vigenciaDerecho": {  
-                            "expediente": "VIGENCIA DE DERECHO",
-                            "liberado": false
+                        vigenciaDerecho: {  
+                            expediente: "VIGENCIA DE DERECHO",
+                            liberado: false
                         }      
                     },
                 });
