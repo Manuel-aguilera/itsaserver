@@ -74,6 +74,7 @@ export const createUser = async (req, res) => {
                     usuario: req.body.usuario, 
                     emailPersonal: req.body.emailPersonal,
                     tokenN: req.body.tokenN,
+                    estadoInsc: "En revisión",
                 });
                 const usersave = await newUser.save();
                 const newDocumento = new Documento({
