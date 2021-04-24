@@ -114,31 +114,6 @@ PUT http://localhost:3001/api/v1/temporaryusers/estadoinscripcion/605adc6cbfb8af
 Content-Type: application/json
 
 {
-    "deposito": [
-    ],
-    "fichaAceptada": false,
-    "pagoInscripcion": false,
-    "usuario": "Hagamos programas juntos",
-    "emailPersonal": "manueleitor.information@gmail.com",
-    "tokenN": "ExponentPushToken[W13468LyTH5oRczdrMwAKg]",
-    "documento": "605dc4364dbb253370670ad5",
-    "apellidoMaterno": "MAGAÑA",
-    "apellidoPaterno": "AGUILERA",
-    "curp": "AUMM971015HMNGGN06",
-    "fechaNacimiento": null,
-    "nombre": "MANUEL",
-    "sexo": "Hombre",
-    "telefono1": "4531194027",
-    "telefono2": "4531194027",
-    "carrera": "Ingenieria en Innovación Agricola Sustentable",
-    "colonia": "chandio",
-    "cp": "60570",
-    "direccion": "8 DE DICIEMBRE",
-    "estado": "Colima",
-    "municipio": "Cuauhtémoc",
-    "numero": "222",
-    "poblacion": "Apatzingán",
-    "turno": "Matutino",
     "estadoInsc": "Ficha finalizada",
     "observaciones": "Listo perro"
 }
@@ -164,7 +139,7 @@ Content-Type: application/json
     "sexo": "Hombre",
     "telefono1": "4531194027",
     "telefono2": "4531194027",
-    "carrera": "Ingenieria en Innovación Agricola Sustentable",
+    "carrera": "Contador público",
     "colonia": "chandio",
     "cp": "60570",
     "direccion": "8 DE DICIEMBRE",

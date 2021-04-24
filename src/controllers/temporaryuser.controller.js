@@ -258,8 +258,8 @@ export const updateEstadoInscripcion = async (req, res) => {
         let dataTemporaryUser = null;
         if(ESTADOINSC[1] === req.body.estadoInsc) //"Ficha aceptada" debemos crear los depositos bancarios
         { 
-            let ficha = FICHA[req.body.carrera];
             const temporaryUser = await TemporaryUser.findById(id);
+            let ficha = FICHA[temporaryUser.carrera];
             if(temporaryUser.deposito.length > 0){
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                     estadoInsc: req.body.estadoInsc, 
@@ -353,9 +353,7 @@ export const updateEstadoInscripcion = async (req, res) => {
 
         if(ESTADOINSC[3] === req.body.estadoInsc){
             const temporaryUser = await TemporaryUser.findById(id);
-            // console.log(temporaryUser)
             if(temporaryUser.deposito.length > 0){
-                console.log("if")
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                     estadoInsc: req.body.estadoInsc, 
                     observaciones:  req.body.observaciones,
@@ -364,11 +362,11 @@ export const updateEstadoInscripcion = async (req, res) => {
                 });
             }  
             else {
-                console.log("else")
-                let matricula = await getMatricula();
+                let matricula = await getPatron();
                 const email = `al${matricula}@itsa.edu.mx`;
-                const usuario = `${req.body.datosAlumno.nombre} ${req.body.datosAlumno.apellidoPaterno} ${req.body.datosAlumno.apellidoMaterno}`;
+                const usuario = `${temporaryUser.nombre} ${temporaryUser.apellidoPaterno} ${temporaryUser.apellidoMaterno}`;
                 const planEstudios = await Carrera.findOne({carrera: temporaryUser.carrera});
+                
                 const newUser = new User({
                     id_temporaryUser: id,
                     datosAlumno: {
@@ -381,7 +379,7 @@ export const updateEstadoInscripcion = async (req, res) => {
                         tipoAlta: "inscripción",
                         estadoAlumno: "vigente",
                         carrera: temporaryUser.carrera,
-                        fechaNacimiento: (temporaryUser.fechaNacimiento) ? temporaryUser.fechaNacimiento : 'No especificado',
+                        fechaNacimiento: temporaryUser.fechaNacimiento,
                         curp: temporaryUser.curp,
                         sexo: temporaryUser.sexo,
                         matricula: matricula,
