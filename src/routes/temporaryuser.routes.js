@@ -10,6 +10,8 @@ router.get('/todos/', userCtrl.getAlumnosInscripciones);
 
 router.get('/', userCtrl.findOneUser);
 
+router.get('/estadoInsc/', userCtrl.getEstadoInsc);
+
 router.get('/temp/', userCtrl.getUserApp);
 
 router.delete('/:id', userCtrl.deleteUser);

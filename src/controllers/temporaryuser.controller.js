@@ -161,6 +161,74 @@ export const updateUser = async (req, res) => {
     }
 }
 
+export const getUserApp = async (req, res) => {
+    if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario a buscar en temporaryuser"
+        })
+    const { id } = req.query;
+    try{
+        const user = await User.findOne({id_temporaryUser:id});
+        if(!user) 
+            return res.json({
+                data: user,
+                status: "notfound",
+                message: `El usuario con el id: ${id} no existe`
+            })
+        const data = {
+            usuario: user.datosGenerales.usuario,
+            matricula: user.datosAlumno.matricula,
+            email: user.datosGenerales.email,
+            semestre: user.situacionActual.semestre,
+            carrera: user.datosAlumno.carrera,
+            turno: user.situacionActual.turno,
+        }
+
+        res.json({
+            data: data,
+            status: "success",
+            message: `El usuario fue encontrado en la tabla temporaryusers`
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
+        });
+    }
+} 
+
+export const getEstadoInsc = async (req, res) => {
+    if(!req.query)
+        res.status(404).json({
+            data: [],
+            status: "failed",
+            message: "No has ingresado el id del usuario a buscar en temporaryuser"
+        })
+    const { id } = req.query;
+    try{
+        const user = await TemporaryUser.findById(id, {estadoInsc: 1});
+        if(!user) 
+            return res.json({
+                data: user,
+                status: "notfound",
+                message: `El usuario con el id: ${id} no existe`
+            })
+
+        res.json({
+            data: user,
+            status: "success",
+            message: `El usuario fue encontrado en la tabla temporaryusers`
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
+        });
+    }
+}
+
 //web
 export const getAlumnosInscripciones = async (req, res) => {
     //para resolver esto debemos usar populate, con eso poblas  los datos sin necesidad de hacer consultas complejas
@@ -508,43 +576,6 @@ export const updateEstadoInscripcion = async (req, res) => {
     }
 }
 
-export const getUserApp = async (req, res) => {
-    if(!req.query)
-        res.status(404).json({
-            data: [],
-            status: "failed",
-            message: "No has ingresado el id del usuario a buscar en temporaryuser"
-        })
-    const { id } = req.query;
-    try{
-        const user = await User.findOne({id_temporaryUser:id});
-        if(!user) 
-            return res.json({
-                data: user,
-                status: "notfound",
-                message: `El usuario con el id: ${id} no existe`
-            })
-        const data = {
-            usuario: user.datosGenerales.usuario,
-            matricula: user.datosAlumno.matricula,
-            email: user.datosGenerales.email,
-            semestre: user.situacionActual.semestre,
-            carrera: user.datosAlumno.carrera,
-            turno: user.situacionActual.turno,
-        }
-
-        res.json({
-            data: data,
-            status: "success",
-            message: `El usuario fue encontrado en la tabla temporaryusers`
-        })
-    }
-    catch(error){
-        res.status(500).json({
-            message: error.message || `Error devolviendo una tarea con el id: ${id}`,
-        });
-    }
-} 
 
 const getFolioPago = () => {
     return `${Date.now()}`;
