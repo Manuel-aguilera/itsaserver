@@ -560,11 +560,11 @@ DELETE https://proagrimex.com/api/v1/users/606fb71107305e07352bca3d
 DELETE http://localhost:3001/api/v1/users/6071539b641f8b2664982776
 
 ###
-PUT https://proagrimex.com/api/v1/users?id=606fb69207305e07352bca3a
+PUT http://localhost:3001/api/v1/users?id=605adc6cbfb8af34609f348a
 Content-Type: application/json
 
 {
-    "id_temporaryUser": "605aeb952396130c36fbc43c"
+    "estadoInsc": "Iniciando"
 }
 
 ###

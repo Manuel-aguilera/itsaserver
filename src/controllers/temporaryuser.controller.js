@@ -5,7 +5,7 @@ import Periodo from '../models/Periodo';
 import Carrera from '../models/Carrera';
 import DepositosBancario from '../models/DepositosBancario';
 
-const ESTADOINSC = ["Ficha no aceptada", "Ficha aceptada", "Deposito no aprobado", "Ficha finalizada", "Ficha rechazada"];
+const ESTADOINSC = ["Ficha no aceptada", "Ficha aceptada", "Deposito no aprobado", "Ficha finalizada", "Ficha rechazada", "Iniciando"];
 const FICHA = {
     "Contador publico":"FICHA DE ADMISIÓN CONTADOR PUBLICO",
     "Ingenieria Civil": "FICHA DE ADMISIÓN INGENIERIA  CIVIL",
@@ -240,9 +240,16 @@ export const getAlumnosInscripciones = async (req, res) => {
             status: "notfound",
             message: `No hay usuarios para mostrar calificaciones`
         })
+
+        let validUsers = [];
+        users.forEach((u) => {
+            if(u.estadoInsc !== ESTADOINSC[5]){
+                validUsers.push(u);
+            }
+        });
         
         res.json({
-            data: users,
+            data: validUsers,
             status: "success",
             message: "Usarios sin poblar"
         });
