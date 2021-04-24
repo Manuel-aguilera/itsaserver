@@ -353,7 +353,7 @@ export const updateEstadoInscripcion = async (req, res) => {
 
         if(ESTADOINSC[3] === req.body.estadoInsc){
             const temporaryUser = await TemporaryUser.findById(id);
-            if(temporaryUser.deposito.length > 0){
+            if(temporaryUser.deposito.length === 0){
                 dataTemporaryUser = await TemporaryUser.findByIdAndUpdate(id, {
                     estadoInsc: req.body.estadoInsc, 
                     observaciones:  req.body.observaciones,
