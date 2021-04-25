@@ -46,14 +46,11 @@ export const createDescarga = async (req, res) => {
         }
 
         //guardamos las ubicaciones de las imagenes en mongodb 
-        console.log('id_user');
-        console.log(req.body.id_user);
         console.log('files');
         console.log(req.files);
         let newDescarga = [];  
         req.files.forEach(file => {
             newDescarga.push(new Descarga({
-                id_user: req.body.id_user,
                 nombre: req.body.nombre,
                 descripcion: req.body.descripcion,
                 archivo: {
