@@ -28,15 +28,15 @@ export const findAllDescarga = async (req, res) => {
 export const createDescarga = async (req, res) => {
     //usar express-validator para validar
     try{
-        // if(!req.body.id_user){
-        //     return res.status(404).send({
-        //         data: [],
-        //         status: '',
-        //         message: 'No se conoce el id_user por lo que no podemos guardar las imagenes',
-        //     })
-        // }
+        if(!req.body){
+            return res.status(404).send({
+                data: [],
+                status: '',
+                message: 'No hay informacion',
+            })
+        }
         await uploadFiles(req, res);
-        //esto
+        
         if (req.files.length === 0 || req.files.length > 1) {
             return res.json({
                 data: [],
@@ -117,8 +117,16 @@ export const findUserDescargas = async (req, res) => {
 }
 
 export const deleteDescarga = async (req, res) => {
-    const { id } = req.params;
     try{
+        if(!req.params){
+            return res.status(404).send({
+                data: [],
+                status: '',
+                message: 'No hay informacion',
+            })
+        }
+        const { id } = req.params;
+
         await Descarga.findByIdAndDelete(id)
         res.json({
             data: [],

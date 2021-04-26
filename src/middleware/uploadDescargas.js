@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     callback(null, path.join(`${__dirname}/../../uploadFile`));
   },
   filename: (req, file, callback) => {
-    const match = ["application/pdf"];
+    const match = ["application/pdf", "image/png", "image/jpeg", "image/jpg"];
 
     if (match.indexOf(file.mimetype) === -1) {
       var message = `<strong>${file.originalname}</strong> es invalido solo se aceptan pdf.`;

@@ -21,10 +21,9 @@
           <form action="/api/v1/descargas" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="example-input-file"> </label>
-              <input type="text" name="id_user" class="form-control-text border"/>
-              <input type="text" name="nombre" class="form-control-text border"/>
-              <input type="text" name="descripcion" class="form-control-text border"/>
-              <input type="file" name="multi-files" multiple id="input-multi-files" class="form-control-file border"/>
+              <input type="text" name="nombre" required class="form-control-text border"/>
+              <input type="text" name="descripcion" required class="form-control-text border"/>
+              <input type="file" name="multi-files" required multiple id="input-multi-files" class="form-control-file border"/>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
