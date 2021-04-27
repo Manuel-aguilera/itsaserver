@@ -348,8 +348,13 @@ export const findAllDepositosBancarios = async (req, res) => {
     try{
         const data = await DepositosBancario.find().sort({createdAt: -1});
         
+        let sinInscripcion = [];
+        data.forEach((d) => {
+            if(d.tipoPago !== "inscripcion" && d.tipoPago !== "fichas" )
+                sinInscripcion.push(d); 
+        });
         res.json({
-            data: data,
+            data: sinInscripcion,
             status: "success",
             message: "Datos de las DepositosBancarios"
         });
